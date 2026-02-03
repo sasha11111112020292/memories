@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tender Space</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-y: scroll;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, #fefdf9 0%, #fffaf3 50%, #fef8f0 100%);
+            color: #5c5348;
+            line-height: 1.6;
+            font-weight: 300;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            animation: gentleShift 30s ease infinite;
+            background-size: 400% 400%;
+        }
+
+        @keyframes gentleShift {
+            0% { background-position: 0% 50% }
+            50% { background-position: 100% 50% }
+            100% { background-position: 0% 50% }
+        }
+
+        /* PARTICLE CANVAS */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* WHISPER TEXT */
+        .whisper-overlay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: rgba(92, 83, 72, 0.07);
+            pointer-events: none;
+            opacity: 0;
+            white-space: nowrap;
+            transition: opacity 1.5s ease, transform 1.5s ease;
+            z-index: 0;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        /* APP */
+        .app {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 20px 100px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            padding: 30px 0 40px;
+            border-bottom: 1px solid rgba(92, 83, 72, 0.08);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #5c5348;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #a09688;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        /* NAV */
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 10px 25px;
+            background: transparent;
+            border: 1px solid rgba(92, 83, 72, 0.1);
+            color: #5c5348;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 20px;
+        }
+
+        .nav-btn:hover {
+            border-color: #d8c9b9;
+            background: rgba(216, 201, 185, 0.05);
+        }
+
+        .nav-btn.active {
+            border-color: #d8c9b9;
+            background: rgba(216, 201, 185, 0.1);
+        }
+
+        /* CONTENT */
+        .content {
+            min-height: 300px;
+        }
+
+        /* SECTIONS */
+        .sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(92, 83, 72, 0.08);
+            border-radius: 6px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            backdrop-filter: blur(5px);
+        }
+
+        .section:hover {
+            border-color: #d8c9b9;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .section-icon {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #a09688;
+            font-weight: 300;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: #5c5348;
+            font-weight: 400;
+        }
+
+        .section-desc {
+            font-size: 0.9rem;
+            color: #a09688;
+            line-height: 1.4;
+        }
+
+        /* ENTRIES */
+        .entries {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .entry {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(92, 83, 72, 0.08);
+            border-radius: 6px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .entry:hover {
+            border-color: #d8c9b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .entry::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to bottom, #d8c9b9, #f0e6d6);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .entry:hover::before {
+            opacity: 1;
+        }
+
+        .entry-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #5c5348;
+            margin-bottom: 15px;
+        }
+
+        .entry-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #a09688;
+            padding-top: 15px;
+            border-top: 1px solid rgba(92, 83, 72, 0.05);
+        }
+
+        /* FORM */
+        .form {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(92, 83, 72, 0.08);
+            border-radius: 6px;
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-title {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #5c5348;
+            font-weight: 400;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #5c5348;
+            font-size: 0.95rem;
+        }
+
+        textarea, select, input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(92, 83, 72, 0.1);
+            background: rgba(255, 255, 255, 0.7);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            color: #5c5348;
+            border-radius: 4px;
+            resize: vertical;
+            transition: border 0.2s ease;
+        }
+
+        textarea:focus, select:focus, input:focus {
+            outline: none;
+            border-color: #d8c9b9;
+            box-shadow: 0 0 0 3px rgba(216, 201, 185, 0.1);
+        }
+
+        textarea {
+            min-height: 120px;
+            line-height: 1.5;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        /* BUTTONS */
+        .btn {
+            padding: 10px 25px;
+            border: 1px solid rgba(92, 83, 72, 0.1);
+            background: transparent;
+            color: #5c5348;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            border-color: #d8c9b9;
+            background: rgba(216, 201, 185, 0.05);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: rgba(216, 201, 185, 0.1);
+            border-color: #d8c9b9;
+        }
+
+        .btn-primary:hover {
+            background: rgba(216, 201, 185, 0.15);
+        }
+
+        /* ADD BUTTON */
+        .add-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid rgba(92, 83, 72, 0.1);
+            color: #5c5348;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+
+        .add-btn:hover {
+            border-color: #d8c9b9;
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        /* STATS */
+        .stats {
+            text-align: center;
+            color: #a09688;
+            font-size: 0.85rem;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(92, 83, 72, 0.05);
+        }
+
+        /* EMPTY STATE */
+        .empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: #a09688;
+        }
+
+        .empty-icon {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        /* BACK BUTTON */
+        .back-btn {
+            margin-bottom: 30px;
+        }
+
+        /* FLOATING PARTICLES */
+        .floating-dot {
+            position: fixed;
+            width: 1px;
+            height: 1px;
+            background: transparent;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-dot::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #d8c9b9;
+            border-radius: 50%;
+            opacity: 0.15;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .sections {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .add-btn {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .whisper-overlay {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* UTILITY */
+        .hidden {
+            display: none;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* SOFT GLOW EFFECT */
+        @keyframes softGlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .soft-glow {
+            animation: softGlow 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Canvas -->
+    <canvas id="particleCanvas"></canvas>
+    
+    <!-- Whisper Overlay -->
+    <div id="whisper" class="whisper-overlay"></div>
+
+    <!-- Floating Dots Container -->
+    <div id="floatingDots"></div>
+
+    <!-- APP -->
+    <div class="app">
+        <!-- HEADER -->
+        <header class="header">
+            <h1 class="title">Tender Space</h1>
+            <p class="subtitle">A gentle place for your memories</p>
+        </header>
+
+        <!-- NAVIGATION -->
+        <nav class="nav">
+            <button class="nav-btn active" data-page="home">Home</button>
+            <button class="nav-btn" data-page="sections">Sections</button>
+            <button class="nav-btn" data-page="data">Save/Load</button>
+        </nav>
+
+        <!-- CONTENT -->
+        <div class="content" id="content">
+            <!-- Home page will be loaded here -->
+        </div>
+
+        <!-- STATS -->
+        <div class="stats">
+            <span id="memoryCount">0</span> memories • Last saved: <span id="lastSaved">just now</span>
+        </div>
+    </div>
+
+    <!-- ADD BUTTON -->
+    <button class="add-btn" id="addBtn">+</button>
+
+    <script>
+        // =====================
+        // PARTICLE SYSTEM
+        // =====================
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let animationId = null;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function createParticles(count = 80) {
+            particles = [];
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 2 + 0.5,
+                    speedX: (Math.random() - 0.5) * 0.15,
+                    speedY: (Math.random() - 0.2) * 0.15,
+                    opacity: Math.random() * 0.4 + 0.1,
+                    color: Math.random() > 0.5 ? '#d8c9b9' : '#f0e6d6'
+                });
+            }
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.opacity;
+                ctx.fill();
+                
+                // Update position
+                p.x += p.speedX;
+                p.y += p.speedY;
+                
+                // Bounce off edges
+                if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+                
+                // Keep within bounds
+                p.x = Math.max(0, Math.min(canvas.width, p.x));
+                p.y = Math.max(0, Math.min(canvas.height, p.y));
+            });
+            
+            ctx.globalAlpha = 1;
+            animationId = requestAnimationFrame(drawParticles);
+        }
+
+        // =====================
+        // WHISPER SYSTEM
+        // =====================
+        const whispers = {
+            morning: [
+                "Good morning, beautiful.",
+                "Breathe in the gentle light.",
+                "Today is soft with possibility.",
+                "You are exactly where you need to be."
+            ],
+            afternoon: [
+                "Take a soft pause.",
+                "You are safe here.",
+                "Everything is unfolding gently.",
+                "Your presence matters."
+            ],
+            evening: [
+                "You made it through today.",
+                "Rest now, gently.",
+                "Softness finds its way.",
+                "Be gentle with yourself."
+            ],
+            night: [
+                "Soft dreams await.",
+                "All is calm, all is well.",
+                "The world rests with you.",
+                "Peace finds you here."
+            ]
+        };
+
+        const whisperEl = document.getElementById('whisper');
+
+        function showWhisper() {
+            const hour = new Date().getHours();
+            let timeOfDay;
+            
+            if (hour >= 5 && hour < 12) timeOfDay = 'morning';
+            else if (hour >= 12 && hour < 17) timeOfDay = 'afternoon';
+            else if (hour >= 17 && hour < 21) timeOfDay = 'evening';
+            else timeOfDay = 'night';
+            
+            const messages = whispers[timeOfDay];
+            const message = messages[Math.floor(Math.random() * messages.length)];
+            
+            whisperEl.textContent = message;
+            whisperEl.style.opacity = '0.07';
+            whisperEl.style.transform = `translate(-50%, -50%) translateY(${Math.random() * 20 - 10}px)`;
+            
+            setTimeout(() => {
+                whisperEl.style.opacity = '0';
+            }, 4000);
+        }
+
+        // =====================
+        // FLOATING DOTS
+        // =====================
+        function createFloatingDots() {
+            const container = document.getElementById('floatingDots');
+            const dotCount = 15;
+            
+            for (let i = 0; i < dotCount; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'floating-dot';
+                dot.style.left = `${Math.random() * 100}vw`;
+                dot.style.top = `${Math.random() * 100}vh`;
+                dot.style.animationDelay = `${Math.random() * 20}s`;
+                container.appendChild(dot);
+            }
+        }
+
+        // =====================
+        // SIMPLE DATA
+        // =====================
+        const SECTIONS = [
+            { id: 'compliments', name: 'Compliments', desc: 'Things people said about you' },
+            { id: 'moments', name: 'Moments', desc: 'Small wonders worth remembering' },
+            { id: 'care', name: 'Care', desc: 'When someone showed up for you' },
+            { id: 'courage', name: 'Courage', desc: 'Things you did while scared' }
+        ];
+
+        let memories = [];
+        let currentPage = 'home';
+
+        // =====================
+        // DOM ELEMENTS
+        // =====================
+        const content = document.getElementById('content');
+        const navBtns = document.querySelectorAll('.nav-btn');
+        const addBtn = document.getElementById('addBtn');
+        const memoryCountEl = document.getElementById('memoryCount');
+        const lastSavedEl = document.getElementById('lastSaved');
+
+        // =====================
+        // INITIAL LOAD
+        // =====================
+        function loadMemories() {
+            try {
+                const saved = localStorage.getItem('tender_space');
+                if (saved) {
+                    memories = JSON.parse(saved);
+                } else {
+                    memories = [
+                        {
+                            id: 1,
+                            section: 'compliments',
+                            text: "You have a gentle way of explaining things that makes people feel safe.",
+                            date: "a Tuesday in February",
+                            feeling: "warm, surprised"
+                        },
+                        {
+                            id: 2,
+                            section: 'moments',
+                            text: "Sunlight through the window, dust particles dancing in the air, and a moment of perfect quiet.",
+                            date: "yesterday",
+                            feeling: "peaceful"
+                        }
+                    ];
+                    saveMemories();
+                }
+                updateStats();
+            } catch (error) {
+                console.error('Error loading:', error);
+                memories = [];
+            }
+        }
+
+        function saveMemories() {
+            try {
+                localStorage.setItem('tender_space', JSON.stringify(memories));
+                updateStats();
+            } catch (error) {
+                console.error('Error saving:', error);
+            }
+        }
+
+        function updateStats() {
+            memoryCountEl.textContent = memories.length;
+            lastSavedEl.textContent = 'just now';
+        }
+
+        // =====================
+        // PAGE RENDERING
+        // =====================
+        function showPage(page) {
+            // Update nav
+            navBtns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.page === page) {
+                    btn.classList.add('active');
+                }
+            });
+
+            currentPage = page;
+
+            // Render page
+            switch(page) {
+                case 'home':
+                    renderHome();
+                    break;
+                case 'sections':
+                    renderSections();
+                    break;
+                case 'data':
+                    renderData();
+                    break;
+            }
+
+            content.classList.add('fade-in');
+            setTimeout(() => content.classList.remove('fade-in'), 300);
+        }
+
+        function renderHome() {
+            const recent = [...memories].sort((a, b) => b.id - a.id).slice(0, 3);
+            
+            let html = '';
+            
+            if (recent.length > 0) {
+                html = `
+                    <h2 style="font-size: 1.3rem; margin-bottom: 20px; color: #5c5348; font-weight: 400; text-align: center;">
+                        Recent memories
+                    </h2>
+                    <div class="entries">
+                        ${recent.map(memory => `
+                            <div class="entry">
+                                <div class="entry-text">${memory.text}</div>
+                                <div class="entry-meta">
+                                    <span>${memory.date || ''}</span>
+                                    <span>${memory.feeling || ''}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div style="text-align: center; margin-top: 40px;">
+                        <button class="btn" onclick="showPage('sections')">View all sections</button>
+                    </div>
+                `;
+            } else {
+                html = `
+                    <div class="empty">
+                        <div class="empty-icon">✧</div>
+                        <p style="font-size: 1.1rem; margin-bottom: 10px;">No memories yet</p>
+                        <p style="margin-bottom: 30px; color: #a09688;">Start by adding your first memory</p>
+                        <button class="btn btn-primary" onclick="showAddForm()">Add memory</button>
+                    </div>
+                `;
+            }
+            
+            content.innerHTML = html;
+        }
+
+        function renderSections() {
+            let html = `
+                <h2 style="font-size: 1.3rem; margin-bottom: 30px; color: #5c5348; font-weight: 400; text-align: center;">
+                    All sections
+                </h2>
+                <div class="sections">
+            `;
+
+            SECTIONS.forEach(section => {
+                const count = memories.filter(m => m.section === section.id).length;
+                
+                html += `
+                    <a href="#" class="section" onclick="renderSection('${section.id}'); return false;">
+                        <div class="section-icon">${getSectionIcon(section.id)}</div>
+                        <h3 class="section-title">${section.name}</h3>
+                        <p class="section-desc">${section.desc}</p>
+                        <div style="margin-top: 15px; font-size: 0.85rem; color: #a09688;">
+                            ${count} memory${count !== 1 ? 'ies' : ''}
+                        </div>
+                    </a>
+                `;
+            });
+
+            html += `
+                </div>
+                <div style="text-align: center; margin-top: 40px;">
+                    <button class="btn" onclick="showPage('home')">← Back to home</button>
+                </div>
+            `;
+
+            content.innerHTML = html;
+        }
+
+        function renderSection(sectionId) {
+            const section = SECTIONS.find(s => s.id === sectionId);
+            const sectionMemories = memories.filter(m => m.section === sectionId).sort((a, b) => b.id - a.id);
+            
+            let html = `
+                <button class="btn back-btn" onclick="showPage('sections')">← All sections</button>
+                <h2 style="font-size: 1.3rem; margin-bottom: 10px; color: #5c5348; font-weight: 400;">
+                    ${section.name}
+                </h2>
+                <p style="color: #a09688; margin-bottom: 30px;">${section.desc}</p>
+            `;
+
+            if (sectionMemories.length > 0) {
+                html += `
+                    <div class="entries">
+                        ${sectionMemories.map(memory => `
+                            <div class="entry">
+                                <div class="entry-text">${memory.text}</div>
+                                <div class="entry-meta">
+                                    <span>${memory.date || ''}</span>
+                                    <span>${memory.feeling || ''}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div class="empty">
+                        <div class="empty-icon">${getSectionIcon(sectionId)}</div>
+                        <p style="margin-bottom: 30px; color: #a09688;">No memories in this section yet</p>
+                    </div>
+                `;
+            }
+
+            html += `
+                <div style="text-align: center; margin-top: 40px;">
+                    <button class="btn btn-primary" onclick="showAddForm('${sectionId}')">Add to this section</button>
+                </div>
+            `;
+
+            content.innerHTML = html;
+        }
+
+        function showAddForm(preSelectedSection = null) {
+            let html = `
+                <button class="btn back-btn" onclick="showPage(currentPage)">← Back</button>
+                <div class="form">
+                    <h3 class="form-title">Add a memory</h3>
+                    <div class="form-group">
+                        <label>What would you like to remember?</label>
+                        <textarea id="memoryText" placeholder="A look, a message, a silence, a kindness..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Section</label>
+                        <select id="memorySection">
+                            ${SECTIONS.map(s => `
+                                <option value="${s.id}" ${preSelectedSection === s.id ? 'selected' : ''}>
+                                    ${s.name}
+                                </option>
+                            `).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date (optional)</label>
+                        <input type="text" id="memoryDate" placeholder="e.g., a Tuesday in February">
+                    </div>
+                    <div class="form-group">
+                        <label>Feeling (optional)</label>
+                        <input type="text" id="memoryFeeling" placeholder="warm, seen, soft, brave...">
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn" onclick="showPage(currentPage)">Cancel</button>
+                        <button class="btn btn-primary" onclick="saveMemory()">Save</button>
+                    </div>
+                </div>
+            `;
+            
+            content.innerHTML = html;
+            
+            // Focus textarea
+            setTimeout(() => {
+                const textarea = document.getElementById('memoryText');
+                if (textarea) textarea.focus();
+            }, 100);
+        }
+
+        function renderData() {
+            let html = `
+                <button class="btn back-btn" onclick="showPage('home')">← Back to home</button>
+                <div class="form">
+                    <h3 class="form-title">Save and load your memories</h3>
+                    <p style="text-align: center; color: #a09688; margin-bottom: 30px;">
+                        You have <strong style="color: #5c5348;">${memories.length}</strong> memories saved.
+                        Export them to keep them safe.
+                    </p>
+                    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                        <button class="btn btn-primary" onclick="exportData()">Export all</button>
+                        <button class="btn" onclick="document.getElementById('importFile').click()">Import</button>
+                        <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+                    </div>
+                </div>
+            `;
+            
+            content.innerHTML = html;
+        }
+
+        // =====================
+        // UTILITY FUNCTIONS
+        // =====================
+        function getSectionIcon(sectionId) {
+            const icons = {
+                'compliments': '♥',
+                'moments': '✧',
+                'care': '⊹',
+                'courage': '→'
+            };
+            return icons[sectionId] || '✧';
+        }
+
+        // =====================
+        // MEMORY FUNCTIONS
+        // =====================
+        function saveMemory() {
+            const text = document.getElementById('memoryText').value.trim();
+            if (!text) {
+                alert('Please write something to remember.');
+                return;
+            }
+
+            const section = document.getElementById('memorySection').value;
+            const date = document.getElementById('memoryDate').value.trim();
+            const feeling = document.getElementById('memoryFeeling').value.trim();
+
+            // Create new memory
+            const newMemory = {
+                id: Date.now(),
+                section: section,
+                text: text,
+                date: date || null,
+                feeling: feeling || null,
+                added: new Date().toISOString()
+            };
+
+            memories.unshift(newMemory);
+            saveMemories();
+            
+            // Show subtle visual feedback
+            const entries = document.querySelectorAll('.entry');
+            if (entries.length > 0) {
+                entries[0].classList.add('soft-glow');
+                setTimeout(() => entries[0].classList.remove('soft-glow'), 2000);
+            }
+            
+            // Go to that section
+            renderSection(section);
+        }
+
+        function exportData() {
+            try {
+                const exportData = {
+                    memories: memories,
+                    sections: SECTIONS,
+                    exported: new Date().toISOString()
+                };
+
+                const dataStr = JSON.stringify(exportData, null, 2);
+                const blob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `tender-space-${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+            } catch (error) {
+                console.error('Export error:', error);
+                alert('Error exporting data.');
+            }
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    
+                    if (!imported.memories || !Array.isArray(imported.memories)) {
+                        throw new Error('Invalid file format');
+                    }
+
+                    if (!confirm(`Import ${imported.memories.length} memories?`)) {
+                        event.target.value = '';
+                        return;
+                    }
+
+                    // Add imported memories
+                    imported.memories.forEach(memory => {
+                        memories.push({
+                            ...memory,
+                            id: memory.id || Date.now() + Math.random()
+                        });
+                    });
+
+                    saveMemories();
+                    showPage('home');
+                    
+                } catch (error) {
+                    console.error('Import error:', error);
+                    alert('Error importing file.');
+                }
+                
+                event.target.value = '';
+            };
+            
+            reader.onerror = function() {
+                alert('Error reading file.');
+                event.target.value = '';
+            };
+            
+            reader.readAsText(file);
+        }
+
+        // =====================
+        // INITIALIZATION
+        // =====================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize visual effects
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            createParticles();
+            drawParticles();
+            createFloatingDots();
+            
+            // Show first whisper
+            setTimeout(showWhisper, 1000);
+            
+            // Set up whisper interval
+            setInterval(showWhisper, 15000);
+            
+            // Load data and show home
+            loadMemories();
+            showPage('home');
+            
+            // Nav buttons
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    showPage(btn.dataset.page);
+                });
+            });
+            
+            // Add button
+            addBtn.addEventListener('click', () => {
+                showAddForm();
+            });
+            
+            // Auto-save every minute
+            setInterval(saveMemories, 60000);
+        });
+
+        // Clean up animation on page hide
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                cancelAnimationFrame(animationId);
+            } else {
+                drawParticles();
+            }
+        });
+    </script>
+</body>
+</html>
