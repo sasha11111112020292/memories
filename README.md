@@ -1270,7 +1270,7 @@
         </header>
 
         <div class="welcome-message">
-            <p class="welcome-text">This is your private corner of the universe. Everything you share here stays here—safe, encrypted, and just for you. Let this be the place where you can finally exhale.</p>
+            <p class="welcome-text" id="welcomeText">This is your private corner of the universe. Everything you share here stays here—safe, encrypted, and just for you. Let this be the place where you can finally exhale.</p>
         </div>
 
         <div class="rooms-grid" id="roomsGrid"></div>
@@ -1308,8 +1308,8 @@
         </div>
 
         <div class="stats">
-            <div class="stats-content">
-                You've preserved <span class="stats-number" id="totalEntries">0</span> beautiful moments across <span class="stats-number" id="totalRooms">0</span> spaces.
+            <div class="stats-content" id="statsContent">
+                Nothing here yet... but this space is waiting for your first memory.
             </div>
         </div>
     </div>
@@ -1348,6 +1348,27 @@
         ];
 
         const ROOMS = [
+            {
+                id: 'freeform',
+                icon: 'thought',
+                title: 'What\'s On My Mind?',
+                description: 'Stream of consciousness. No filters, just thoughts.',
+                color: '#a8a29e'
+            },
+            {
+                id: 'openwhen',
+                icon: 'envelope',
+                title: 'Open When...',
+                description: 'Letters to yourself for when you need them—sealed with love until the right moment',
+                color: '#e69fac'
+            },
+            {
+                id: 'proud',
+                icon: 'trophy',
+                title: 'Proud Moments',
+                description: 'Times you surprised yourself, when you were stronger than you knew',
+                color: '#d4a574'
+            },
             {
                 id: 'compliments',
                 icon: 'star',
@@ -1398,11 +1419,11 @@
                 color: '#e5a868'
             },
             {
-                id: 'hard',
-                icon: 'cloud',
-                title: 'Hard Days',
-                description: 'A space to hold the difficult feelings without fixing them',
-                color: '#8a9ba8'
+                id: 'scream',
+                icon: 'lightning',
+                title: 'Scream Room',
+                description: 'Let it all out—rage, pain, unfairness. No judgment, just release.',
+                color: '#c74440'
             },
             {
                 id: 'identity',
@@ -1410,13 +1431,6 @@
                 title: 'Being Me',
                 description: 'Your journey of self-discovery and authenticity',
                 color: '#9b87b5'
-            },
-            {
-                id: 'freeform',
-                icon: 'thought',
-                title: 'What\'s On My Mind?',
-                description: 'Stream of consciousness. No filters, just thoughts.',
-                color: '#a8a29e'
             },
             {
                 id: 'creative',
@@ -1438,7 +1452,10 @@
             cloud: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>',
             rainbow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 17H2M22 14c0-5.5-4.5-10-10-10S2 8.5 2 14M19 14c0-3.9-3.1-7-7-7s-7 3.1-7 7M16 14c0-2.2-1.8-4-4-4s-4 1.8-4 4"></path></svg>',
             thought: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><circle cx="9" cy="10" r="1"></circle><circle cx="12" cy="10" r="1"></circle><circle cx="15" cy="10" r="1"></circle></svg>',
-            palette: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c.93 0 1.68-.75 1.68-1.68 0-.42-.16-.81-.42-1.12-.25-.3-.41-.71-.41-1.15 0-.93.75-1.68 1.68-1.68h1.95c3.03 0 5.5-2.47 5.5-5.5C22 6.48 17.52 2 12 2z"></path><circle cx="6.5" cy="11.5" r="1.5"></circle><circle cx="9.5" cy="7.5" r="1.5"></circle><circle cx="14.5" cy="7.5" r="1.5"></circle><circle cx="17.5" cy="11.5" r="1.5"></circle></svg>'
+            palette: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c.93 0 1.68-.75 1.68-1.68 0-.42-.16-.81-.42-1.12-.25-.3-.41-.71-.41-1.15 0-.93.75-1.68 1.68-1.68h1.95c3.03 0 5.5-2.47 5.5-5.5C22 6.48 17.52 2 12 2z"></path><circle cx="6.5" cy="11.5" r="1.5"></circle><circle cx="9.5" cy="7.5" r="1.5"></circle><circle cx="14.5" cy="7.5" r="1.5"></circle><circle cx="17.5" cy="11.5" r="1.5"></circle></svg>',
+            envelope: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>',
+            trophy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 010-5H6M18 9h1.5a2.5 2.5 0 000-5H18"></path><path d="M18 20a8 8 0 01-6-2.667A8 8 0 016 20M6 4h12v6a6 6 0 01-12 0V4zM8 20v-2M16 20v-2"></path></svg>',
+            lightning: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>'
         };
 
         let entries = {};
@@ -1852,8 +1869,22 @@
             const totalEntries = Object.values(entries).reduce((sum, arr) => sum + arr.length, 0);
             const totalRooms = Object.keys(entries).filter(key => entries[key].length > 0).length;
 
-            document.getElementById('totalEntries').textContent = totalEntries;
-            document.getElementById('totalRooms').textContent = totalRooms;
+            const statsEl = document.getElementById('statsContent');
+            if (totalEntries === 0) {
+                statsEl.innerHTML = 'Nothing here yet... but this space is waiting for your first memory.';
+            } else if (totalEntries === 1) {
+                statsEl.innerHTML = '🌱 You\'ve planted your first seed. One beautiful moment preserved.';
+            } else if (totalEntries < 5) {
+                statsEl.innerHTML = `✨ ${totalEntries} moments captured—your garden is beginning to grow.`;
+            } else if (totalEntries < 10) {
+                statsEl.innerHTML = `🌸 ${totalEntries} memories blooming across ${totalRooms} ${totalRooms === 1 ? 'space' : 'spaces'}. Look at you creating beauty.`;
+            } else if (totalEntries < 25) {
+                statsEl.innerHTML = `🌿 ${totalEntries} precious moments held safe across ${totalRooms} spaces. This is becoming something special.`;
+            } else if (totalEntries < 50) {
+                statsEl.innerHTML = `🌺 ${totalEntries} memories preserved—each one a testament to your journey through ${totalRooms} different spaces.`;
+            } else {
+                statsEl.innerHTML = `🌳 ${totalEntries} moments of your life, treasured across ${totalRooms} sacred spaces. What a beautiful collection of your story.`;
+            }
         }
 
         function saveData() {
