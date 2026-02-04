@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Safe Space — Your Personal Sanctuary</title>
-    <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;1,300&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,73 +12,387 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg-primary: #fafaf9;
+            --bg-secondary: #f5f5f4;
+            --text-primary: #1c1917;
+            --text-secondary: #57534e;
+            --text-tertiary: #a8a29e;
+            --border-light: #e7e5e4;
+            --border-medium: #d6d3d1;
+            --accent-primary: #78716c;
+            --accent-secondary: #a8a29e;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+
         body {
-            font-family: 'Work Sans', sans-serif;
-            background: linear-gradient(135deg, #fdf6e3 0%, #f5e6d3 50%, #ffd7ba 100%);
-            color: #3d3d3d;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(-45deg, #fafaf9, #f5f5f4, #fef5f0, #f9f5f9, #f5f5f4, #fafaf9);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            color: var(--text-primary);
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 60px 24px;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(212, 165, 116, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(155, 135, 181, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 40% 90%, rgba(230, 159, 172, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .container {
-            max-width: 1200px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 80px;
+            position: relative;
         }
 
         h1 {
-            font-family: 'Spectral', serif;
-            font-size: 48px;
+            font-family: 'Crimson Pro', serif;
+            font-size: 56px;
             font-weight: 300;
-            color: #8b6f47;
-            margin-bottom: 12px;
-            letter-spacing: 1px;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            border-right: 2px solid var(--text-primary);
+            white-space: nowrap;
+            animation: typing 2s steps(10, end) forwards, blink 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; border-right: none; }
+        }
+
+        @keyframes blink {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--text-primary); }
+        }
+
+        h1::before {
+            content: '';
+            position: absolute;
+            top: -25px;
+            right: -45px;
+            width: 35px;
+            height: 30px;
+            background: radial-gradient(ellipse at 30% 40%, #e69fac 0%, #d88b95 40%, transparent 70%),
+                        radial-gradient(ellipse at 70% 40%, #e69fac 0%, #d88b95 40%, transparent 70%);
+            opacity: 0;
+            transform: rotate(15deg) scale(0);
+            filter: blur(0.5px);
+            animation: fadeInKiss 1s ease 2s forwards;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -40px;
+            width: 28px;
+            height: 22px;
+            background: radial-gradient(ellipse at 35% 45%, rgba(230, 159, 172, 0.6) 0%, rgba(216, 139, 149, 0.4) 40%, transparent 65%),
+                        radial-gradient(ellipse at 65% 45%, rgba(230, 159, 172, 0.6) 0%, rgba(216, 139, 149, 0.4) 40%, transparent 65%);
+            opacity: 0;
+            transform: rotate(15deg) scale(0);
+            filter: blur(0.8px);
+            animation: fadeInKiss 1s ease 2.1s forwards;
+        }
+
+        @keyframes fadeInKiss {
+            0% { opacity: 0; transform: rotate(15deg) scale(0); }
+            50% { opacity: 0.5; transform: rotate(15deg) scale(1.1); }
+            100% { opacity: 0.35; transform: rotate(15deg) scale(1); }
+        }
+
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, rgba(212, 165, 116, 0.8) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: sparkleFloat 2s ease-out forwards;
+            z-index: 9999;
+        }
+
+        .sparkle::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            width: 2px;
+            height: 6px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), transparent);
+            transform: rotate(0deg);
+        }
+
+        .sparkle::after {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            width: 6px;
+            height: 2px;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.9), transparent);
+        }
+
+        @keyframes sparkleFloat {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-40px) scale(0.3) rotate(180deg);
+            }
+        }
+
+        .floating-hearts {
+            position: fixed;
+            bottom: -50px;
+            animation: floatUp 20s linear infinite;
+            pointer-events: none;
+            opacity: 0.12;
+            z-index: 1;
+            width: 20px;
+            height: 20px;
+        }
+
+        .floating-hearts::before {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 16px;
+            background: #e69fac;
+            border-radius: 10px 10px 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .floating-hearts::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 16px;
+            background: #e69fac;
+            border-radius: 10px 10px 0 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+            left: 10px;
+        }
+
+        @keyframes floatUp {
+            0% {
+                bottom: -50px;
+                transform: translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.12;
+            }
+            90% {
+                opacity: 0.12;
+            }
+            100% {
+                bottom: 110vh;
+                transform: translateX(30px) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         .tagline {
-            font-size: 15px;
-            color: #a08968;
-            font-weight: 300;
+            font-size: 16px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+
+        .daily-quote {
+            margin-top: 32px;
+            padding: 24px 40px;
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.08) 0%, rgba(155, 135, 181, 0.08) 100%);
+            border: 1px solid rgba(212, 165, 116, 0.2);
+            border-radius: 12px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease 2.5s both;
+        }
+
+        .daily-quote::before {
+            content: '✨';
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            font-size: 20px;
+            opacity: 0.6;
+            animation: gentleFloat 4s ease-in-out infinite;
+        }
+
+        .daily-quote::after {
+            content: '✨';
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            font-size: 20px;
+            opacity: 0.6;
+            animation: gentleFloat 4s ease-in-out infinite 2s;
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% {
+                transform: translateY(0px);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(-3px);
+                opacity: 0.8;
+            }
+        }
+
+        .quote-text {
+            font-family: 'Crimson Pro', serif;
+            font-size: 17px;
             font-style: italic;
+            color: var(--text-primary);
+            line-height: 1.6;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .quote-author {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
 
         .welcome-message {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(139, 111, 71, 0.15);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 50px;
+            background: linear-gradient(135deg, #ffffff 0%, #fafaf9 100%);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 48px;
+            margin-bottom: 60px;
             text-align: center;
-            box-shadow: 0 8px 32px rgba(139, 111, 71, 0.08);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-message::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -5%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(212, 165, 116, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: colorPulse 8s ease-in-out infinite;
+        }
+
+        .welcome-message::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -5%;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(155, 135, 181, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: colorPulse 8s ease-in-out infinite 2s;
+        }
+
+        @keyframes colorPulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scale(1.1);
+            }
         }
 
         .welcome-text {
-            font-family: 'Spectral', serif;
-            font-size: 18px;
-            line-height: 1.8;
-            color: #6b5d4f;
-            font-style: italic;
+            font-family: 'Crimson Pro', serif;
+            font-size: 20px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-text::first-letter {
+            font-size: 32px;
+            font-weight: 400;
+            color: var(--text-primary);
+            float: left;
+            line-height: 1;
+            margin-right: 8px;
+            margin-top: 4px;
         }
 
         .rooms-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
         }
 
         .room {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(139, 111, 71, 0.15);
-            border-radius: 24px;
-            padding: 28px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 32px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             position: relative;
             overflow: hidden;
@@ -90,101 +404,167 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 6px;
-            background: var(--room-color);
-            opacity: 0.6;
-            transition: all 0.3s ease;
+            height: 3px;
+            background: linear-gradient(90deg, var(--room-color), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .room::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at top right, var(--room-color) 0%, transparent 70%);
+            opacity: 0.03;
+            pointer-events: none;
         }
 
         .room:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 16px 48px rgba(139, 111, 71, 0.15);
-            border-color: rgba(139, 111, 71, 0.25);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.12), 0 0 0 1px var(--border-medium);
+            border-color: var(--border-medium);
         }
 
         .room:hover::before {
-            height: 100%;
+            opacity: 1;
+        }
+
+        .room:hover::after {
             opacity: 0.08;
         }
 
         .room-header {
             display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 20px;
         }
 
         .room-icon {
-            font-size: 28px;
-            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, white 100%);
+            border-radius: 10px;
+            flex-shrink: 0;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
         }
 
-        .room-title {
-            font-family: 'Spectral', serif;
-            font-size: 22px;
-            font-weight: 400;
-            color: #5d4e3a;
+        .room-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text-primary);
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .room-header-content {
             flex: 1;
         }
 
-        .room-count {
-            background: rgba(139, 111, 71, 0.1);
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 13px;
-            color: #8b6f47;
+        .room-title {
+            font-size: 20px;
             font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+
+        .room-count {
+            display: inline-block;
+            background: var(--bg-secondary);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-top: 8px;
         }
 
         .room-description {
             font-size: 14px;
-            color: #7d6f5d;
+            color: var(--text-tertiary);
             line-height: 1.6;
-            margin-bottom: 20px;
-            font-style: italic;
+            margin-bottom: 24px;
         }
 
         .entries-preview {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-bottom: 16px;
+            gap: 12px;
+            margin-bottom: 20px;
+            min-height: 120px;
         }
 
         .entry-snippet {
-            background: rgba(255, 255, 255, 0.5);
-            padding: 12px 14px;
-            border-radius: 10px;
+            background: var(--bg-secondary);
+            padding: 14px 16px;
+            border-radius: 8px;
             font-size: 13px;
-            color: #5d5d5d;
+            color: var(--text-secondary);
+            line-height: 1.6;
             border-left: 3px solid var(--room-color);
-            line-height: 1.5;
             transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .entry-snippet::before {
+            content: '"';
+            position: absolute;
+            top: 8px;
+            left: 10px;
+            font-size: 24px;
+            color: var(--room-color);
+            opacity: 0.15;
+            font-family: 'Crimson Pro', serif;
+            line-height: 1;
         }
 
         .entry-snippet:hover {
-            background: rgba(255, 255, 255, 0.8);
-            transform: translateX(4px);
+            background: var(--bg-primary);
+            transform: translateX(2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .entry-media-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 8px;
+            font-size: 11px;
+            color: var(--text-tertiary);
+        }
+
+        .entry-media-indicator svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--text-tertiary);
         }
 
         .add-entry-btn {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             background: transparent;
-            border: 2px dashed rgba(139, 111, 71, 0.25);
-            border-radius: 12px;
-            color: #a08968;
+            border: 1.5px dashed var(--border-medium);
+            border-radius: 8px;
+            color: var(--text-tertiary);
             font-size: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-family: 'Work Sans', sans-serif;
-            font-weight: 400;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
         }
 
         .add-entry-btn:hover {
-            background: rgba(139, 111, 71, 0.08);
-            border-color: rgba(139, 111, 71, 0.4);
-            color: #8b6f47;
+            background: var(--bg-secondary);
+            border-color: var(--accent-primary);
+            color: var(--text-secondary);
         }
 
         .modal {
@@ -193,13 +573,13 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(61, 46, 35, 0.7);
-            backdrop-filter: blur(12px);
+            background: rgba(28, 25, 23, 0.4);
+            backdrop-filter: blur(8px);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            padding: 20px;
+            padding: 24px;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -210,180 +590,468 @@
         }
 
         .modal-content {
-            background: linear-gradient(135deg, #fff9f0 0%, #ffecd1 100%);
-            border: 3px solid rgba(139, 111, 71, 0.2);
-            border-radius: 28px;
-            padding: 40px;
-            max-width: 600px;
+            background: white;
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 48px;
+            max-width: 700px;
             width: 100%;
-            box-shadow: 0 24px 64px rgba(61, 46, 35, 0.3);
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.05);
             max-height: 90vh;
             overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #d4a574, #9b87b5, #e69fac, #7b9eb0);
+            border-radius: 16px 16px 0 0;
         }
 
         .modal-header {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 30px;
+            gap: 16px;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-light);
         }
 
         .modal-icon {
-            font-size: 36px;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, white 100%);
+            border-radius: 10px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .modal-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text-primary);
         }
 
         .modal-title {
-            font-family: 'Spectral', serif;
             font-size: 28px;
-            font-weight: 400;
-            color: #5d4e3a;
+            font-weight: 500;
+            color: var(--text-primary);
             flex: 1;
+            letter-spacing: -0.5px;
         }
 
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
 
         .form-label {
             display: block;
-            font-size: 13px;
-            color: #8b6f47;
-            margin-bottom: 10px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
             font-weight: 500;
-            letter-spacing: 0.5px;
         }
 
         .form-textarea {
             width: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            border: 2px solid rgba(139, 111, 71, 0.2);
-            border-radius: 16px;
-            padding: 18px;
-            color: #3d3d3d;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 16px;
+            color: var(--text-primary);
             font-size: 15px;
-            font-family: 'Spectral', serif;
-            line-height: 1.8;
-            min-height: 200px;
+            font-family: 'Crimson Pro', serif;
+            line-height: 1.7;
+            min-height: 180px;
             resize: vertical;
             transition: all 0.3s ease;
             outline: none;
         }
 
         .form-textarea:focus {
-            border-color: rgba(139, 111, 71, 0.4);
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 4px 16px rgba(139, 111, 71, 0.1);
+            border-color: var(--accent-primary);
+            background: white;
+            box-shadow: var(--shadow-md);
         }
 
         .form-textarea::placeholder {
-            color: #b8a890;
-            font-style: italic;
+            color: var(--text-tertiary);
+        }
+
+        .media-upload-section {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .media-upload-label {
+            display: block;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .media-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .media-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+        }
+
+        .media-btn:hover {
+            background: var(--bg-primary);
+            border-color: var(--border-medium);
+        }
+
+        .media-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-secondary);
+        }
+
+        .media-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .media-preview-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+
+        .media-preview-item:hover {
+            box-shadow: var(--shadow-md);
+            transform: scale(1.02);
+        }
+
+        .media-preview-item img,
+        .media-preview-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .media-preview-item audio {
+            width: 100%;
+            height: 100%;
+        }
+
+        .media-remove-btn {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 24px;
+            height: 24px;
+            background: rgba(28, 25, 23, 0.8);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .media-remove-btn:hover {
+            background: rgba(28, 25, 23, 0.95);
+        }
+
+        .audio-preview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
         }
 
         .form-actions {
             display: flex;
             gap: 12px;
-            margin-top: 30px;
+            margin-top: 32px;
         }
 
         .btn {
             flex: 1;
-            padding: 16px 24px;
+            padding: 14px 24px;
             border: none;
-            border-radius: 14px;
+            border-radius: 10px;
             font-size: 15px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-family: 'Work Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #d4a574 0%, #c99a6e 100%);
-            color: #fff;
-            box-shadow: 0 4px 16px rgba(212, 165, 116, 0.3);
+            background: var(--text-primary);
+            color: white;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(212, 165, 116, 0.4);
+            background: var(--text-secondary);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
         }
 
         .btn-secondary {
-            background: rgba(139, 111, 71, 0.1);
-            color: #8b6f47;
-            border: 2px solid rgba(139, 111, 71, 0.2);
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-light);
         }
 
         .btn-secondary:hover {
-            background: rgba(139, 111, 71, 0.15);
-            border-color: rgba(139, 111, 71, 0.3);
+            background: var(--bg-primary);
+            border-color: var(--border-medium);
         }
 
         .bottom-actions {
             display: flex;
             gap: 16px;
             justify-content: center;
-            padding: 30px 20px;
+            padding: 40px 20px;
+            flex-wrap: wrap;
         }
 
         .action-btn {
             padding: 12px 24px;
-            background: rgba(255, 255, 255, 0.7);
-            border: 2px solid rgba(139, 111, 71, 0.15);
-            border-radius: 16px;
-            color: #8b6f47;
+            background: white;
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            color: var(--text-secondary);
             font-size: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-family: 'Work Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 165, 116, 0.2), transparent);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .action-btn:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .action-btn:hover {
-            background: rgba(255, 255, 255, 0.9);
-            border-color: rgba(139, 111, 71, 0.3);
+            background: var(--bg-secondary);
+            border-color: var(--border-medium);
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(139, 111, 71, 0.15);
+            box-shadow: var(--shadow-md);
+        }
+
+        .action-btn.magical {
+            background: linear-gradient(135deg, #d4a574 0%, #c9a66b 50%, #d4a574 100%);
+            background-size: 200% 200%;
+            animation: shimmer 3s ease infinite;
+            color: white;
+            border: none;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .action-btn.magical:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 24px rgba(212, 165, 116, 0.4);
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .surprise-btn {
+            background: linear-gradient(135deg, #e69fac 0%, #d88b95 50%, #e69fac 100%);
+            background-size: 200% 200%;
+            animation: shimmer 3s ease infinite;
+            animation-delay: 1s;
+        }
+
+        .action-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-secondary);
         }
 
         .stats {
             text-align: center;
-            margin-top: 40px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 20px;
-            border: 2px solid rgba(139, 111, 71, 0.1);
+            margin-top: 60px;
+            padding: 40px;
+            background: linear-gradient(135deg, white 0%, var(--bg-secondary) 100%);
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(212, 165, 116, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
         }
 
         .stats-content {
-            font-family: 'Spectral', serif;
-            font-size: 16px;
-            color: #6b5d4f;
+            font-family: 'Crimson Pro', serif;
+            font-size: 18px;
+            color: var(--text-secondary);
             line-height: 1.8;
+            position: relative;
+            z-index: 1;
         }
 
         .stats-number {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: 400;
-            color: #8b6f47;
-            margin: 0 6px;
+            color: var(--text-primary);
+            margin: 0 8px;
         }
 
         .empty-state {
             text-align: center;
-            padding: 30px;
-            color: #b8a890;
-            font-style: italic;
+            padding: 32px;
+            color: var(--text-tertiary);
             font-size: 14px;
+        }
+
+        .memory-modal-content {
+            background: linear-gradient(135deg, #fefefe 0%, #fafaf9 100%);
+            padding: 48px;
+            text-align: center;
+            position: relative;
+        }
+
+        .memory-modal-content::before {
+            content: '✨';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 32px;
+            opacity: 0.3;
+            animation: sparkleRotate 4s linear infinite;
+        }
+
+        .memory-modal-content::after {
+            content: '✨';
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 32px;
+            opacity: 0.3;
+            animation: sparkleRotate 4s linear infinite reverse;
+        }
+
+        @keyframes sparkleRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .memory-room-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.15), rgba(155, 135, 181, 0.15));
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .memory-text {
+            font-family: 'Crimson Pro', serif;
+            font-size: 20px;
+            line-height: 1.8;
+            color: var(--text-primary);
+            margin: 24px 0;
+            font-style: italic;
+        }
+
+        .memory-date {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-top: 20px;
+        }
+
+        .memory-media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .memory-media-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .memory-media-item img,
+        .memory-media-item video {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
         }
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -395,18 +1063,18 @@
             animation: fadeIn 0.6s ease backwards;
         }
 
-        .room:nth-child(1) { animation-delay: 0.1s; }
-        .room:nth-child(2) { animation-delay: 0.2s; }
-        .room:nth-child(3) { animation-delay: 0.3s; }
-        .room:nth-child(4) { animation-delay: 0.4s; }
-        .room:nth-child(5) { animation-delay: 0.5s; }
-        .room:nth-child(6) { animation-delay: 0.6s; }
-        .room:nth-child(7) { animation-delay: 0.7s; }
-        .room:nth-child(8) { animation-delay: 0.8s; }
+        .room:nth-child(1) { animation-delay: 0.05s; }
+        .room:nth-child(2) { animation-delay: 0.1s; }
+        .room:nth-child(3) { animation-delay: 0.15s; }
+        .room:nth-child(4) { animation-delay: 0.2s; }
+        .room:nth-child(5) { animation-delay: 0.25s; }
+        .room:nth-child(6) { animation-delay: 0.3s; }
+        .room:nth-child(7) { animation-delay: 0.35s; }
+        .room:nth-child(8) { animation-delay: 0.4s; }
 
         ::selection {
-            background: rgba(212, 165, 116, 0.3);
-            color: #3d3d3d;
+            background: rgba(120, 113, 108, 0.2);
+            color: var(--text-primary);
         }
 
         ::-webkit-scrollbar {
@@ -414,16 +1082,16 @@
         }
 
         ::-webkit-scrollbar-track {
-            background: rgba(139, 111, 71, 0.05);
+            background: var(--bg-secondary);
         }
 
         ::-webkit-scrollbar-thumb {
-            background: rgba(139, 111, 71, 0.2);
+            background: var(--border-medium);
             border-radius: 5px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(139, 111, 71, 0.3);
+            background: var(--accent-primary);
         }
 
         @media (max-width: 768px) {
@@ -432,11 +1100,20 @@
             }
 
             h1 {
-                font-size: 36px;
+                font-size: 40px;
             }
 
             .modal-content {
-                padding: 30px 24px;
+                padding: 32px 24px;
+            }
+
+            .media-buttons {
+                flex-direction: column;
+            }
+
+            .media-btn {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -445,7 +1122,11 @@
     <div class="container">
         <header>
             <h1>Safe Space</h1>
-            <p class="tagline">A gentle place for all the pieces of you</p>
+            <p class="tagline">A sanctuary for every piece of you</p>
+            <div class="daily-quote" id="dailyQuote">
+                <p class="quote-text" id="quoteText"></p>
+                <p class="quote-author" id="quoteAuthor"></p>
+            </div>
         </header>
 
         <div class="welcome-message">
@@ -466,12 +1147,33 @@
         </div>
 
         <div class="bottom-actions">
+            <button class="action-btn magical" onclick="showRandomMemory()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                <span>Random Memory</span>
+            </button>
+            <button class="action-btn surprise-btn" onclick="surpriseMe()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <span>Surprise Me</span>
+            </button>
             <button class="action-btn" onclick="exportData()">
-                <span>💾</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
                 <span>Save Backup</span>
             </button>
             <button class="action-btn" onclick="document.getElementById('importFile').click()">
-                <span>📂</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
                 <span>Load Backup</span>
             </button>
             <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
@@ -481,7 +1183,7 @@
     <div class="modal" id="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <span class="modal-icon" id="modalIcon">💭</span>
+                <div class="modal-icon" id="modalIconContainer"></div>
                 <h2 class="modal-title" id="modalTitle">New Entry</h2>
             </div>
 
@@ -494,6 +1196,41 @@
                 ></textarea>
             </div>
 
+            <div class="media-upload-section">
+                <label class="media-upload-label">Add media (optional)</label>
+                <div class="media-buttons">
+                    <button class="media-btn" onclick="document.getElementById('photoInput').click()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                        Photo
+                    </button>
+                    <button class="media-btn" onclick="document.getElementById('videoInput').click()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                        </svg>
+                        Video
+                    </button>
+                    <button class="media-btn" onclick="document.getElementById('audioInput').click()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        Audio
+                    </button>
+                </div>
+                <input type="file" id="photoInput" accept="image/*" style="display: none;" onchange="handleMediaUpload(event, 'photo')" multiple>
+                <input type="file" id="videoInput" accept="video/*" style="display: none;" onchange="handleMediaUpload(event, 'video')" multiple>
+                <input type="file" id="audioInput" accept="audio/*" style="display: none;" onchange="handleMediaUpload(event, 'audio')" multiple>
+                
+                <div class="media-preview-grid" id="mediaPreview"></div>
+            </div>
+
             <div class="form-actions">
                 <button class="btn btn-secondary" onclick="closeModal()">Maybe Later</button>
                 <button class="btn btn-primary" onclick="saveEntry()">Keep This Safe</button>
@@ -502,82 +1239,264 @@
     </div>
 
     <script>
+        const INSPIRATIONAL_QUOTES = [
+            { text: "Darling, you are absolutely fabulous, and don't let anyone tell you otherwise!", author: "Your Inner Rarity" },
+            { text: "Every moment of authenticity is a small revolution.", author: "Unknown" },
+            { text: "You are allowed to be both a masterpiece and a work in progress simultaneously.", author: "Sophia Bush" },
+            { text: "The most courageous act is still to think for yourself. Aloud.", author: "Coco Chanel" },
+            { text: "Elegance is not about being noticed, it's about being remembered.", author: "Giorgio Armani" },
+            { text: "Your emotions make you human. Even the unpleasant ones have a purpose.", author: "Sabaa Tahir" },
+            { text: "Be yourself; everyone else is already taken.", author: "Oscar Wilde" },
+            { text: "You are enough, just as you are. Each emotion you feel, every thought you have, is valid.", author: "Unknown" },
+            { text: "Vulnerability is the birthplace of love, belonging, joy, courage, and creativity.", author: "Brené Brown" },
+            { text: "The privilege of a lifetime is to become who you truly are.", author: "Carl Jung" },
+            { text: "What lies behind us and what lies before us are tiny matters compared to what lies within us.", author: "Ralph Waldo Emerson" },
+            { text: "You yourself, as much as anybody in the entire universe, deserve your love and affection.", author: "Buddha" },
+            { text: "Imperfection is beauty, madness is genius, and it's better to be absolutely ridiculous than absolutely boring.", author: "Marilyn Monroe" },
+            { text: "To be beautiful means to be yourself. You don't need to be accepted by others. You need to accept yourself.", author: "Thich Nhat Hanh" },
+            { text: "The most common way people give up their power is by thinking they don't have any.", author: "Alice Walker" }
+        ];
+
         const ROOMS = [
             {
                 id: 'compliments',
-                icon: '🌟',
+                icon: 'star',
                 title: 'Kind Words',
                 description: 'Compliments and affirming words that made you feel seen',
-                color: '#f4c430',
-                prompt: 'What kind words touched your heart today?'
+                color: '#d4a574'
             },
             {
                 id: 'brave',
-                icon: '🦋',
+                icon: 'heart',
                 title: 'Brave Moments',
                 description: 'Times you did something scary, even when you were afraid',
-                color: '#9b59b6',
-                prompt: 'What brave thing did you do, even though it was hard?'
+                color: '#9b87b5'
             },
             {
                 id: 'special',
-                icon: '✨',
+                icon: 'sparkles',
                 title: 'Special Moments',
                 description: 'Memories that sparkle, moments you want to remember forever',
-                color: '#ff9a9e',
-                prompt: 'What made this moment special to you?'
+                color: '#e69fac'
             },
             {
                 id: 'voices',
-                icon: '💬',
+                icon: 'messages',
                 title: 'Two Voices',
                 description: 'The conversation between your inner critic and inner friend',
-                color: '#6a89cc',
-                prompt: 'What is your critic saying? Now, what would your loving friend say back?'
+                color: '#7b9eb0'
             },
             {
                 id: 'letters',
-                icon: '💌',
+                icon: 'mail',
                 title: 'Unsent Letters',
                 description: 'Words you need to say but haven\'t sent—to anyone, even yourself',
-                color: '#f8b500',
-                prompt: 'Who is this letter to, and what do you need to say?'
+                color: '#c9a66b'
             },
             {
                 id: 'grateful',
-                icon: '🌸',
+                icon: 'flower',
                 title: 'Gratitude',
                 description: 'Small and large things that filled you with appreciation',
-                color: '#ff6b9d',
-                prompt: 'What are you grateful for right now?'
+                color: '#d88b95'
             },
             {
                 id: 'laughter',
-                icon: '😊',
+                icon: 'smile',
                 title: 'Joy Captured',
                 description: 'Things that made you laugh, smile, or feel light',
-                color: '#ffa502',
-                prompt: 'What brought joy to your day?'
+                color: '#e5a868'
             },
             {
                 id: 'hard',
-                icon: '🌧️',
+                icon: 'cloud',
                 title: 'Hard Days',
                 description: 'A space to hold the difficult feelings without fixing them',
-                color: '#778ca3',
-                prompt: 'What feels heavy right now? You don\'t have to fix it, just name it.'
+                color: '#8a9ba8'
             }
         ];
 
+        const ICONS = {
+            star: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>',
+            heart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>',
+            sparkles: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3zM19 12l1 3 3 1-3 1-1 3-1-3-3-1 3-1 1-3z"></path></svg>',
+            messages: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>',
+            mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>',
+            flower: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M12 2a3 3 0 0 0 0 6 3 3 0 0 0 0-6zM12 16a3 3 0 0 0 0 6 3 3 0 0 0 0-6zM22 12a3 3 0 0 0-6 0 3 3 0 0 0 6 0zM8 12a3 3 0 0 0-6 0 3 3 0 0 0 6 0z"></path></svg>',
+            smile: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>',
+            cloud: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>'
+        };
+
         let entries = {};
         let currentRoom = null;
+        let currentMedia = [];
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             loadData();
             renderRooms();
             updateStats();
+            displayDailyQuote();
+            createFloatingHearts();
         });
+
+        function displayDailyQuote() {
+            const quote = INSPIRATIONAL_QUOTES[Math.floor(Math.random() * INSPIRATIONAL_QUOTES.length)];
+            document.getElementById('quoteText').textContent = `"${quote.text}"`;
+            document.getElementById('quoteAuthor').textContent = `— ${quote.author}`;
+        }
+
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => sparkle.remove(), 2000);
+        }
+
+        function createFloatingHearts() {
+            setInterval(() => {
+                if (Math.random() > 0.85) { // Less frequent - only 15% chance every interval
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-hearts';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDuration = (15 + Math.random() * 10) + 's';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => heart.remove(), 25000);
+                }
+            }, 8000); // Check every 8 seconds instead of 5
+        }
+
+        function showRandomMemory() {
+            const allEntries = [];
+            
+            // Collect all entries from all rooms
+            Object.keys(entries).forEach(roomId => {
+                const room = ROOMS.find(r => r.id === roomId);
+                if (entries[roomId] && entries[roomId].length > 0) {
+                    entries[roomId].forEach(entry => {
+                        allEntries.push({ ...entry, roomId, roomTitle: room?.title || 'Unknown' });
+                    });
+                }
+            });
+
+            if (allEntries.length === 0) {
+                alert('No memories yet, darling! Start creating some beautiful moments first. ✨');
+                return;
+            }
+
+            // Pick a random entry
+            const randomEntry = allEntries[Math.floor(Math.random() * allEntries.length)];
+            
+            // Show in modal
+            showMemoryModal(randomEntry);
+        }
+
+        function showMemoryModal(entry) {
+            const modal = document.getElementById('modal');
+            const modalContent = modal.querySelector('.modal-content');
+            
+            // Create custom content for memory display
+            let mediaHTML = '';
+            if (entry.media && entry.media.length > 0) {
+                mediaHTML = '<div class="memory-media-grid">' + 
+                    entry.media.map(m => {
+                        if (m.type === 'photo') {
+                            return `<div class="memory-media-item"><img src="${m.data}" alt="Memory"></div>`;
+                        } else if (m.type === 'video') {
+                            return `<div class="memory-media-item"><video src="${m.data}" controls></video></div>`;
+                        } else if (m.type === 'audio') {
+                            return `<div class="memory-media-item"><audio src="${m.data}" controls></audio></div>`;
+                        }
+                        return '';
+                    }).join('') +
+                    '</div>';
+            }
+
+            const date = new Date(entry.date).toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+
+            modalContent.innerHTML = `
+                <div class="memory-modal-content">
+                    <div class="memory-room-badge">${entry.roomTitle}</div>
+                    <div class="memory-text">"${entry.text}"</div>
+                    ${mediaHTML}
+                    <div class="memory-date">Preserved on ${date}</div>
+                    <div class="form-actions" style="margin-top: 32px;">
+                        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+                        <button class="btn btn-primary" onclick="showRandomMemory()">Another Memory</button>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.add('active');
+        }
+
+        function surpriseMe() {
+            const surprises = [
+                () => {
+                    // Minimal sparkle bloom
+                    for (let i = 0; i < 12; i++) {
+                        setTimeout(() => {
+                            const x = window.innerWidth / 2 + (Math.random() - 0.5) * 400;
+                            const y = window.innerHeight / 2 + (Math.random() - 0.5) * 400;
+                            createSparkle(x, y);
+                        }, i * 80);
+                    }
+                    setTimeout(() => {
+                        alert('✨ You are absolutely magnificent, darling! ✨');
+                    }, 1000);
+                },
+                () => {
+                    // Random compliment
+                    const compliments = [
+                        "Your existence is a work of art! 🎨",
+                        "Darling, you're simply divine! 💎",
+                        "The world is better with you in it! 🌟",
+                        "You are fabulous beyond measure! ✨",
+                        "Your spirit shines so brightly! 💫",
+                        "You deserve all the beautiful things! 🌸"
+                    ];
+                    alert(compliments[Math.floor(Math.random() * compliments.length)]);
+                },
+                () => {
+                    // New quote with gentle animation
+                    displayDailyQuote();
+                    const quoteEl = document.getElementById('dailyQuote');
+                    quoteEl.style.animation = 'none';
+                    setTimeout(() => {
+                        quoteEl.style.animation = 'fadeIn 0.8s ease';
+                    }, 10);
+                    alert('New inspiration just for you! 💝');
+                },
+                () => {
+                    // Gentle heart cascade
+                    for (let i = 0; i < 8; i++) {
+                        setTimeout(() => {
+                            const heart = document.createElement('div');
+                            heart.className = 'floating-hearts';
+                            heart.style.left = (30 + Math.random() * 40) + '%';
+                            heart.style.animationDuration = '4s';
+                            heart.style.opacity = '0.2';
+                            document.body.appendChild(heart);
+                            setTimeout(() => heart.remove(), 4000);
+                        }, i * 150);
+                    }
+                    setTimeout(() => {
+                        alert('Sending you all the love! 💕');
+                    }, 1200);
+                }
+            ];
+
+            // Pick a random surprise
+            const surprise = surprises[Math.floor(Math.random() * surprises.length)];
+            surprise();
+        }
 
         function renderRooms() {
             const grid = document.getElementById('roomsGrid');
@@ -595,15 +1514,28 @@
                         const preview = entry.text.length > 80 
                             ? entry.text.substring(0, 80) + '...'
                             : entry.text;
-                        return `<div class="entry-snippet">${preview}</div>`;
+                        const mediaCount = (entry.media || []).length;
+                        const mediaIndicator = mediaCount > 0 
+                            ? `<span class="entry-media-indicator">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                    <polyline points="21 15 16 10 5 21"></polyline>
+                                </svg>
+                                ${mediaCount}
+                               </span>`
+                            : '';
+                        return `<div class="entry-snippet">${preview}${mediaIndicator}</div>`;
                     }).join('')
                     : '<div class="empty-state">No entries yet—this room is waiting for you</div>';
 
                 roomEl.innerHTML = `
                     <div class="room-header">
-                        <span class="room-icon">${room.icon}</span>
-                        <h3 class="room-title">${room.title}</h3>
-                        <span class="room-count">${roomEntries.length}</span>
+                        <div class="room-icon">${ICONS[room.icon]}</div>
+                        <div class="room-header-content">
+                            <h3 class="room-title">${room.title}</h3>
+                            <span class="room-count">${roomEntries.length} entries</span>
+                        </div>
                     </div>
                     <p class="room-description">${room.description}</p>
                     <div class="entries-preview">
@@ -621,12 +1553,13 @@
         function openModal(roomId) {
             currentRoom = ROOMS.find(r => r.id === roomId);
             if (!currentRoom) return;
+            currentMedia = [];
 
-            document.getElementById('modalIcon').textContent = currentRoom.icon;
+            document.getElementById('modalIconContainer').innerHTML = ICONS[currentRoom.icon];
             document.getElementById('modalTitle').textContent = currentRoom.title;
-            document.getElementById('promptLabel').textContent = currentRoom.prompt;
+            document.getElementById('promptLabel').textContent = getPromptForRoom(roomId);
             document.getElementById('entryText').value = '';
-            document.getElementById('entryText').placeholder = 'Let it out... this space holds you.';
+            document.getElementById('mediaPreview').innerHTML = '';
 
             const modal = document.getElementById('modal');
             modal.classList.add('active');
@@ -635,14 +1568,73 @@
             }, 100);
         }
 
+        function getPromptForRoom(roomId) {
+            const prompts = {
+                compliments: 'What kind words touched your heart today?',
+                brave: 'What brave thing did you do, even though it was hard?',
+                special: 'What made this moment special to you?',
+                voices: 'What is your critic saying? Now, what would your loving friend say back?',
+                letters: 'Who is this letter to, and what do you need to say?',
+                grateful: 'What are you grateful for right now?',
+                laughter: 'What brought joy to your day?',
+                hard: 'What feels heavy right now? You don\'t have to fix it, just name it.'
+            };
+            return prompts[roomId] || 'What\'s on your heart?';
+        }
+
         function closeModal() {
             document.getElementById('modal').classList.remove('active');
             currentRoom = null;
+            currentMedia = [];
+        }
+
+        function handleMediaUpload(event, type) {
+            const files = Array.from(event.target.files);
+            
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    currentMedia.push({
+                        type: type,
+                        data: e.target.result,
+                        name: file.name
+                    });
+                    renderMediaPreview();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function renderMediaPreview() {
+            const preview = document.getElementById('mediaPreview');
+            preview.innerHTML = currentMedia.map((media, index) => {
+                let content = '';
+                if (media.type === 'photo') {
+                    content = `<img src="${media.data}" alt="Preview">`;
+                } else if (media.type === 'video') {
+                    content = `<video src="${media.data}" controls></video>`;
+                } else if (media.type === 'audio') {
+                    content = `<div class="audio-preview"><audio src="${media.data}" controls></audio></div>`;
+                }
+                
+                return `
+                    <div class="media-preview-item">
+                        ${content}
+                        <button class="media-remove-btn" onclick="removeMedia(${index})">×</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function removeMedia(index) {
+            currentMedia.splice(index, 1);
+            renderMediaPreview();
         }
 
         function saveEntry() {
             const text = document.getElementById('entryText').value.trim();
-            if (!text || !currentRoom) return;
+            if (!text && currentMedia.length === 0) return;
+            if (!currentRoom) return;
 
             if (!entries[currentRoom.id]) {
                 entries[currentRoom.id] = [];
@@ -650,6 +1642,7 @@
 
             entries[currentRoom.id].push({
                 text: text,
+                media: [...currentMedia],
                 date: new Date().toISOString(),
                 id: Date.now()
             });
@@ -683,7 +1676,9 @@
             const data = {
                 entries,
                 exported: new Date().toISOString(),
-                version: '1.0'
+                version: '2.0',
+                mediaCount: Object.values(entries).reduce((sum, arr) => 
+                    sum + arr.reduce((mediaSum, entry) => mediaSum + (entry.media?.length || 0), 0), 0)
             };
 
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -693,6 +1688,10 @@
             a.download = `safe-space-backup-${new Date().toISOString().split('T')[0]}.json`;
             a.click();
             URL.revokeObjectURL(url);
+            
+            // Show confirmation
+            const totalMedia = data.mediaCount;
+            console.log(`Exported backup with ${totalMedia} media files`);
         }
 
         function importData(e) {
@@ -716,14 +1715,12 @@
             reader.readAsText(file);
         }
 
-        // Click outside modal to close
         document.getElementById('modal').addEventListener('click', (e) => {
             if (e.target.id === 'modal') {
                 closeModal();
             }
         });
 
-        // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeModal();
         });
