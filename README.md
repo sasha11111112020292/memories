@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tender Space</title>
+    <title>Gentle Heart</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <style>
-        /* RESET */
+        /* PERFECT RESET */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html {
             overflow-y: scroll;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -26,50 +28,32 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
-            animation: gentleShift 30s ease infinite;
+            animation: gentleShift 40s ease-in-out infinite;
             background-size: 400% 400%;
         }
 
         @keyframes gentleShift {
-            0% { background-position: 0% 50% }
+            0%, 100% { background-position: 0% 50% }
             50% { background-position: 100% 50% }
-            100% { background-position: 0% 50% }
         }
 
-        /* PARTICLE CANVAS */
-        #particleCanvas {
+        /* HEART CANVAS */
+        #heartCanvas {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
             pointer-events: none;
-        }
-
-        /* WHISPER TEXT */
-        .whisper-overlay {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: rgba(92, 83, 72, 0.07);
-            pointer-events: none;
-            opacity: 0;
-            white-space: nowrap;
-            transition: opacity 1.5s ease, transform 1.5s ease;
-            z-index: 0;
-            font-style: italic;
-            font-weight: 300;
+            opacity: 0.03;
         }
 
         /* APP */
         .app {
-            max-width: 900px;
+            max-width: min(900px, 95vw);
             margin: 0 auto;
-            padding: 30px 20px 100px;
+            padding: clamp(20px, 5vw, 40px) clamp(15px, 3vw, 30px) 100px;
             position: relative;
             z-index: 1;
         }
@@ -77,34 +61,47 @@
         /* HEADER */
         .header {
             text-align: center;
-            padding: 30px 0 40px;
-            border-bottom: 1px solid rgba(92, 83, 72, 0.08);
-            margin-bottom: 40px;
+            padding: clamp(25px, 7vw, 40px) 0 clamp(30px, 8vw, 50px);
+            margin-bottom: clamp(30px, 7vw, 50px);
             position: relative;
         }
 
         .title {
             font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+            font-size: clamp(2rem, 6vw, 3.2rem);
             font-weight: 300;
             color: #5c5348;
             margin-bottom: 8px;
             letter-spacing: 0.5px;
+            position: relative;
+        }
+
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 1px;
+            background: rgba(216, 201, 185, 0.3);
         }
 
         .subtitle {
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
             color: #a09688;
             font-style: italic;
             font-weight: 300;
+            line-height: 1.4;
+            margin-top: 15px;
         }
 
-        /* NAV */
+        /* NAVIGATION - FIXED */
         .nav {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 40px;
+            gap: 12px;
+            margin-bottom: clamp(30px, 7vw, 45px);
             flex-wrap: wrap;
         }
 
@@ -114,76 +111,33 @@
             border: 1px solid rgba(92, 83, 72, 0.1);
             color: #5c5348;
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             border-radius: 20px;
+            font-weight: 400;
+            outline: none;
         }
 
         .nav-btn:hover {
             border-color: #d8c9b9;
             background: rgba(216, 201, 185, 0.05);
+            transform: translateY(-1px);
         }
 
         .nav-btn.active {
             border-color: #d8c9b9;
             background: rgba(216, 201, 185, 0.1);
+            font-weight: 500;
         }
 
         /* CONTENT */
         .content {
             min-height: 300px;
+            position: relative;
         }
 
-        /* SECTIONS */
-        .sections {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 25px;
-            margin-bottom: 60px;
-        }
-
-        .section {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(92, 83, 72, 0.08);
-            border-radius: 6px;
-            padding: 30px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            backdrop-filter: blur(5px);
-        }
-
-        .section:hover {
-            border-color: #d8c9b9;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
-            background: rgba(255, 255, 255, 0.95);
-        }
-
-        .section-icon {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: #a09688;
-            font-weight: 300;
-        }
-
-        .section-title {
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-            color: #5c5348;
-            font-weight: 400;
-        }
-
-        .section-desc {
-            font-size: 0.9rem;
-            color: #a09688;
-            line-height: 1.4;
-        }
-
-        /* ENTRIES */
+        /* DIARY ENTRIES */
         .entries {
             display: flex;
             flex-direction: column;
@@ -191,9 +145,9 @@
         }
 
         .entry {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(92, 83, 72, 0.08);
-            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(216, 201, 185, 0.2);
+            border-radius: 8px;
             padding: 25px;
             transition: all 0.3s ease;
             backdrop-filter: blur(5px);
@@ -204,8 +158,8 @@
         .entry:hover {
             border-color: #d8c9b9;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
-            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.92);
         }
 
         .entry::before {
@@ -224,33 +178,79 @@
             opacity: 1;
         }
 
-        .entry-text {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #5c5348;
-            margin-bottom: 15px;
-        }
-
-        .entry-meta {
+        .entry-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem;
-            color: #a09688;
-            padding-top: 15px;
-            border-top: 1px solid rgba(92, 83, 72, 0.05);
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
-        /* FORM */
+        .entry-date {
+            font-size: 0.9rem;
+            color: #a09688;
+            font-style: italic;
+        }
+
+        .entry-feelings {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .feeling-tag {
+            font-size: 0.8rem;
+            padding: 4px 12px;
+            border-radius: 15px;
+            background: rgba(216, 201, 185, 0.1);
+            color: #8a7c6b;
+            border: 1px solid rgba(216, 201, 185, 0.2);
+        }
+
+        .entry-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #5c5348;
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+        }
+
+        .entry-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(216, 201, 185, 0.1);
+        }
+
+        .entry-action-btn {
+            padding: 6px 16px;
+            background: transparent;
+            border: 1px solid rgba(92, 83, 72, 0.1);
+            color: #5c5348;
+            font-family: inherit;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-radius: 15px;
+            transition: all 0.2s ease;
+        }
+
+        .entry-action-btn:hover {
+            border-color: #d8c9b9;
+            background: rgba(216, 201, 185, 0.05);
+        }
+
+        /* FORMS */
         .form {
             background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(92, 83, 72, 0.08);
-            border-radius: 6px;
+            border: 1px solid rgba(216, 201, 185, 0.2);
+            border-radius: 8px;
             padding: 30px;
             max-width: 600px;
             margin: 0 auto;
             backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
         }
 
         .form-title {
@@ -275,25 +275,44 @@
         textarea, select, input {
             width: 100%;
             padding: 12px;
-            border: 1px solid rgba(92, 83, 72, 0.1);
-            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(216, 201, 185, 0.3);
+            background: rgba(255, 255, 255, 0.8);
             font-family: 'Cormorant Garamond', serif;
             font-size: 1rem;
             color: #5c5348;
-            border-radius: 4px;
+            border-radius: 6px;
             resize: vertical;
             transition: border 0.2s ease;
+            outline: none;
         }
 
         textarea:focus, select:focus, input:focus {
-            outline: none;
             border-color: #d8c9b9;
             box-shadow: 0 0 0 3px rgba(216, 201, 185, 0.1);
         }
 
         textarea {
             min-height: 120px;
-            line-height: 1.5;
+            line-height: 1.6;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(216, 201, 185, 0.2);
+            background: rgba(255, 255, 255, 0.6);
         }
 
         .form-actions {
@@ -306,14 +325,15 @@
         /* BUTTONS */
         .btn {
             padding: 10px 25px;
-            border: 1px solid rgba(92, 83, 72, 0.1);
+            border: 1px solid rgba(216, 201, 185, 0.3);
             background: transparent;
             color: #5c5348;
             font-family: 'Cormorant Garamond', serif;
             font-size: 1rem;
             cursor: pointer;
             border-radius: 20px;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            outline: none;
         }
 
         .btn:hover {
@@ -331,26 +351,27 @@
             background: rgba(216, 201, 185, 0.15);
         }
 
-        /* ADD BUTTON */
+        /* ADD BUTTON - FIXED */
         .add-btn {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            background: #fff;
-            border: 1px solid rgba(92, 83, 72, 0.1);
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(216, 201, 185, 0.3);
             color: #5c5348;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            z-index: 100;
+            z-index: 1000;
             backdrop-filter: blur(5px);
+            outline: none;
         }
 
         .add-btn:hover {
@@ -367,7 +388,7 @@
             font-size: 0.85rem;
             margin-top: 60px;
             padding-top: 20px;
-            border-top: 1px solid rgba(92, 83, 72, 0.05);
+            border-top: 1px solid rgba(216, 201, 185, 0.2);
         }
 
         /* EMPTY STATE */
@@ -378,42 +399,96 @@
         }
 
         .empty-icon {
-            font-size: 2rem;
+            font-size: 3rem;
             margin-bottom: 20px;
             opacity: 0.3;
+            animation: gentleFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
         }
 
         /* BACK BUTTON */
         .back-btn {
             margin-bottom: 30px;
+            padding-left: 35px;
+            position: relative;
         }
 
-        /* FLOATING PARTICLES */
-        .floating-dot {
+        .back-btn::before {
+            content: '←';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* MESSAGES */
+        .messages-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .message-item {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(216, 201, 185, 0.2);
+            border-radius: 8px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .message-item:hover {
+            border-color: #d8c9b9;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .message-trigger {
+            font-size: 1.1rem;
+            color: #5c5348;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .message-text {
+            color: #5c5348;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        /* HEART ANIMATION */
+        .heart-container {
             position: fixed;
-            width: 1px;
-            height: 1px;
-            background: transparent;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
             z-index: -1;
+            opacity: 0.1;
         }
 
-        .floating-dot::before {
-            content: '';
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #d8c9b9;
-            border-radius: 50%;
-            opacity: 0.15;
+        .heart-path {
+            stroke: #d8c9b9;
+            stroke-width: 1;
+            fill: none;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawHeart 8s ease-in-out infinite;
+        }
+
+        @keyframes drawHeart {
+            0% { stroke-dashoffset: 1000; opacity: 0; }
+            20% { stroke-dashoffset: 0; opacity: 0.1; }
+            80% { opacity: 0.1; }
+            100% { stroke-dashoffset: 1000; opacity: 0; }
         }
 
         /* RESPONSIVE */
         @media (max-width: 768px) {
-            .sections {
-                grid-template-columns: 1fr;
-            }
-            
             .nav {
                 flex-direction: column;
                 align-items: center;
@@ -427,10 +502,12 @@
             .add-btn {
                 bottom: 20px;
                 right: 20px;
+                width: 56px;
+                height: 56px;
             }
             
-            .whisper-overlay {
-                font-size: 1.2rem;
+            .form {
+                padding: 20px;
             }
         }
 
@@ -447,377 +524,301 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        /* SOFT GLOW EFFECT */
-        @keyframes softGlow {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.6; }
-        }
-
-        .soft-glow {
-            animation: softGlow 4s ease-in-out infinite;
-        }
     </style>
 </head>
 <body>
-    <!-- Particle Canvas -->
-    <canvas id="particleCanvas"></canvas>
+    <!-- Heart Canvas -->
+    <canvas id="heartCanvas"></canvas>
     
-    <!-- Whisper Overlay -->
-    <div id="whisper" class="whisper-overlay"></div>
-
-    <!-- Floating Dots Container -->
-    <div id="floatingDots"></div>
-
-    <!-- APP -->
-    <div class="app">
-        <!-- HEADER -->
-        <header class="header">
-            <h1 class="title">Tender Space</h1>
-            <p class="subtitle">A gentle place for your memories</p>
-        </header>
-
-        <!-- NAVIGATION -->
-        <nav class="nav">
-            <button class="nav-btn active" data-page="home">Home</button>
-            <button class="nav-btn" data-page="sections">Sections</button>
-            <button class="nav-btn" data-page="data">Save/Load</button>
-        </nav>
-
-        <!-- CONTENT -->
-        <div class="content" id="content">
-            <!-- Home page will be loaded here -->
-        </div>
-
-        <!-- STATS -->
-        <div class="stats">
-            <span id="memoryCount">0</span> memories • Last saved: <span id="lastSaved">just now</span>
-        </div>
+    <!-- Heart SVG Animation -->
+    <div class="heart-container">
+        <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+            <path class="heart-path" d="M50,85 C30,65 15,50 15,30 C15,15 30,5 50,5 C70,5 85,15 85,30 C85,50 70,65 50,85 Z" 
+                  transform="translate(0, 5) scale(0.9)"/>
+        </svg>
     </div>
 
-    <!-- ADD BUTTON -->
-    <button class="add-btn" id="addBtn">+</button>
+    <!-- App Container -->
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="title">Gentle Heart</h1>
+            <p class="subtitle">A soft space for what matters</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <button class="nav-btn active" data-page="diary">Diary</button>
+            <button class="nav-btn" data-page="messages">Messages to Self</button>
+            <button class="nav-btn" data-page="data">Save / Load</button>
+        </nav>
+
+        <!-- Content -->
+        <main class="content" id="content">
+            <!-- Content loads here -->
+        </main>
+
+        <!-- Stats -->
+        <footer class="stats">
+            <span id="entryCount">0</span> entries • Last saved: <span id="lastSaved">just now</span>
+        </footer>
+    </div>
+
+    <!-- Add Button -->
+    <button class="add-btn" id="addBtn" aria-label="Add new">+</button>
 
     <script>
         // =====================
-        // PARTICLE SYSTEM
+        // FIXED WORKING SYSTEM
         // =====================
-        const canvas = document.getElementById('particleCanvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let animationId = null;
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        function createParticles(count = 80) {
-            particles = [];
-            for (let i = 0; i < count; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    size: Math.random() * 2 + 0.5,
-                    speedX: (Math.random() - 0.5) * 0.15,
-                    speedY: (Math.random() - 0.2) * 0.15,
-                    opacity: Math.random() * 0.4 + 0.1,
-                    color: Math.random() > 0.5 ? '#d8c9b9' : '#f0e6d6'
-                });
-            }
-        }
-
-        function drawParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            particles.forEach(p => {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fillStyle = p.color;
-                ctx.globalAlpha = p.opacity;
-                ctx.fill();
-                
-                // Update position
-                p.x += p.speedX;
-                p.y += p.speedY;
-                
-                // Bounce off edges
-                if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
-                if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
-                
-                // Keep within bounds
-                p.x = Math.max(0, Math.min(canvas.width, p.x));
-                p.y = Math.max(0, Math.min(canvas.height, p.y));
-            });
-            
-            ctx.globalAlpha = 1;
-            animationId = requestAnimationFrame(drawParticles);
-        }
-
-        // =====================
-        // WHISPER SYSTEM
-        // =====================
-        const whispers = {
-            morning: [
-                "Good morning, beautiful.",
-                "Breathe in the gentle light.",
-                "Today is soft with possibility.",
-                "You are exactly where you need to be."
-            ],
-            afternoon: [
-                "Take a soft pause.",
-                "You are safe here.",
-                "Everything is unfolding gently.",
-                "Your presence matters."
-            ],
-            evening: [
-                "You made it through today.",
-                "Rest now, gently.",
-                "Softness finds its way.",
-                "Be gentle with yourself."
-            ],
-            night: [
-                "Soft dreams await.",
-                "All is calm, all is well.",
-                "The world rests with you.",
-                "Peace finds you here."
-            ]
+        // App Data Schema
+        const dataSchema = {
+            meta: {
+                title: "Gentle Heart",
+                version: "1.0.0",
+                lastSaved: new Date().toISOString(),
+                created: new Date().toISOString()
+            },
+            entries: [],
+            messages: []
         };
 
-        const whisperEl = document.getElementById('whisper');
-
-        function showWhisper() {
-            const hour = new Date().getHours();
-            let timeOfDay;
-            
-            if (hour >= 5 && hour < 12) timeOfDay = 'morning';
-            else if (hour >= 12 && hour < 17) timeOfDay = 'afternoon';
-            else if (hour >= 17 && hour < 21) timeOfDay = 'evening';
-            else timeOfDay = 'night';
-            
-            const messages = whispers[timeOfDay];
-            const message = messages[Math.floor(Math.random() * messages.length)];
-            
-            whisperEl.textContent = message;
-            whisperEl.style.opacity = '0.07';
-            whisperEl.style.transform = `translate(-50%, -50%) translateY(${Math.random() * 20 - 10}px)`;
-            
-            setTimeout(() => {
-                whisperEl.style.opacity = '0';
-            }, 4000);
-        }
-
-        // =====================
-        // FLOATING DOTS
-        // =====================
-        function createFloatingDots() {
-            const container = document.getElementById('floatingDots');
-            const dotCount = 15;
-            
-            for (let i = 0; i < dotCount; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'floating-dot';
-                dot.style.left = `${Math.random() * 100}vw`;
-                dot.style.top = `${Math.random() * 100}vh`;
-                dot.style.animationDelay = `${Math.random() * 20}s`;
-                container.appendChild(dot);
-            }
-        }
-
-        // =====================
-        // SIMPLE DATA
-        // =====================
-        const SECTIONS = [
-            { id: 'compliments', name: 'Compliments', desc: 'Things people said about you' },
-            { id: 'moments', name: 'Moments', desc: 'Small wonders worth remembering' },
-            { id: 'care', name: 'Care', desc: 'When someone showed up for you' },
-            { id: 'courage', name: 'Courage', desc: 'Things you did while scared' }
+        // Feelings
+        const feelings = [
+            'soft', 'heavy', 'quiet', 'bright', 'tender',
+            'gentle', 'calm', 'full', 'empty', 'peaceful'
         ];
 
-        let memories = [];
-        let currentPage = 'home';
+        // App State
+        let appState = {
+            data: JSON.parse(JSON.stringify(dataSchema)),
+            currentPage: 'diary',
+            tempMedia: []
+        };
+
+        // DOM Elements
+        const elements = {
+            content: document.getElementById('content'),
+            addBtn: document.getElementById('addBtn'),
+            entryCount: document.getElementById('entryCount'),
+            lastSaved: document.getElementById('lastSaved')
+        };
 
         // =====================
-        // DOM ELEMENTS
+        // DRAW HEART FUNCTION
         // =====================
-        const content = document.getElementById('content');
-        const navBtns = document.querySelectorAll('.nav-btn');
-        const addBtn = document.getElementById('addBtn');
-        const memoryCountEl = document.getElementById('memoryCount');
-        const lastSavedEl = document.getElementById('lastSaved');
+        function drawHeart() {
+            const canvas = document.getElementById('heartCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw multiple heart shapes
+                for (let i = 0; i < 3; i++) {
+                    const size = 150 + i * 50;
+                    const x = canvas.width / 2;
+                    const y = canvas.height / 2;
+                    const opacity = 0.02 - (i * 0.005);
+                    const color = i === 0 ? '#d8c9b9' : i === 1 ? '#f0e6d6' : '#e8d8c8';
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(x, y - size/3);
+                    
+                    // Draw heart shape
+                    ctx.bezierCurveTo(
+                        x + size/2, y - size/2,
+                        x + size, y + size/6,
+                        x, y + size/2
+                    );
+                    ctx.bezierCurveTo(
+                        x - size, y + size/6,
+                        x - size/2, y - size/2,
+                        x, y - size/3
+                    );
+                    
+                    ctx.closePath();
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 0.5;
+                    ctx.globalAlpha = opacity;
+                    ctx.stroke();
+                }
+                
+                ctx.globalAlpha = 1;
+                requestAnimationFrame(draw);
+            }
+            
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            draw();
+        }
 
         // =====================
-        // INITIAL LOAD
+        // DATA MANAGEMENT
         // =====================
-        function loadMemories() {
+        function loadData() {
             try {
-                const saved = localStorage.getItem('tender_space');
+                const saved = localStorage.getItem('gentle_heart_data');
                 if (saved) {
-                    memories = JSON.parse(saved);
-                } else {
-                    memories = [
-                        {
-                            id: 1,
-                            section: 'compliments',
-                            text: "You have a gentle way of explaining things that makes people feel safe.",
-                            date: "a Tuesday in February",
-                            feeling: "warm, surprised"
-                        },
-                        {
-                            id: 2,
-                            section: 'moments',
-                            text: "Sunlight through the window, dust particles dancing in the air, and a moment of perfect quiet.",
-                            date: "yesterday",
-                            feeling: "peaceful"
+                    const parsed = JSON.parse(saved);
+                    // Merge with schema to ensure structure
+                    appState.data = {
+                        ...dataSchema,
+                        ...parsed,
+                        meta: {
+                            ...dataSchema.meta,
+                            ...parsed.meta
                         }
-                    ];
-                    saveMemories();
+                    };
                 }
                 updateStats();
             } catch (error) {
-                console.error('Error loading:', error);
-                memories = [];
+                console.log('Starting fresh');
+                saveData();
             }
         }
 
-        function saveMemories() {
+        function saveData() {
             try {
-                localStorage.setItem('tender_space', JSON.stringify(memories));
+                appState.data.meta.lastSaved = new Date().toISOString();
+                localStorage.setItem('gentle_heart_data', JSON.stringify(appState.data));
                 updateStats();
+                return true;
             } catch (error) {
-                console.error('Error saving:', error);
+                console.error('Save error:', error);
+                alert('Could not save data. Storage might be full.');
+                return false;
             }
         }
 
         function updateStats() {
-            memoryCountEl.textContent = memories.length;
-            lastSavedEl.textContent = 'just now';
+            elements.entryCount.textContent = appState.data.entries.length;
+            const lastSaved = new Date(appState.data.meta.lastSaved);
+            const now = new Date();
+            const diff = Math.floor((now - lastSaved) / 1000);
+            
+            if (diff < 60) elements.lastSaved.textContent = 'just now';
+            else if (diff < 3600) elements.lastSaved.textContent = `${Math.floor(diff/60)} min ago`;
+            else if (diff < 86400) elements.lastSaved.textContent = `${Math.floor(diff/3600)} hr ago`;
+            else elements.lastSaved.textContent = `${Math.floor(diff/86400)} days ago`;
         }
 
         // =====================
-        // PAGE RENDERING
+        // PAGE MANAGEMENT
         // =====================
         function showPage(page) {
-            // Update nav
-            navBtns.forEach(btn => {
+            // Update nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.dataset.page === page) {
                     btn.classList.add('active');
                 }
             });
-
-            currentPage = page;
-
-            // Render page
-            switch(page) {
-                case 'home':
-                    renderHome();
-                    break;
-                case 'sections':
-                    renderSections();
-                    break;
-                case 'data':
-                    renderData();
-                    break;
-            }
-
-            content.classList.add('fade-in');
-            setTimeout(() => content.classList.remove('fade-in'), 300);
+            
+            appState.currentPage = page;
+            
+            // Clear and render page
+            elements.content.innerHTML = '';
+            elements.content.classList.remove('fade-in');
+            
+            setTimeout(() => {
+                switch(page) {
+                    case 'diary':
+                        renderDiary();
+                        break;
+                    case 'messages':
+                        renderMessages();
+                        break;
+                    case 'data':
+                        renderDataPage();
+                        break;
+                }
+                elements.content.classList.add('fade-in');
+            }, 10);
         }
 
-        function renderHome() {
-            const recent = [...memories].sort((a, b) => b.id - a.id).slice(0, 3);
+        function renderDiary() {
+            const entries = [...appState.data.entries].sort((a, b) => 
+                new Date(b.date) - new Date(a.date)
+            );
             
             let html = '';
             
-            if (recent.length > 0) {
+            if (entries.length > 0) {
                 html = `
-                    <h2 style="font-size: 1.3rem; margin-bottom: 20px; color: #5c5348; font-weight: 400; text-align: center;">
-                        Recent memories
+                    <h2 style="font-size: 1.3rem; margin-bottom: 25px; color: #5c5348; font-weight: 400; text-align: center;">
+                        Your moments
                     </h2>
                     <div class="entries">
-                        ${recent.map(memory => `
+                        ${entries.map(entry => `
                             <div class="entry">
-                                <div class="entry-text">${memory.text}</div>
-                                <div class="entry-meta">
-                                    <span>${memory.date || ''}</span>
-                                    <span>${memory.feeling || ''}</span>
+                                <div class="entry-header">
+                                    <div class="entry-date">${formatDate(entry.date)}</div>
+                                </div>
+                                ${entry.feelings && entry.feelings.length > 0 ? `
+                                    <div class="entry-feelings">
+                                        ${entry.feelings.map(feeling => `
+                                            <span class="feeling-tag">${feeling}</span>
+                                        `).join('')}
+                                    </div>
+                                ` : ''}
+                                <div class="entry-text">${escapeHtml(entry.text)}</div>
+                                ${entry.note ? `
+                                    <div style="margin-top: 15px; padding: 15px; background: rgba(216, 201, 185, 0.05); border-radius: 6px; border-left: 3px solid #d8c9b9;">
+                                        <div style="font-size: 0.9rem; color: #a09688; margin-bottom: 5px;">And also:</div>
+                                        <div style="color: #5c5348; font-style: italic;">${escapeHtml(entry.note)}</div>
+                                    </div>
+                                ` : ''}
+                                <div class="entry-actions">
+                                    <button class="entry-action-btn" onclick="editEntry('${entry.id}')">Edit</button>
+                                    <button class="entry-action-btn" onclick="deleteEntry('${entry.id}')">Delete</button>
                                 </div>
                             </div>
                         `).join('')}
-                    </div>
-                    <div style="text-align: center; margin-top: 40px;">
-                        <button class="btn" onclick="showPage('sections')">View all sections</button>
                     </div>
                 `;
             } else {
                 html = `
                     <div class="empty">
-                        <div class="empty-icon">✧</div>
-                        <p style="font-size: 1.1rem; margin-bottom: 10px;">No memories yet</p>
-                        <p style="margin-bottom: 30px; color: #a09688;">Start by adding your first memory</p>
-                        <button class="btn btn-primary" onclick="showAddForm()">Add memory</button>
+                        <div class="empty-icon">🫀</div>
+                        <p style="font-size: 1.1rem; margin-bottom: 10px;">No entries yet</p>
+                        <p style="margin-bottom: 30px; color: #a09688;">This space is quiet and waiting</p>
+                        <button class="btn btn-primary" onclick="showEntryForm()">Begin</button>
                     </div>
                 `;
             }
             
-            content.innerHTML = html;
+            elements.content.innerHTML = html;
         }
 
-        function renderSections() {
-            let html = `
-                <h2 style="font-size: 1.3rem; margin-bottom: 30px; color: #5c5348; font-weight: 400; text-align: center;">
-                    All sections
-                </h2>
-                <div class="sections">
-            `;
-
-            SECTIONS.forEach(section => {
-                const count = memories.filter(m => m.section === section.id).length;
-                
-                html += `
-                    <a href="#" class="section" onclick="renderSection('${section.id}'); return false;">
-                        <div class="section-icon">${getSectionIcon(section.id)}</div>
-                        <h3 class="section-title">${section.name}</h3>
-                        <p class="section-desc">${section.desc}</p>
-                        <div style="margin-top: 15px; font-size: 0.85rem; color: #a09688;">
-                            ${count} memory${count !== 1 ? 'ies' : ''}
-                        </div>
-                    </a>
-                `;
-            });
-
-            html += `
-                </div>
-                <div style="text-align: center; margin-top: 40px;">
-                    <button class="btn" onclick="showPage('home')">← Back to home</button>
-                </div>
-            `;
-
-            content.innerHTML = html;
-        }
-
-        function renderSection(sectionId) {
-            const section = SECTIONS.find(s => s.id === sectionId);
-            const sectionMemories = memories.filter(m => m.section === sectionId).sort((a, b) => b.id - a.id);
+        function renderMessages() {
+            const messages = appState.data.messages;
             
             let html = `
-                <button class="btn back-btn" onclick="showPage('sections')">← All sections</button>
-                <h2 style="font-size: 1.3rem; margin-bottom: 10px; color: #5c5348; font-weight: 400;">
-                    ${section.name}
+                <h2 style="font-size: 1.3rem; margin-bottom: 25px; color: #5c5348; font-weight: 400; text-align: center;">
+                    Messages to self
                 </h2>
-                <p style="color: #a09688; margin-bottom: 30px;">${section.desc}</p>
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <button class="btn btn-primary" onclick="showMessageForm()">Add message</button>
+                </div>
             `;
-
-            if (sectionMemories.length > 0) {
+            
+            if (messages.length > 0) {
                 html += `
-                    <div class="entries">
-                        ${sectionMemories.map(memory => `
-                            <div class="entry">
-                                <div class="entry-text">${memory.text}</div>
-                                <div class="entry-meta">
-                                    <span>${memory.date || ''}</span>
-                                    <span>${memory.feeling || ''}</span>
+                    <div class="messages-list">
+                        ${messages.map(msg => `
+                            <div class="message-item">
+                                <div class="message-trigger">${escapeHtml(msg.trigger)}</div>
+                                <div class="message-text">${escapeHtml(msg.text)}</div>
+                                <div class="entry-actions">
+                                    <button class="entry-action-btn" onclick="editMessage('${msg.id}')">Edit</button>
+                                    <button class="entry-action-btn" onclick="deleteMessage('${msg.id}')">Delete</button>
                                 </div>
                             </div>
                         `).join('')}
@@ -826,157 +827,240 @@
             } else {
                 html += `
                     <div class="empty">
-                        <div class="empty-icon">${getSectionIcon(sectionId)}</div>
-                        <p style="margin-bottom: 30px; color: #a09688;">No memories in this section yet</p>
+                        <div class="empty-icon">✧</div>
+                        <p style="font-size: 1.1rem; margin-bottom: 10px;">No messages yet</p>
+                        <p style="margin-bottom: 30px; color: #a09688;">Words for your future self</p>
                     </div>
                 `;
             }
-
+            
             html += `
                 <div style="text-align: center; margin-top: 40px;">
-                    <button class="btn btn-primary" onclick="showAddForm('${sectionId}')">Add to this section</button>
-                </div>
-            `;
-
-            content.innerHTML = html;
-        }
-
-        function showAddForm(preSelectedSection = null) {
-            let html = `
-                <button class="btn back-btn" onclick="showPage(currentPage)">← Back</button>
-                <div class="form">
-                    <h3 class="form-title">Add a memory</h3>
-                    <div class="form-group">
-                        <label>What would you like to remember?</label>
-                        <textarea id="memoryText" placeholder="A look, a message, a silence, a kindness..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Section</label>
-                        <select id="memorySection">
-                            ${SECTIONS.map(s => `
-                                <option value="${s.id}" ${preSelectedSection === s.id ? 'selected' : ''}>
-                                    ${s.name}
-                                </option>
-                            `).join('')}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Date (optional)</label>
-                        <input type="text" id="memoryDate" placeholder="e.g., a Tuesday in February">
-                    </div>
-                    <div class="form-group">
-                        <label>Feeling (optional)</label>
-                        <input type="text" id="memoryFeeling" placeholder="warm, seen, soft, brave...">
-                    </div>
-                    <div class="form-actions">
-                        <button class="btn" onclick="showPage(currentPage)">Cancel</button>
-                        <button class="btn btn-primary" onclick="saveMemory()">Save</button>
-                    </div>
+                    <button class="btn" onclick="showPage('diary')">← Back to diary</button>
                 </div>
             `;
             
-            content.innerHTML = html;
-            
-            // Focus textarea
-            setTimeout(() => {
-                const textarea = document.getElementById('memoryText');
-                if (textarea) textarea.focus();
-            }, 100);
+            elements.content.innerHTML = html;
         }
 
-        function renderData() {
-            let html = `
-                <button class="btn back-btn" onclick="showPage('home')">← Back to home</button>
+        function renderDataPage() {
+            const html = `
+                <button class="btn back-btn" onclick="showPage('diary')">← Back to diary</button>
                 <div class="form">
-                    <h3 class="form-title">Save and load your memories</h3>
+                    <h3 class="form-title">Save and load</h3>
                     <p style="text-align: center; color: #a09688; margin-bottom: 30px;">
-                        You have <strong style="color: #5c5348;">${memories.length}</strong> memories saved.
-                        Export them to keep them safe.
+                        You have <strong>${appState.data.entries.length}</strong> entries and 
+                        <strong>${appState.data.messages.length}</strong> messages.
                     </p>
                     <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
                         <button class="btn btn-primary" onclick="exportData()">Export all</button>
                         <button class="btn" onclick="document.getElementById('importFile').click()">Import</button>
-                        <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+                        <button class="btn" onclick="clearData()">Clear all</button>
+                        <input type="file" id="importFile" accept=".json" class="hidden" onchange="importData(event)">
+                    </div>
+                    <p style="text-align: center; margin-top: 30px; color: #a09688; font-size: 0.9rem;">
+                        Your data is saved automatically in your browser.
+                    </p>
+                </div>
+            `;
+            
+            elements.content.innerHTML = html;
+        }
+
+        // =====================
+        // ENTRY FUNCTIONS
+        // =====================
+        function showEntryForm(entryId = null) {
+            const entry = entryId ? appState.data.entries.find(e => e.id === entryId) : null;
+            const isEdit = !!entry;
+            
+            const html = `
+                <button class="btn back-btn" onclick="showPage('diary')">← Back</button>
+                <div class="form">
+                    <h3 class="form-title">${isEdit ? 'Edit entry' : 'New entry'}</h3>
+                    <div class="form-group">
+                        <label>What's present</label>
+                        <textarea id="entryText" placeholder="What you notice, feel, or remember...">${entry ? escapeHtml(entry.text) : ''}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>And also... (optional)</label>
+                        <textarea id="entryNote" placeholder="Something else that might be true...">${entry ? escapeHtml(entry.note || '') : ''}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Feeling tones (optional)</label>
+                        <div class="checkbox-group" id="feelingsGroup">
+                            ${feelings.map(feeling => `
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="${feeling}" 
+                                        ${entry && entry.feelings && entry.feelings.includes(feeling) ? 'checked' : ''}>
+                                    ${feeling}
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="entryDate" value="${entry ? entry.date.split('T')[0] : new Date().toISOString().split('T')[0]}">
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn" onclick="showPage('diary')">Cancel</button>
+                        <button class="btn btn-primary" onclick="saveEntry('${entryId}')">${isEdit ? 'Update' : 'Save'}</button>
                     </div>
                 </div>
             `;
             
-            content.innerHTML = html;
+            elements.content.innerHTML = html;
         }
 
-        // =====================
-        // UTILITY FUNCTIONS
-        // =====================
-        function getSectionIcon(sectionId) {
-            const icons = {
-                'compliments': '♥',
-                'moments': '✧',
-                'care': '⊹',
-                'courage': '→'
-            };
-            return icons[sectionId] || '✧';
-        }
-
-        // =====================
-        // MEMORY FUNCTIONS
-        // =====================
-        function saveMemory() {
-            const text = document.getElementById('memoryText').value.trim();
+        function saveEntry(entryId = null) {
+            const text = document.getElementById('entryText').value.trim();
+            const note = document.getElementById('entryNote').value.trim();
+            const dateInput = document.getElementById('entryDate').value;
+            
             if (!text) {
-                alert('Please write something to remember.');
+                alert('Please write something.');
                 return;
             }
-
-            const section = document.getElementById('memorySection').value;
-            const date = document.getElementById('memoryDate').value.trim();
-            const feeling = document.getElementById('memoryFeeling').value.trim();
-
-            // Create new memory
-            const newMemory = {
-                id: Date.now(),
-                section: section,
-                text: text,
-                date: date || null,
-                feeling: feeling || null,
-                added: new Date().toISOString()
-            };
-
-            memories.unshift(newMemory);
-            saveMemories();
             
-            // Show subtle visual feedback
-            const entries = document.querySelectorAll('.entry');
-            if (entries.length > 0) {
-                entries[0].classList.add('soft-glow');
-                setTimeout(() => entries[0].classList.remove('soft-glow'), 2000);
+            // Get selected feelings
+            const checkboxes = document.querySelectorAll('#feelingsGroup input:checked');
+            const selectedFeelings = Array.from(checkboxes).map(cb => cb.value);
+            
+            const entry = {
+                id: entryId || Date.now().toString(),
+                date: dateInput ? new Date(dateInput + 'T12:00:00').toISOString() : new Date().toISOString(),
+                text: text,
+                note: note || null,
+                feelings: selectedFeelings
+            };
+            
+            if (entryId) {
+                // Update
+                const index = appState.data.entries.findIndex(e => e.id === entryId);
+                if (index !== -1) {
+                    appState.data.entries[index] = entry;
+                }
+            } else {
+                // Add new
+                appState.data.entries.unshift(entry);
             }
             
-            // Go to that section
-            renderSection(section);
+            if (saveData()) {
+                showPage('diary');
+            }
         }
 
+        function editEntry(entryId) {
+            showEntryForm(entryId);
+        }
+
+        function deleteEntry(entryId) {
+            if (confirm('Delete this entry?')) {
+                appState.data.entries = appState.data.entries.filter(e => e.id !== entryId);
+                saveData();
+                renderDiary();
+            }
+        }
+
+        // =====================
+        // MESSAGE FUNCTIONS
+        // =====================
+        function showMessageForm(msgId = null) {
+            const msg = msgId ? appState.data.messages.find(m => m.id === msgId) : null;
+            const isEdit = !!msg;
+            
+            const html = `
+                <button class="btn back-btn" onclick="showPage('messages')">← Back</button>
+                <div class="form">
+                    <h3 class="form-title">${isEdit ? 'Edit message' : 'New message'}</h3>
+                    <div class="form-group">
+                        <label>Read this when...</label>
+                        <input type="text" id="msgTrigger" placeholder="when I feel..." value="${msg ? escapeHtml(msg.trigger) : ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea id="msgText" placeholder="Write what you need to hear...">${msg ? escapeHtml(msg.text) : ''}</textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn" onclick="showPage('messages')">Cancel</button>
+                        <button class="btn btn-primary" onclick="saveMessage('${msgId}')">${isEdit ? 'Update' : 'Save'}</button>
+                    </div>
+                </div>
+            `;
+            
+            elements.content.innerHTML = html;
+        }
+
+        function saveMessage(msgId = null) {
+            const trigger = document.getElementById('msgTrigger').value.trim();
+            const text = document.getElementById('msgText').value.trim();
+            
+            if (!trigger || !text) {
+                alert('Please fill in both fields.');
+                return;
+            }
+            
+            const message = {
+                id: msgId || Date.now().toString(),
+                trigger: trigger,
+                text: text
+            };
+            
+            if (msgId) {
+                // Update
+                const index = appState.data.messages.findIndex(m => m.id === msgId);
+                if (index !== -1) {
+                    appState.data.messages[index] = message;
+                }
+            } else {
+                // Add new
+                appState.data.messages.push(message);
+            }
+            
+            if (saveData()) {
+                showPage('messages');
+            }
+        }
+
+        function editMessage(msgId) {
+            showMessageForm(msgId);
+        }
+
+        function deleteMessage(msgId) {
+            if (confirm('Delete this message?')) {
+                appState.data.messages = appState.data.messages.filter(m => m.id !== msgId);
+                saveData();
+                renderMessages();
+            }
+        }
+
+        // =====================
+        // DATA IMPORT/EXPORT
+        // =====================
         function exportData() {
             try {
                 const exportData = {
-                    memories: memories,
-                    sections: SECTIONS,
-                    exported: new Date().toISOString()
+                    ...appState.data,
+                    meta: {
+                        ...appState.data.meta,
+                        exported: new Date().toISOString()
+                    }
                 };
-
+                
                 const dataStr = JSON.stringify(exportData, null, 2);
                 const blob = new Blob([dataStr], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
                 
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `tender-space-${new Date().toISOString().split('T')[0]}.json`;
+                a.download = `gentle-heart-${new Date().toISOString().split('T')[0]}.json`;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-
+                
+                setTimeout(() => URL.revokeObjectURL(url), 100);
+                alert('Data exported successfully.');
             } catch (error) {
-                console.error('Export error:', error);
                 alert('Error exporting data.');
             }
         }
@@ -984,91 +1068,124 @@
         function importData(event) {
             const file = event.target.files[0];
             if (!file) return;
-
+            
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
                     const imported = JSON.parse(e.target.result);
                     
-                    if (!imported.memories || !Array.isArray(imported.memories)) {
+                    if (!imported.entries || !Array.isArray(imported.entries)) {
                         throw new Error('Invalid file format');
                     }
-
-                    if (!confirm(`Import ${imported.memories.length} memories?`)) {
-                        event.target.value = '';
-                        return;
-                    }
-
-                    // Add imported memories
-                    imported.memories.forEach(memory => {
-                        memories.push({
-                            ...memory,
-                            id: memory.id || Date.now() + Math.random()
-                        });
-                    });
-
-                    saveMemories();
-                    showPage('home');
                     
+                    if (confirm(`Import ${imported.entries.length} entries and ${imported.messages?.length || 0} messages?`)) {
+                        appState.data.entries = imported.entries;
+                        if (imported.messages) {
+                            appState.data.messages = imported.messages;
+                        }
+                        saveData();
+                        showPage('diary');
+                        alert('Data imported successfully.');
+                    }
                 } catch (error) {
-                    console.error('Import error:', error);
-                    alert('Error importing file.');
+                    alert('Error importing file. Make sure it\'s a valid export.');
                 }
-                
                 event.target.value = '';
             };
-            
-            reader.onerror = function() {
-                alert('Error reading file.');
-                event.target.value = '';
-            };
-            
             reader.readAsText(file);
+        }
+
+        function clearData() {
+            if (confirm('Clear ALL data? This cannot be undone.')) {
+                appState.data = JSON.parse(JSON.stringify(dataSchema));
+                saveData();
+                showPage('diary');
+            }
+        }
+
+        // =====================
+        // UTILITY FUNCTIONS
+        // =====================
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text || '';
+            return div.innerHTML;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diff = now - date;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            
+            if (days === 0) return 'Today';
+            if (days === 1) return 'Yesterday';
+            if (days < 7) return `${days} days ago`;
+            if (days < 30) return `${Math.floor(days / 7)} weeks ago`;
+            
+            return date.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
         }
 
         // =====================
         // INITIALIZATION
         // =====================
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initialize visual effects
-            window.addEventListener('resize', resizeCanvas);
-            resizeCanvas();
-            createParticles();
-            drawParticles();
-            createFloatingDots();
+        document.addEventListener('DOMContentLoaded', function() {
+            // Draw heart background
+            drawHeart();
             
-            // Show first whisper
-            setTimeout(showWhisper, 1000);
+            // Load data
+            loadData();
             
-            // Set up whisper interval
-            setInterval(showWhisper, 15000);
+            // Show diary page
+            showPage('diary');
             
-            // Load data and show home
-            loadMemories();
-            showPage('home');
-            
-            // Nav buttons
-            navBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    showPage(btn.dataset.page);
+            // Navigation buttons - FIXED
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    showPage(this.dataset.page);
                 });
             });
             
-            // Add button
-            addBtn.addEventListener('click', () => {
-                showAddForm();
+            // Add button - FIXED
+            elements.addBtn.addEventListener('click', function() {
+                if (appState.currentPage === 'diary') {
+                    showEntryForm();
+                } else if (appState.currentPage === 'messages') {
+                    showMessageForm();
+                } else if (appState.currentPage === 'data') {
+                    exportData();
+                }
             });
             
-            // Auto-save every minute
-            setInterval(saveMemories, 60000);
-        });
-
-        // Clean up animation on page hide
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                cancelAnimationFrame(animationId);
-            } else {
-                drawParticles();
+            // Auto-save every 30 seconds
+            setInterval(function() {
+                if (appState.data.entries.length > 0 || appState.data.messages.length > 0) {
+                    saveData();
+                }
+            }, 30000);
+            
+            // Initialize with a sample entry if empty
+            if (appState.data.entries.length === 0 && appState.data.messages.length === 0) {
+                appState.data.entries.push({
+                    id: Date.now().toString(),
+                    date: new Date().toISOString(),
+                    text: "This is a gentle space for what matters. Write as little or as much as feels right.",
+                    note: "The quiet moments count too.",
+                    feelings: ['gentle', 'soft']
+                });
+                
+                appState.data.messages.push({
+                    id: (Date.now() + 1).toString(),
+                    trigger: "when I feel too much",
+                    text: "You're holding space. That's enough."
+                });
+                
+                saveData();
             }
         });
     </script>
