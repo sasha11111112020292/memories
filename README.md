@@ -512,6 +512,7 @@
             border-left: 3px solid var(--room-color);
             transition: all 0.2s ease;
             position: relative;
+            cursor: pointer;
         }
 
         .entry-snippet::before {
@@ -1510,7 +1511,7 @@
 
                 const previewEntries = roomEntries.slice(-3).reverse();
                 const entriesHTML = previewEntries.length > 0
-                    ? previewEntries.map(entry => {
+                    ? previewEntries.map((entry, index) => {
                         const preview = entry.text.length > 80 
                             ? entry.text.substring(0, 80) + '...'
                             : entry.text;
@@ -1525,7 +1526,7 @@
                                 ${mediaCount}
                                </span>`
                             : '';
-                        return `<div class="entry-snippet">${preview}${mediaIndicator}</div>`;
+                        return `<div class="entry-snippet" onclick="viewEntry('${room.id}', ${roomEntries.length - 1 - index})">${preview}${mediaIndicator}</div>`;
                     }).join('')
                     : '<div class="empty-state">No entries yet—this room is waiting for you</div>';
 
@@ -1583,9 +1584,86 @@
         }
 
         function closeModal() {
-            document.getElementById('modal').classList.remove('active');
+            const modal = document.getElementById('modal');
+            const modalContent = modal.querySelector('.modal-content');
+            
+            // Restore the normal entry form
+            restoreEntryForm();
+            
+            modal.classList.remove('active');
             currentRoom = null;
             currentMedia = [];
+        }
+
+        function restoreEntryForm() {
+            const modal = document.getElementById('modal');
+            const modalContent = modal.querySelector('.modal-content');
+            
+            modalContent.innerHTML = `
+                <div class="modal-header">
+                    <div class="modal-icon" id="modalIconContainer"></div>
+                    <h2 class="modal-title" id="modalTitle">New Entry</h2>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" id="promptLabel">What's on your heart?</label>
+                    <textarea 
+                        class="form-textarea" 
+                        id="entryText" 
+                        placeholder="Let it out... this space holds you."
+                    ></textarea>
+                </div>
+
+                <div class="media-upload-section">
+                    <label class="media-upload-label">Add media (optional)</label>
+                    <div class="media-buttons">
+                        <button class="media-btn" onclick="document.getElementById('photoInput').click()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                <polyline points="21 15 16 10 5 21"></polyline>
+                            </svg>
+                            Photo
+                        </button>
+                        <button class="media-btn" onclick="document.getElementById('videoInput').click()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                            </svg>
+                            Video
+                        </button>
+                        <button class="media-btn" onclick="document.getElementById('audioInput').click()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                                <line x1="12" y1="19" x2="12" y2="23"></line>
+                                <line x1="8" y1="23" x2="16" y2="23"></line>
+                            </svg>
+                            Audio
+                        </button>
+                    </div>
+                    <input type="file" id="photoInput" accept="image/*" style="display: none;" onchange="handleMediaUpload(event, 'photo')" multiple>
+                    <input type="file" id="videoInput" accept="video/*" style="display: none;" onchange="handleMediaUpload(event, 'video')" multiple>
+                    <input type="file" id="audioInput" accept="audio/*" style="display: none;" onchange="handleMediaUpload(event, 'audio')" multiple>
+                    
+                    <div class="media-preview-grid" id="mediaPreview"></div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-secondary" onclick="closeModal()">Maybe Later</button>
+                    <button class="btn btn-primary" onclick="saveEntry()">Keep This Safe</button>
+                </div>
+            `;
+        }
+
+        function viewEntry(roomId, entryIndex) {
+            const room = ROOMS.find(r => r.id === roomId);
+            const entry = entries[roomId][entryIndex];
+            
+            if (!entry || !room) return;
+            
+            const entryWithRoom = { ...entry, roomId, roomTitle: room.title };
+            showMemoryModal(entryWithRoom);
         }
 
         function handleMediaUpload(event, type) {
