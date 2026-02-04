@@ -3,1190 +3,729 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gentle Heart</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <title>Safe Space — Your Personal Sanctuary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;1,300&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        /* PERFECT RESET */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            overflow-y: scroll;
-            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Cormorant Garamond', serif;
-            background: linear-gradient(135deg, #fefdf9 0%, #fffaf3 50%, #fef8f0 100%);
-            color: #5c5348;
-            line-height: 1.6;
-            font-weight: 300;
+            font-family: 'Work Sans', sans-serif;
+            background: linear-gradient(135deg, #fdf6e3 0%, #f5e6d3 50%, #ffd7ba 100%);
+            color: #3d3d3d;
             min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-            animation: gentleShift 40s ease-in-out infinite;
-            background-size: 400% 400%;
+            padding: 40px 20px;
         }
 
-        @keyframes gentleShift {
-            0%, 100% { background-position: 0% 50% }
-            50% { background-position: 100% 50% }
-        }
-
-        /* HEART CANVAS */
-        #heartCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -2;
-            pointer-events: none;
-            opacity: 0.03;
-        }
-
-        /* APP */
-        .app {
-            max-width: min(900px, 95vw);
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: clamp(20px, 5vw, 40px) clamp(15px, 3vw, 30px) 100px;
-            position: relative;
-            z-index: 1;
         }
 
-        /* HEADER */
-        .header {
+        header {
             text-align: center;
-            padding: clamp(25px, 7vw, 40px) 0 clamp(30px, 8vw, 50px);
-            margin-bottom: clamp(30px, 7vw, 50px);
-            position: relative;
+            margin-bottom: 60px;
         }
 
-        .title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 6vw, 3.2rem);
+        h1 {
+            font-family: 'Spectral', serif;
+            font-size: 48px;
             font-weight: 300;
-            color: #5c5348;
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-            position: relative;
+            color: #8b6f47;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
         }
 
-        .title::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 1px;
-            background: rgba(216, 201, 185, 0.3);
-        }
-
-        .subtitle {
-            font-size: clamp(0.9rem, 3vw, 1.1rem);
-            color: #a09688;
+        .tagline {
+            font-size: 15px;
+            color: #a08968;
+            font-weight: 300;
             font-style: italic;
-            font-weight: 300;
-            line-height: 1.4;
-            margin-top: 15px;
         }
 
-        /* NAVIGATION - FIXED */
-        .nav {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: clamp(30px, 7vw, 45px);
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            padding: 10px 25px;
-            background: transparent;
-            border: 1px solid rgba(92, 83, 72, 0.1);
-            color: #5c5348;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .welcome-message {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(139, 111, 71, 0.15);
             border-radius: 20px;
-            font-weight: 400;
-            outline: none;
+            padding: 30px;
+            margin-bottom: 50px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(139, 111, 71, 0.08);
         }
 
-        .nav-btn:hover {
-            border-color: #d8c9b9;
-            background: rgba(216, 201, 185, 0.05);
-            transform: translateY(-1px);
+        .welcome-text {
+            font-family: 'Spectral', serif;
+            font-size: 18px;
+            line-height: 1.8;
+            color: #6b5d4f;
+            font-style: italic;
         }
 
-        .nav-btn.active {
-            border-color: #d8c9b9;
-            background: rgba(216, 201, 185, 0.1);
-            font-weight: 500;
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
         }
 
-        /* CONTENT */
-        .content {
-            min-height: 300px;
-            position: relative;
-        }
-
-        /* DIARY ENTRIES */
-        .entries {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .entry {
-            background: rgba(255, 255, 255, 0.85);
-            border: 1px solid rgba(216, 201, 185, 0.2);
-            border-radius: 8px;
-            padding: 25px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
+        .room {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(139, 111, 71, 0.15);
+            border-radius: 24px;
+            padding: 28px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
             position: relative;
             overflow: hidden;
         }
 
-        .entry:hover {
-            border-color: #d8c9b9;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
-            background: rgba(255, 255, 255, 0.92);
-        }
-
-        .entry::before {
+        .room::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 3px;
+            right: 0;
+            height: 6px;
+            background: var(--room-color);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .room:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(139, 111, 71, 0.15);
+            border-color: rgba(139, 111, 71, 0.25);
+        }
+
+        .room:hover::before {
             height: 100%;
-            background: linear-gradient(to bottom, #d8c9b9, #f0e6d6);
+            opacity: 0.08;
+        }
+
+        .room-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .room-icon {
+            font-size: 28px;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+        }
+
+        .room-title {
+            font-family: 'Spectral', serif;
+            font-size: 22px;
+            font-weight: 400;
+            color: #5d4e3a;
+            flex: 1;
+        }
+
+        .room-count {
+            background: rgba(139, 111, 71, 0.1);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            color: #8b6f47;
+            font-weight: 500;
+        }
+
+        .room-description {
+            font-size: 14px;
+            color: #7d6f5d;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .entries-preview {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .entry-snippet {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            color: #5d5d5d;
+            border-left: 3px solid var(--room-color);
+            line-height: 1.5;
+            transition: all 0.2s ease;
+        }
+
+        .entry-snippet:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateX(4px);
+        }
+
+        .add-entry-btn {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 2px dashed rgba(139, 111, 71, 0.25);
+            border-radius: 12px;
+            color: #a08968;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 400;
+        }
+
+        .add-entry-btn:hover {
+            background: rgba(139, 111, 71, 0.08);
+            border-color: rgba(139, 111, 71, 0.4);
+            color: #8b6f47;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(61, 46, 35, 0.7);
+            backdrop-filter: blur(12px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
 
-        .entry:hover::before {
+        .modal.active {
+            display: flex;
             opacity: 1;
         }
 
-        .entry-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .entry-date {
-            font-size: 0.9rem;
-            color: #a09688;
-            font-style: italic;
-        }
-
-        .entry-feelings {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .feeling-tag {
-            font-size: 0.8rem;
-            padding: 4px 12px;
-            border-radius: 15px;
-            background: rgba(216, 201, 185, 0.1);
-            color: #8a7c6b;
-            border: 1px solid rgba(216, 201, 185, 0.2);
-        }
-
-        .entry-text {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: #5c5348;
-            margin-bottom: 15px;
-            white-space: pre-wrap;
-        }
-
-        .entry-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(216, 201, 185, 0.1);
-        }
-
-        .entry-action-btn {
-            padding: 6px 16px;
-            background: transparent;
-            border: 1px solid rgba(92, 83, 72, 0.1);
-            color: #5c5348;
-            font-family: inherit;
-            font-size: 0.9rem;
-            cursor: pointer;
-            border-radius: 15px;
-            transition: all 0.2s ease;
-        }
-
-        .entry-action-btn:hover {
-            border-color: #d8c9b9;
-            background: rgba(216, 201, 185, 0.05);
-        }
-
-        /* FORMS */
-        .form {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(216, 201, 185, 0.2);
-            border-radius: 8px;
-            padding: 30px;
+        .modal-content {
+            background: linear-gradient(135deg, #fff9f0 0%, #ffecd1 100%);
+            border: 3px solid rgba(139, 111, 71, 0.2);
+            border-radius: 28px;
+            padding: 40px;
             max-width: 600px;
-            margin: 0 auto;
-            backdrop-filter: blur(10px);
+            width: 100%;
+            box-shadow: 0 24px 64px rgba(61, 46, 35, 0.3);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
-        .form-title {
-            font-size: 1.3rem;
-            margin-bottom: 25px;
-            text-align: center;
-            color: #5c5348;
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .modal-icon {
+            font-size: 36px;
+        }
+
+        .modal-title {
+            font-family: 'Spectral', serif;
+            font-size: 28px;
             font-weight: 400;
+            color: #5d4e3a;
+            flex: 1;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
-        label {
+        .form-label {
             display: block;
-            margin-bottom: 8px;
-            color: #5c5348;
-            font-size: 0.95rem;
+            font-size: 13px;
+            color: #8b6f47;
+            margin-bottom: 10px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
 
-        textarea, select, input {
+        .form-textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid rgba(216, 201, 185, 0.3);
             background: rgba(255, 255, 255, 0.8);
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1rem;
-            color: #5c5348;
-            border-radius: 6px;
+            border: 2px solid rgba(139, 111, 71, 0.2);
+            border-radius: 16px;
+            padding: 18px;
+            color: #3d3d3d;
+            font-size: 15px;
+            font-family: 'Spectral', serif;
+            line-height: 1.8;
+            min-height: 200px;
             resize: vertical;
-            transition: border 0.2s ease;
+            transition: all 0.3s ease;
             outline: none;
         }
 
-        textarea:focus, select:focus, input:focus {
-            border-color: #d8c9b9;
-            box-shadow: 0 0 0 3px rgba(216, 201, 185, 0.1);
+        .form-textarea:focus {
+            border-color: rgba(139, 111, 71, 0.4);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 16px rgba(139, 111, 71, 0.1);
         }
 
-        textarea {
-            min-height: 120px;
-            line-height: 1.6;
-        }
-
-        .checkbox-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 5px;
-        }
-
-        .checkbox-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            padding: 6px 12px;
-            border-radius: 10px;
-            border: 1px solid rgba(216, 201, 185, 0.2);
-            background: rgba(255, 255, 255, 0.6);
+        .form-textarea::placeholder {
+            color: #b8a890;
+            font-style: italic;
         }
 
         .form-actions {
             display: flex;
-            gap: 15px;
-            justify-content: flex-end;
+            gap: 12px;
             margin-top: 30px;
         }
 
-        /* BUTTONS */
         .btn {
-            padding: 10px 25px;
-            border: 1px solid rgba(216, 201, 185, 0.3);
-            background: transparent;
-            color: #5c5348;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1rem;
+            flex: 1;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 500;
             cursor: pointer;
-            border-radius: 20px;
             transition: all 0.3s ease;
-            outline: none;
-        }
-
-        .btn:hover {
-            border-color: #d8c9b9;
-            background: rgba(216, 201, 185, 0.05);
-            transform: translateY(-1px);
+            font-family: 'Work Sans', sans-serif;
         }
 
         .btn-primary {
-            background: rgba(216, 201, 185, 0.1);
-            border-color: #d8c9b9;
+            background: linear-gradient(135deg, #d4a574 0%, #c99a6e 100%);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(212, 165, 116, 0.3);
         }
 
         .btn-primary:hover {
-            background: rgba(216, 201, 185, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(212, 165, 116, 0.4);
         }
 
-        /* ADD BUTTON - FIXED */
-        .add-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(216, 201, 185, 0.3);
-            color: #5c5348;
-            font-size: 1.5rem;
+        .btn-secondary {
+            background: rgba(139, 111, 71, 0.1);
+            color: #8b6f47;
+            border: 2px solid rgba(139, 111, 71, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(139, 111, 71, 0.15);
+            border-color: rgba(139, 111, 71, 0.3);
+        }
+
+        .bottom-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            padding: 30px 20px;
+        }
+
+        .action-btn {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 2px solid rgba(139, 111, 71, 0.15);
+            border-radius: 16px;
+            color: #8b6f47;
+            font-size: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-family: 'Work Sans', sans-serif;
             display: flex;
             align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            z-index: 1000;
-            backdrop-filter: blur(5px);
-            outline: none;
+            gap: 8px;
         }
 
-        .add-btn:hover {
-            border-color: #d8c9b9;
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-            background: rgba(255, 255, 255, 0.95);
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(139, 111, 71, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(139, 111, 71, 0.15);
         }
 
-        /* STATS */
         .stats {
             text-align: center;
-            color: #a09688;
-            font-size: 0.85rem;
-            margin-top: 60px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(216, 201, 185, 0.2);
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            border: 2px solid rgba(139, 111, 71, 0.1);
         }
 
-        /* EMPTY STATE */
-        .empty {
-            text-align: center;
-            padding: 60px 20px;
-            color: #a09688;
+        .stats-content {
+            font-family: 'Spectral', serif;
+            font-size: 16px;
+            color: #6b5d4f;
+            line-height: 1.8;
         }
 
-        .empty-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            opacity: 0.3;
-            animation: gentleFloat 6s ease-in-out infinite;
-        }
-
-        @keyframes gentleFloat {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-10px) scale(1.05); }
-        }
-
-        /* BACK BUTTON */
-        .back-btn {
-            margin-bottom: 30px;
-            padding-left: 35px;
-            position: relative;
-        }
-
-        .back-btn::before {
-            content: '←';
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        /* MESSAGES */
-        .messages-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .message-item {
-            background: rgba(255, 255, 255, 0.85);
-            border: 1px solid rgba(216, 201, 185, 0.2);
-            border-radius: 8px;
-            padding: 25px;
-            transition: all 0.3s ease;
-        }
-
-        .message-item:hover {
-            border-color: #d8c9b9;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
-        }
-
-        .message-trigger {
-            font-size: 1.1rem;
-            color: #5c5348;
-            margin-bottom: 10px;
+        .stats-number {
+            font-size: 32px;
             font-weight: 400;
+            color: #8b6f47;
+            margin: 0 6px;
         }
 
-        .message-text {
-            color: #5c5348;
-            line-height: 1.6;
-            white-space: pre-wrap;
-        }
-
-        /* HEART ANIMATION */
-        .heart-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.1;
-        }
-
-        .heart-path {
-            stroke: #d8c9b9;
-            stroke-width: 1;
-            fill: none;
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            animation: drawHeart 8s ease-in-out infinite;
-        }
-
-        @keyframes drawHeart {
-            0% { stroke-dashoffset: 1000; opacity: 0; }
-            20% { stroke-dashoffset: 0; opacity: 0.1; }
-            80% { opacity: 0.1; }
-            100% { stroke-dashoffset: 1000; opacity: 0; }
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .nav {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .nav-btn {
-                width: 100%;
-                max-width: 300px;
-            }
-            
-            .add-btn {
-                bottom: 20px;
-                right: 20px;
-                width: 56px;
-                height: 56px;
-            }
-            
-            .form {
-                padding: 20px;
-            }
-        }
-
-        /* UTILITY */
-        .hidden {
-            display: none;
-        }
-
-        .fade-in {
-            animation: fadeIn 0.4s ease;
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #b8a890;
+            font-style: italic;
+            font-size: 14px;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .room {
+            animation: fadeIn 0.6s ease backwards;
+        }
+
+        .room:nth-child(1) { animation-delay: 0.1s; }
+        .room:nth-child(2) { animation-delay: 0.2s; }
+        .room:nth-child(3) { animation-delay: 0.3s; }
+        .room:nth-child(4) { animation-delay: 0.4s; }
+        .room:nth-child(5) { animation-delay: 0.5s; }
+        .room:nth-child(6) { animation-delay: 0.6s; }
+        .room:nth-child(7) { animation-delay: 0.7s; }
+        .room:nth-child(8) { animation-delay: 0.8s; }
+
+        ::selection {
+            background: rgba(212, 165, 116, 0.3);
+            color: #3d3d3d;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(139, 111, 71, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(139, 111, 71, 0.2);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(139, 111, 71, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .rooms-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .modal-content {
+                padding: 30px 24px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Heart Canvas -->
-    <canvas id="heartCanvas"></canvas>
-    
-    <!-- Heart SVG Animation -->
-    <div class="heart-container">
-        <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-            <path class="heart-path" d="M50,85 C30,65 15,50 15,30 C15,15 30,5 50,5 C70,5 85,15 85,30 C85,50 70,65 50,85 Z" 
-                  transform="translate(0, 5) scale(0.9)"/>
-        </svg>
-    </div>
-
-    <!-- App Container -->
-    <div class="app">
-        <!-- Header -->
-        <header class="header">
-            <h1 class="title">Gentle Heart</h1>
-            <p class="subtitle">A soft space for what matters</p>
+    <div class="container">
+        <header>
+            <h1>Safe Space</h1>
+            <p class="tagline">A gentle place for all the pieces of you</p>
         </header>
 
-        <!-- Navigation -->
-        <nav class="nav">
-            <button class="nav-btn active" data-page="diary">Diary</button>
-            <button class="nav-btn" data-page="messages">Messages to Self</button>
-            <button class="nav-btn" data-page="data">Save / Load</button>
-        </nav>
+        <div class="welcome-message">
+            <p class="welcome-text">
+                This is your sanctuary. Every thought, feeling, and moment matters here. 
+                There's no judgment, no rush—just space to be exactly who you are.
+            </p>
+        </div>
 
-        <!-- Content -->
-        <main class="content" id="content">
-            <!-- Content loads here -->
-        </main>
+        <div class="rooms-grid" id="roomsGrid"></div>
 
-        <!-- Stats -->
-        <footer class="stats">
-            <span id="entryCount">0</span> entries • Last saved: <span id="lastSaved">just now</span>
-        </footer>
+        <div class="stats" id="stats">
+            <div class="stats-content">
+                You've preserved <span class="stats-number" id="totalEntries">0</span> moments in your sanctuary.
+                <br>
+                You've visited <span class="stats-number" id="activeRooms">0</span> different rooms.
+            </div>
+        </div>
+
+        <div class="bottom-actions">
+            <button class="action-btn" onclick="exportData()">
+                <span>💾</span>
+                <span>Save Backup</span>
+            </button>
+            <button class="action-btn" onclick="document.getElementById('importFile').click()">
+                <span>📂</span>
+                <span>Load Backup</span>
+            </button>
+            <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+        </div>
     </div>
 
-    <!-- Add Button -->
-    <button class="add-btn" id="addBtn" aria-label="Add new">+</button>
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-icon" id="modalIcon">💭</span>
+                <h2 class="modal-title" id="modalTitle">New Entry</h2>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" id="promptLabel">What's on your heart?</label>
+                <textarea 
+                    class="form-textarea" 
+                    id="entryText" 
+                    placeholder="Let it out... this space holds you."
+                ></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button class="btn btn-secondary" onclick="closeModal()">Maybe Later</button>
+                <button class="btn btn-primary" onclick="saveEntry()">Keep This Safe</button>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // =====================
-        // FIXED WORKING SYSTEM
-        // =====================
-
-        // App Data Schema
-        const dataSchema = {
-            meta: {
-                title: "Gentle Heart",
-                version: "1.0.0",
-                lastSaved: new Date().toISOString(),
-                created: new Date().toISOString()
+        const ROOMS = [
+            {
+                id: 'compliments',
+                icon: '🌟',
+                title: 'Kind Words',
+                description: 'Compliments and affirming words that made you feel seen',
+                color: '#f4c430',
+                prompt: 'What kind words touched your heart today?'
             },
-            entries: [],
-            messages: []
-        };
-
-        // Feelings
-        const feelings = [
-            'soft', 'heavy', 'quiet', 'bright', 'tender',
-            'gentle', 'calm', 'full', 'empty', 'peaceful'
+            {
+                id: 'brave',
+                icon: '🦋',
+                title: 'Brave Moments',
+                description: 'Times you did something scary, even when you were afraid',
+                color: '#9b59b6',
+                prompt: 'What brave thing did you do, even though it was hard?'
+            },
+            {
+                id: 'special',
+                icon: '✨',
+                title: 'Special Moments',
+                description: 'Memories that sparkle, moments you want to remember forever',
+                color: '#ff9a9e',
+                prompt: 'What made this moment special to you?'
+            },
+            {
+                id: 'voices',
+                icon: '💬',
+                title: 'Two Voices',
+                description: 'The conversation between your inner critic and inner friend',
+                color: '#6a89cc',
+                prompt: 'What is your critic saying? Now, what would your loving friend say back?'
+            },
+            {
+                id: 'letters',
+                icon: '💌',
+                title: 'Unsent Letters',
+                description: 'Words you need to say but haven\'t sent—to anyone, even yourself',
+                color: '#f8b500',
+                prompt: 'Who is this letter to, and what do you need to say?'
+            },
+            {
+                id: 'grateful',
+                icon: '🌸',
+                title: 'Gratitude',
+                description: 'Small and large things that filled you with appreciation',
+                color: '#ff6b9d',
+                prompt: 'What are you grateful for right now?'
+            },
+            {
+                id: 'laughter',
+                icon: '😊',
+                title: 'Joy Captured',
+                description: 'Things that made you laugh, smile, or feel light',
+                color: '#ffa502',
+                prompt: 'What brought joy to your day?'
+            },
+            {
+                id: 'hard',
+                icon: '🌧️',
+                title: 'Hard Days',
+                description: 'A space to hold the difficult feelings without fixing them',
+                color: '#778ca3',
+                prompt: 'What feels heavy right now? You don\'t have to fix it, just name it.'
+            }
         ];
 
-        // App State
-        let appState = {
-            data: JSON.parse(JSON.stringify(dataSchema)),
-            currentPage: 'diary',
-            tempMedia: []
-        };
+        let entries = {};
+        let currentRoom = null;
 
-        // DOM Elements
-        const elements = {
-            content: document.getElementById('content'),
-            addBtn: document.getElementById('addBtn'),
-            entryCount: document.getElementById('entryCount'),
-            lastSaved: document.getElementById('lastSaved')
-        };
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            renderRooms();
+            updateStats();
+        });
 
-        // =====================
-        // DRAW HEART FUNCTION
-        // =====================
-        function drawHeart() {
-            const canvas = document.getElementById('heartCanvas');
-            const ctx = canvas.getContext('2d');
-            
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            
-            function draw() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                // Draw multiple heart shapes
-                for (let i = 0; i < 3; i++) {
-                    const size = 150 + i * 50;
-                    const x = canvas.width / 2;
-                    const y = canvas.height / 2;
-                    const opacity = 0.02 - (i * 0.005);
-                    const color = i === 0 ? '#d8c9b9' : i === 1 ? '#f0e6d6' : '#e8d8c8';
-                    
-                    ctx.beginPath();
-                    ctx.moveTo(x, y - size/3);
-                    
-                    // Draw heart shape
-                    ctx.bezierCurveTo(
-                        x + size/2, y - size/2,
-                        x + size, y + size/6,
-                        x, y + size/2
-                    );
-                    ctx.bezierCurveTo(
-                        x - size, y + size/6,
-                        x - size/2, y - size/2,
-                        x, y - size/3
-                    );
-                    
-                    ctx.closePath();
-                    ctx.strokeStyle = color;
-                    ctx.lineWidth = 0.5;
-                    ctx.globalAlpha = opacity;
-                    ctx.stroke();
-                }
-                
-                ctx.globalAlpha = 1;
-                requestAnimationFrame(draw);
-            }
-            
-            window.addEventListener('resize', resizeCanvas);
-            resizeCanvas();
-            draw();
+        function renderRooms() {
+            const grid = document.getElementById('roomsGrid');
+            grid.innerHTML = '';
+
+            ROOMS.forEach(room => {
+                const roomEntries = entries[room.id] || [];
+                const roomEl = document.createElement('div');
+                roomEl.className = 'room';
+                roomEl.style.setProperty('--room-color', room.color);
+
+                const previewEntries = roomEntries.slice(-3).reverse();
+                const entriesHTML = previewEntries.length > 0
+                    ? previewEntries.map(entry => {
+                        const preview = entry.text.length > 80 
+                            ? entry.text.substring(0, 80) + '...'
+                            : entry.text;
+                        return `<div class="entry-snippet">${preview}</div>`;
+                    }).join('')
+                    : '<div class="empty-state">No entries yet—this room is waiting for you</div>';
+
+                roomEl.innerHTML = `
+                    <div class="room-header">
+                        <span class="room-icon">${room.icon}</span>
+                        <h3 class="room-title">${room.title}</h3>
+                        <span class="room-count">${roomEntries.length}</span>
+                    </div>
+                    <p class="room-description">${room.description}</p>
+                    <div class="entries-preview">
+                        ${entriesHTML}
+                    </div>
+                    <button class="add-entry-btn" onclick="openModal('${room.id}')">
+                        + Add to this space
+                    </button>
+                `;
+
+                grid.appendChild(roomEl);
+            });
         }
 
-        // =====================
-        // DATA MANAGEMENT
-        // =====================
-        function loadData() {
-            try {
-                const saved = localStorage.getItem('gentle_heart_data');
-                if (saved) {
-                    const parsed = JSON.parse(saved);
-                    // Merge with schema to ensure structure
-                    appState.data = {
-                        ...dataSchema,
-                        ...parsed,
-                        meta: {
-                            ...dataSchema.meta,
-                            ...parsed.meta
-                        }
-                    };
-                }
-                updateStats();
-            } catch (error) {
-                console.log('Starting fresh');
-                saveData();
-            }
+        function openModal(roomId) {
+            currentRoom = ROOMS.find(r => r.id === roomId);
+            if (!currentRoom) return;
+
+            document.getElementById('modalIcon').textContent = currentRoom.icon;
+            document.getElementById('modalTitle').textContent = currentRoom.title;
+            document.getElementById('promptLabel').textContent = currentRoom.prompt;
+            document.getElementById('entryText').value = '';
+            document.getElementById('entryText').placeholder = 'Let it out... this space holds you.';
+
+            const modal = document.getElementById('modal');
+            modal.classList.add('active');
+            setTimeout(() => {
+                document.getElementById('entryText').focus();
+            }, 100);
         }
 
-        function saveData() {
-            try {
-                appState.data.meta.lastSaved = new Date().toISOString();
-                localStorage.setItem('gentle_heart_data', JSON.stringify(appState.data));
-                updateStats();
-                return true;
-            } catch (error) {
-                console.error('Save error:', error);
-                alert('Could not save data. Storage might be full.');
-                return false;
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+            currentRoom = null;
+        }
+
+        function saveEntry() {
+            const text = document.getElementById('entryText').value.trim();
+            if (!text || !currentRoom) return;
+
+            if (!entries[currentRoom.id]) {
+                entries[currentRoom.id] = [];
             }
+
+            entries[currentRoom.id].push({
+                text: text,
+                date: new Date().toISOString(),
+                id: Date.now()
+            });
+
+            saveData();
+            renderRooms();
+            updateStats();
+            closeModal();
         }
 
         function updateStats() {
-            elements.entryCount.textContent = appState.data.entries.length;
-            const lastSaved = new Date(appState.data.meta.lastSaved);
-            const now = new Date();
-            const diff = Math.floor((now - lastSaved) / 1000);
-            
-            if (diff < 60) elements.lastSaved.textContent = 'just now';
-            else if (diff < 3600) elements.lastSaved.textContent = `${Math.floor(diff/60)} min ago`;
-            else if (diff < 86400) elements.lastSaved.textContent = `${Math.floor(diff/3600)} hr ago`;
-            else elements.lastSaved.textContent = `${Math.floor(diff/86400)} days ago`;
+            const totalEntries = Object.values(entries).reduce((sum, arr) => sum + arr.length, 0);
+            const activeRooms = Object.keys(entries).filter(key => entries[key].length > 0).length;
+
+            document.getElementById('totalEntries').textContent = totalEntries;
+            document.getElementById('activeRooms').textContent = activeRooms;
         }
 
-        // =====================
-        // PAGE MANAGEMENT
-        // =====================
-        function showPage(page) {
-            // Update nav buttons
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.page === page) {
-                    btn.classList.add('active');
-                }
-            });
-            
-            appState.currentPage = page;
-            
-            // Clear and render page
-            elements.content.innerHTML = '';
-            elements.content.classList.remove('fade-in');
-            
-            setTimeout(() => {
-                switch(page) {
-                    case 'diary':
-                        renderDiary();
-                        break;
-                    case 'messages':
-                        renderMessages();
-                        break;
-                    case 'data':
-                        renderDataPage();
-                        break;
-                }
-                elements.content.classList.add('fade-in');
-            }, 10);
+        function saveData() {
+            localStorage.setItem('safeSpaceEntries', JSON.stringify(entries));
         }
 
-        function renderDiary() {
-            const entries = [...appState.data.entries].sort((a, b) => 
-                new Date(b.date) - new Date(a.date)
-            );
-            
-            let html = '';
-            
-            if (entries.length > 0) {
-                html = `
-                    <h2 style="font-size: 1.3rem; margin-bottom: 25px; color: #5c5348; font-weight: 400; text-align: center;">
-                        Your moments
-                    </h2>
-                    <div class="entries">
-                        ${entries.map(entry => `
-                            <div class="entry">
-                                <div class="entry-header">
-                                    <div class="entry-date">${formatDate(entry.date)}</div>
-                                </div>
-                                ${entry.feelings && entry.feelings.length > 0 ? `
-                                    <div class="entry-feelings">
-                                        ${entry.feelings.map(feeling => `
-                                            <span class="feeling-tag">${feeling}</span>
-                                        `).join('')}
-                                    </div>
-                                ` : ''}
-                                <div class="entry-text">${escapeHtml(entry.text)}</div>
-                                ${entry.note ? `
-                                    <div style="margin-top: 15px; padding: 15px; background: rgba(216, 201, 185, 0.05); border-radius: 6px; border-left: 3px solid #d8c9b9;">
-                                        <div style="font-size: 0.9rem; color: #a09688; margin-bottom: 5px;">And also:</div>
-                                        <div style="color: #5c5348; font-style: italic;">${escapeHtml(entry.note)}</div>
-                                    </div>
-                                ` : ''}
-                                <div class="entry-actions">
-                                    <button class="entry-action-btn" onclick="editEntry('${entry.id}')">Edit</button>
-                                    <button class="entry-action-btn" onclick="deleteEntry('${entry.id}')">Delete</button>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-            } else {
-                html = `
-                    <div class="empty">
-                        <div class="empty-icon">🫀</div>
-                        <p style="font-size: 1.1rem; margin-bottom: 10px;">No entries yet</p>
-                        <p style="margin-bottom: 30px; color: #a09688;">This space is quiet and waiting</p>
-                        <button class="btn btn-primary" onclick="showEntryForm()">Begin</button>
-                    </div>
-                `;
-            }
-            
-            elements.content.innerHTML = html;
-        }
-
-        function renderMessages() {
-            const messages = appState.data.messages;
-            
-            let html = `
-                <h2 style="font-size: 1.3rem; margin-bottom: 25px; color: #5c5348; font-weight: 400; text-align: center;">
-                    Messages to self
-                </h2>
-                <div style="text-align: center; margin-bottom: 30px;">
-                    <button class="btn btn-primary" onclick="showMessageForm()">Add message</button>
-                </div>
-            `;
-            
-            if (messages.length > 0) {
-                html += `
-                    <div class="messages-list">
-                        ${messages.map(msg => `
-                            <div class="message-item">
-                                <div class="message-trigger">${escapeHtml(msg.trigger)}</div>
-                                <div class="message-text">${escapeHtml(msg.text)}</div>
-                                <div class="entry-actions">
-                                    <button class="entry-action-btn" onclick="editMessage('${msg.id}')">Edit</button>
-                                    <button class="entry-action-btn" onclick="deleteMessage('${msg.id}')">Delete</button>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-            } else {
-                html += `
-                    <div class="empty">
-                        <div class="empty-icon">✧</div>
-                        <p style="font-size: 1.1rem; margin-bottom: 10px;">No messages yet</p>
-                        <p style="margin-bottom: 30px; color: #a09688;">Words for your future self</p>
-                    </div>
-                `;
-            }
-            
-            html += `
-                <div style="text-align: center; margin-top: 40px;">
-                    <button class="btn" onclick="showPage('diary')">← Back to diary</button>
-                </div>
-            `;
-            
-            elements.content.innerHTML = html;
-        }
-
-        function renderDataPage() {
-            const html = `
-                <button class="btn back-btn" onclick="showPage('diary')">← Back to diary</button>
-                <div class="form">
-                    <h3 class="form-title">Save and load</h3>
-                    <p style="text-align: center; color: #a09688; margin-bottom: 30px;">
-                        You have <strong>${appState.data.entries.length}</strong> entries and 
-                        <strong>${appState.data.messages.length}</strong> messages.
-                    </p>
-                    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                        <button class="btn btn-primary" onclick="exportData()">Export all</button>
-                        <button class="btn" onclick="document.getElementById('importFile').click()">Import</button>
-                        <button class="btn" onclick="clearData()">Clear all</button>
-                        <input type="file" id="importFile" accept=".json" class="hidden" onchange="importData(event)">
-                    </div>
-                    <p style="text-align: center; margin-top: 30px; color: #a09688; font-size: 0.9rem;">
-                        Your data is saved automatically in your browser.
-                    </p>
-                </div>
-            `;
-            
-            elements.content.innerHTML = html;
-        }
-
-        // =====================
-        // ENTRY FUNCTIONS
-        // =====================
-        function showEntryForm(entryId = null) {
-            const entry = entryId ? appState.data.entries.find(e => e.id === entryId) : null;
-            const isEdit = !!entry;
-            
-            const html = `
-                <button class="btn back-btn" onclick="showPage('diary')">← Back</button>
-                <div class="form">
-                    <h3 class="form-title">${isEdit ? 'Edit entry' : 'New entry'}</h3>
-                    <div class="form-group">
-                        <label>What's present</label>
-                        <textarea id="entryText" placeholder="What you notice, feel, or remember...">${entry ? escapeHtml(entry.text) : ''}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>And also... (optional)</label>
-                        <textarea id="entryNote" placeholder="Something else that might be true...">${entry ? escapeHtml(entry.note || '') : ''}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Feeling tones (optional)</label>
-                        <div class="checkbox-group" id="feelingsGroup">
-                            ${feelings.map(feeling => `
-                                <label class="checkbox-label">
-                                    <input type="checkbox" value="${feeling}" 
-                                        ${entry && entry.feelings && entry.feelings.includes(feeling) ? 'checked' : ''}>
-                                    ${feeling}
-                                </label>
-                            `).join('')}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Date</label>
-                        <input type="date" id="entryDate" value="${entry ? entry.date.split('T')[0] : new Date().toISOString().split('T')[0]}">
-                    </div>
-                    <div class="form-actions">
-                        <button class="btn" onclick="showPage('diary')">Cancel</button>
-                        <button class="btn btn-primary" onclick="saveEntry('${entryId}')">${isEdit ? 'Update' : 'Save'}</button>
-                    </div>
-                </div>
-            `;
-            
-            elements.content.innerHTML = html;
-        }
-
-        function saveEntry(entryId = null) {
-            const text = document.getElementById('entryText').value.trim();
-            const note = document.getElementById('entryNote').value.trim();
-            const dateInput = document.getElementById('entryDate').value;
-            
-            if (!text) {
-                alert('Please write something.');
-                return;
-            }
-            
-            // Get selected feelings
-            const checkboxes = document.querySelectorAll('#feelingsGroup input:checked');
-            const selectedFeelings = Array.from(checkboxes).map(cb => cb.value);
-            
-            const entry = {
-                id: entryId || Date.now().toString(),
-                date: dateInput ? new Date(dateInput + 'T12:00:00').toISOString() : new Date().toISOString(),
-                text: text,
-                note: note || null,
-                feelings: selectedFeelings
-            };
-            
-            if (entryId) {
-                // Update
-                const index = appState.data.entries.findIndex(e => e.id === entryId);
-                if (index !== -1) {
-                    appState.data.entries[index] = entry;
-                }
-            } else {
-                // Add new
-                appState.data.entries.unshift(entry);
-            }
-            
-            if (saveData()) {
-                showPage('diary');
+        function loadData() {
+            const saved = localStorage.getItem('safeSpaceEntries');
+            if (saved) {
+                entries = JSON.parse(saved);
             }
         }
 
-        function editEntry(entryId) {
-            showEntryForm(entryId);
-        }
-
-        function deleteEntry(entryId) {
-            if (confirm('Delete this entry?')) {
-                appState.data.entries = appState.data.entries.filter(e => e.id !== entryId);
-                saveData();
-                renderDiary();
-            }
-        }
-
-        // =====================
-        // MESSAGE FUNCTIONS
-        // =====================
-        function showMessageForm(msgId = null) {
-            const msg = msgId ? appState.data.messages.find(m => m.id === msgId) : null;
-            const isEdit = !!msg;
-            
-            const html = `
-                <button class="btn back-btn" onclick="showPage('messages')">← Back</button>
-                <div class="form">
-                    <h3 class="form-title">${isEdit ? 'Edit message' : 'New message'}</h3>
-                    <div class="form-group">
-                        <label>Read this when...</label>
-                        <input type="text" id="msgTrigger" placeholder="when I feel..." value="${msg ? escapeHtml(msg.trigger) : ''}">
-                    </div>
-                    <div class="form-group">
-                        <label>Message</label>
-                        <textarea id="msgText" placeholder="Write what you need to hear...">${msg ? escapeHtml(msg.text) : ''}</textarea>
-                    </div>
-                    <div class="form-actions">
-                        <button class="btn" onclick="showPage('messages')">Cancel</button>
-                        <button class="btn btn-primary" onclick="saveMessage('${msgId}')">${isEdit ? 'Update' : 'Save'}</button>
-                    </div>
-                </div>
-            `;
-            
-            elements.content.innerHTML = html;
-        }
-
-        function saveMessage(msgId = null) {
-            const trigger = document.getElementById('msgTrigger').value.trim();
-            const text = document.getElementById('msgText').value.trim();
-            
-            if (!trigger || !text) {
-                alert('Please fill in both fields.');
-                return;
-            }
-            
-            const message = {
-                id: msgId || Date.now().toString(),
-                trigger: trigger,
-                text: text
-            };
-            
-            if (msgId) {
-                // Update
-                const index = appState.data.messages.findIndex(m => m.id === msgId);
-                if (index !== -1) {
-                    appState.data.messages[index] = message;
-                }
-            } else {
-                // Add new
-                appState.data.messages.push(message);
-            }
-            
-            if (saveData()) {
-                showPage('messages');
-            }
-        }
-
-        function editMessage(msgId) {
-            showMessageForm(msgId);
-        }
-
-        function deleteMessage(msgId) {
-            if (confirm('Delete this message?')) {
-                appState.data.messages = appState.data.messages.filter(m => m.id !== msgId);
-                saveData();
-                renderMessages();
-            }
-        }
-
-        // =====================
-        // DATA IMPORT/EXPORT
-        // =====================
         function exportData() {
-            try {
-                const exportData = {
-                    ...appState.data,
-                    meta: {
-                        ...appState.data.meta,
-                        exported: new Date().toISOString()
-                    }
-                };
-                
-                const dataStr = JSON.stringify(exportData, null, 2);
-                const blob = new Blob([dataStr], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `gentle-heart-${new Date().toISOString().split('T')[0]}.json`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                
-                setTimeout(() => URL.revokeObjectURL(url), 100);
-                alert('Data exported successfully.');
-            } catch (error) {
-                alert('Error exporting data.');
-            }
+            const data = {
+                entries,
+                exported: new Date().toISOString(),
+                version: '1.0'
+            };
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `safe-space-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
         }
 
-        function importData(event) {
-            const file = event.target.files[0];
+        function importData(e) {
+            const file = e.target.files[0];
             if (!file) return;
-            
+
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = (event) => {
                 try {
-                    const imported = JSON.parse(e.target.result);
-                    
-                    if (!imported.entries || !Array.isArray(imported.entries)) {
-                        throw new Error('Invalid file format');
-                    }
-                    
-                    if (confirm(`Import ${imported.entries.length} entries and ${imported.messages?.length || 0} messages?`)) {
-                        appState.data.entries = imported.entries;
-                        if (imported.messages) {
-                            appState.data.messages = imported.messages;
-                        }
+                    const data = JSON.parse(event.target.result);
+                    if (data.entries) {
+                        entries = data.entries;
                         saveData();
-                        showPage('diary');
-                        alert('Data imported successfully.');
+                        renderRooms();
+                        updateStats();
                     }
                 } catch (error) {
-                    alert('Error importing file. Make sure it\'s a valid export.');
+                    alert('Could not load backup. Please check the file.');
                 }
-                event.target.value = '';
             };
             reader.readAsText(file);
         }
 
-        function clearData() {
-            if (confirm('Clear ALL data? This cannot be undone.')) {
-                appState.data = JSON.parse(JSON.stringify(dataSchema));
-                saveData();
-                showPage('diary');
+        // Click outside modal to close
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') {
+                closeModal();
             }
-        }
+        });
 
-        // =====================
-        // UTILITY FUNCTIONS
-        // =====================
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text || '';
-            return div.innerHTML;
-        }
-
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            const now = new Date();
-            const diff = now - date;
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            
-            if (days === 0) return 'Today';
-            if (days === 1) return 'Yesterday';
-            if (days < 7) return `${days} days ago`;
-            if (days < 30) return `${Math.floor(days / 7)} weeks ago`;
-            
-            return date.toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-        }
-
-        // =====================
-        // INITIALIZATION
-        // =====================
-        document.addEventListener('DOMContentLoaded', function() {
-            // Draw heart background
-            drawHeart();
-            
-            // Load data
-            loadData();
-            
-            // Show diary page
-            showPage('diary');
-            
-            // Navigation buttons - FIXED
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    showPage(this.dataset.page);
-                });
-            });
-            
-            // Add button - FIXED
-            elements.addBtn.addEventListener('click', function() {
-                if (appState.currentPage === 'diary') {
-                    showEntryForm();
-                } else if (appState.currentPage === 'messages') {
-                    showMessageForm();
-                } else if (appState.currentPage === 'data') {
-                    exportData();
-                }
-            });
-            
-            // Auto-save every 30 seconds
-            setInterval(function() {
-                if (appState.data.entries.length > 0 || appState.data.messages.length > 0) {
-                    saveData();
-                }
-            }, 30000);
-            
-            // Initialize with a sample entry if empty
-            if (appState.data.entries.length === 0 && appState.data.messages.length === 0) {
-                appState.data.entries.push({
-                    id: Date.now().toString(),
-                    date: new Date().toISOString(),
-                    text: "This is a gentle space for what matters. Write as little or as much as feels right.",
-                    note: "The quiet moments count too.",
-                    feelings: ['gentle', 'soft']
-                });
-                
-                appState.data.messages.push({
-                    id: (Date.now() + 1).toString(),
-                    trigger: "when I feel too much",
-                    text: "You're holding space. That's enough."
-                });
-                
-                saveData();
-            }
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
         });
     </script>
 </body>
