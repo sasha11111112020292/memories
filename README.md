@@ -38,6 +38,16 @@
             padding: 60px 24px;
             line-height: 1.6;
             position: relative;
+            transition: background 0.5s ease;
+        }
+
+        body.room-active {
+            background: linear-gradient(-45deg, 
+                var(--active-room-color-light), 
+                var(--active-room-color-lighter), 
+                #fafaf9, 
+                var(--active-room-color-lighter)
+            );
         }
 
         body::before {
@@ -56,23 +66,14 @@
         }
 
         @keyframes gradientShift {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .container {
             position: relative;
             z-index: 1;
-        }
-
-        .container {
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -144,100 +145,23 @@
             100% { opacity: 0.35; transform: rotate(15deg) scale(1); }
         }
 
-        .sparkle {
+        .signature {
             position: fixed;
+            bottom: 20px;
+            right: 30px;
+            font-family: 'Crimson Pro', serif;
+            font-size: 24px;
+            color: rgba(212, 165, 116, 0.4);
+            z-index: 100;
             pointer-events: none;
-            width: 4px;
-            height: 4px;
-            background: radial-gradient(circle, rgba(212, 165, 116, 0.8) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: sparkleFloat 2s ease-out forwards;
-            z-index: 9999;
+            font-style: italic;
+            letter-spacing: 1px;
+            animation: fadeIn 1s ease 3s both;
         }
 
-        .sparkle::before {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: -1px;
-            width: 2px;
-            height: 6px;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), transparent);
-            transform: rotate(0deg);
-        }
-
-        .sparkle::after {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: -1px;
-            width: 6px;
-            height: 2px;
-            background: linear-gradient(to right, rgba(255, 255, 255, 0.9), transparent);
-        }
-
-        @keyframes sparkleFloat {
-            0% {
-                opacity: 1;
-                transform: translateY(0) scale(1) rotate(0deg);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-40px) scale(0.3) rotate(180deg);
-            }
-        }
-
-        .floating-hearts {
-            position: fixed;
-            bottom: -50px;
-            animation: floatUp 20s linear infinite;
-            pointer-events: none;
-            opacity: 0.12;
-            z-index: 1;
-            width: 20px;
-            height: 20px;
-        }
-
-        .floating-hearts::before {
-            content: '';
-            position: absolute;
-            width: 10px;
-            height: 16px;
-            background: #e69fac;
-            border-radius: 10px 10px 0 0;
-            transform: rotate(-45deg);
-            transform-origin: 0 100%;
-        }
-
-        .floating-hearts::after {
-            content: '';
-            position: absolute;
-            width: 10px;
-            height: 16px;
-            background: #e69fac;
-            border-radius: 10px 10px 0 0;
-            transform: rotate(45deg);
-            transform-origin: 100% 100%;
-            left: 10px;
-        }
-
-        @keyframes floatUp {
-            0% {
-                bottom: -50px;
-                transform: translateX(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.12;
-            }
-            90% {
-                opacity: 0.12;
-            }
-            100% {
-                bottom: 110vh;
-                transform: translateX(30px) rotate(360deg);
-                opacity: 0;
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .tagline {
@@ -316,6 +240,7 @@
             border-radius: 16px;
             padding: 48px;
             margin-bottom: 60px;
+            margin-top: 60px;
             text-align: center;
             box-shadow: var(--shadow-sm);
             position: relative;
@@ -380,6 +305,102 @@
             margin-top: 4px;
         }
 
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, rgba(212, 165, 116, 0.8) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: sparkleFloat 2s ease-out forwards;
+            z-index: 9999;
+        }
+
+        .sparkle::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            width: 2px;
+            height: 6px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), transparent);
+            transform: rotate(0deg);
+        }
+
+        .sparkle::after {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            width: 6px;
+            height: 2px;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.9), transparent);
+        }
+
+        @keyframes sparkleFloat {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-40px) scale(0.3) rotate(180deg);
+            }
+        }
+
+        .floating-kiss {
+            position: fixed;
+            bottom: -50px;
+            animation: floatUp 20s linear infinite;
+            pointer-events: none;
+            opacity: 0.15;
+            z-index: 1;
+            width: 30px;
+            height: 30px;
+        }
+
+        .floating-kiss::before {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 20px;
+            background: radial-gradient(ellipse at 30% 40%, #e69fac 0%, #d88b95 40%, transparent 70%),
+                        radial-gradient(ellipse at 70% 40%, #e69fac 0%, #d88b95 40%, transparent 70%);
+            transform: rotate(15deg);
+            filter: blur(0.5px);
+        }
+
+        .floating-kiss::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 16px;
+            left: 2px;
+            background: radial-gradient(ellipse at 35% 45%, rgba(230, 159, 172, 0.6) 0%, rgba(216, 139, 149, 0.4) 40%, transparent 65%),
+                        radial-gradient(ellipse at 65% 45%, rgba(230, 159, 172, 0.6) 0%, rgba(216, 139, 149, 0.4) 40%, transparent 65%);
+            transform: rotate(15deg);
+            filter: blur(0.8px);
+        }
+
+        @keyframes floatUp {
+            0% {
+                bottom: -50px;
+                transform: translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.15;
+            }
+            90% {
+                opacity: 0.15;
+            }
+            100% {
+                bottom: 110vh;
+                transform: translateX(30px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
         .rooms-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
@@ -434,6 +455,10 @@
 
         .room:hover::after {
             opacity: 0.08;
+        }
+
+        .room:active {
+            transform: translateY(-2px) scale(0.98);
         }
 
         .room-header {
@@ -601,6 +626,18 @@
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
+            animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .modal-content::before {
@@ -750,6 +787,7 @@
             border: 1px solid var(--border-light);
             box-shadow: var(--shadow-sm);
             transition: all 0.2s ease;
+            cursor: pointer;
         }
 
         .media-preview-item:hover {
@@ -835,6 +873,30 @@
         .btn-secondary:hover {
             background: var(--bg-primary);
             border-color: var(--border-medium);
+        }
+
+        .btn-edit {
+            padding: 8px 16px;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-edit svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .btn-delete {
+            background: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+        }
+
+        .btn-delete:hover {
+            background: #fdd;
+            border-color: #fbb;
         }
 
         .bottom-actions {
@@ -1003,15 +1065,14 @@
 
         .memory-room-badge {
             display: inline-block;
-            padding: 6px 14px;
+            padding: 8px 16px;
             background: linear-gradient(135deg, rgba(212, 165, 116, 0.15), rgba(155, 135, 181, 0.15));
             border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
             letter-spacing: 0.5px;
-            text-transform: uppercase;
         }
 
         .memory-text {
@@ -1019,223 +1080,251 @@
             font-size: 20px;
             line-height: 1.8;
             color: var(--text-primary);
-            margin: 24px 0;
+            margin-bottom: 28px;
             font-style: italic;
-        }
-
-        .memory-date {
-            font-size: 13px;
-            color: var(--text-tertiary);
-            margin-top: 20px;
         }
 
         .memory-media-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 12px;
-            margin-top: 24px;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
         .memory-media-item {
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: var(--shadow-sm);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .memory-media-item:hover {
+            transform: scale(1.02);
         }
 
         .memory-media-item img,
         .memory-media-item video {
             width: 100%;
-            height: 200px;
+            height: 180px;
             object-fit: cover;
         }
 
-        @keyframes fadeIn {
+        .memory-date {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            margin-bottom: 24px;
+        }
+
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            animation: fadeInLightbox 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        @keyframes fadeInLightbox {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+            animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes scaleIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: scale(0.9);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: scale(1);
             }
         }
 
-        .room {
-            animation: fadeIn 0.6s ease backwards;
+        .lightbox-content img,
+        .lightbox-content video {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
         }
 
-        .room:nth-child(1) { animation-delay: 0.05s; }
-        .room:nth-child(2) { animation-delay: 0.1s; }
-        .room:nth-child(3) { animation-delay: 0.15s; }
-        .room:nth-child(4) { animation-delay: 0.2s; }
-        .room:nth-child(5) { animation-delay: 0.25s; }
-        .room:nth-child(6) { animation-delay: 0.3s; }
-        .room:nth-child(7) { animation-delay: 0.35s; }
-        .room:nth-child(8) { animation-delay: 0.4s; }
-
-        ::selection {
-            background: rgba(120, 113, 108, 0.2);
-            color: var(--text-primary);
+        .lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        ::-webkit-scrollbar {
-            width: 10px;
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
         }
 
-        ::-webkit-scrollbar-track {
-            background: var(--bg-secondary);
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: var(--border-medium);
-            border-radius: 5px;
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-primary);
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
         }
 
         @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+
             .rooms-grid {
                 grid-template-columns: 1fr;
             }
 
-            h1 {
-                font-size: 40px;
+            .modal-content {
+                padding: 24px;
             }
 
-            .modal-content {
+            .welcome-message {
                 padding: 32px 24px;
             }
 
-            .media-buttons {
-                flex-direction: column;
+            .signature {
+                font-size: 18px;
+                right: 20px;
             }
 
-            .media-btn {
-                width: 100%;
-                justify-content: center;
+            .lightbox-content {
+                padding: 20px;
+            }
+
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
             }
         }
     </style>
 </head>
 <body>
+    <div class="signature">𝒪𝐵</div>
+    
     <div class="container">
         <header>
             <h1>Safe Space</h1>
-            <p class="tagline">A sanctuary for every piece of you</p>
+            <p class="tagline">Your personal sanctuary for thoughts, feelings, and moments that matter</p>
+            
             <div class="daily-quote" id="dailyQuote">
-                <p class="quote-text" id="quoteText"></p>
-                <p class="quote-author" id="quoteAuthor"></p>
+                <div class="quote-text" id="quoteText">"Loading wisdom..."</div>
+                <div class="quote-author" id="quoteAuthor">— Unknown</div>
             </div>
         </header>
 
         <div class="welcome-message">
-            <p class="welcome-text">
-                This is your sanctuary. Every thought, feeling, and moment matters here. 
-                There's no judgment, no rush—just space to be exactly who you are.
-            </p>
+            <p class="welcome-text">This is your private corner of the universe. Everything you share here stays here—safe, encrypted, and just for you. Let this be the place where you can finally exhale.</p>
         </div>
 
         <div class="rooms-grid" id="roomsGrid"></div>
 
-        <div class="stats" id="stats">
-            <div class="stats-content">
-                You've preserved <span class="stats-number" id="totalEntries">0</span> moments in your sanctuary.
-                <br>
-                You've visited <span class="stats-number" id="activeRooms">0</span> different rooms.
-            </div>
-        </div>
-
         <div class="bottom-actions">
             <button class="action-btn magical" onclick="showRandomMemory()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
                 </svg>
-                <span>Random Memory</span>
+                Surprise Memory
             </button>
             <button class="action-btn surprise-btn" onclick="surpriseMe()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    <circle cx="12" cy="12" r="3"/>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
                 </svg>
-                <span>Surprise Me</span>
+                Surprise Me!
             </button>
             <button class="action-btn" onclick="exportData()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                     <polyline points="7 10 12 15 17 10"></polyline>
                     <line x1="12" y1="15" x2="12" y2="3"></line>
                 </svg>
-                <span>Save Backup</span>
+                Export Backup
             </button>
-            <button class="action-btn" onclick="document.getElementById('importFile').click()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <label class="action-btn" style="margin: 0; cursor: pointer;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                     <polyline points="17 8 12 3 7 8"></polyline>
                     <line x1="12" y1="3" x2="12" y2="15"></line>
                 </svg>
-                <span>Load Backup</span>
-            </button>
-            <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+                Import Backup
+                <input type="file" accept=".json" onchange="importData(event)" style="display: none;">
+            </label>
+        </div>
+
+        <div class="stats">
+            <div class="stats-content">
+                You've preserved <span class="stats-number" id="totalEntries">0</span> beautiful moments across <span class="stats-number" id="totalRooms">0</span> spaces.
+            </div>
         </div>
     </div>
 
+    <!-- Modal -->
     <div class="modal" id="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-icon" id="modalIconContainer"></div>
-                <h2 class="modal-title" id="modalTitle">New Entry</h2>
-            </div>
+        <div class="modal-content"></div>
+    </div>
 
-            <div class="form-group">
-                <label class="form-label" id="promptLabel">What's on your heart?</label>
-                <textarea 
-                    class="form-textarea" 
-                    id="entryText" 
-                    placeholder="Let it out... this space holds you."
-                ></textarea>
-            </div>
-
-            <div class="media-upload-section">
-                <label class="media-upload-label">Add media (optional)</label>
-                <div class="media-buttons">
-                    <button class="media-btn" onclick="document.getElementById('photoInput').click()">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                            <polyline points="21 15 16 10 5 21"></polyline>
-                        </svg>
-                        Photo
-                    </button>
-                    <button class="media-btn" onclick="document.getElementById('videoInput').click()">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-                        </svg>
-                        Video
-                    </button>
-                    <button class="media-btn" onclick="document.getElementById('audioInput').click()">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
-                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                            <line x1="12" y1="19" x2="12" y2="23"></line>
-                            <line x1="8" y1="23" x2="16" y2="23"></line>
-                        </svg>
-                        Audio
-                    </button>
-                </div>
-                <input type="file" id="photoInput" accept="image/*" style="display: none;" onchange="handleMediaUpload(event, 'photo')" multiple>
-                <input type="file" id="videoInput" accept="video/*" style="display: none;" onchange="handleMediaUpload(event, 'video')" multiple>
-                <input type="file" id="audioInput" accept="audio/*" style="display: none;" onchange="handleMediaUpload(event, 'audio')" multiple>
-                
-                <div class="media-preview-grid" id="mediaPreview"></div>
-            </div>
-
-            <div class="form-actions">
-                <button class="btn btn-secondary" onclick="closeModal()">Maybe Later</button>
-                <button class="btn btn-primary" onclick="saveEntry()">Keep This Safe</button>
-            </div>
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content" id="lightboxContent">
+            <button class="lightbox-close" onclick="closeLightbox()">×</button>
+            <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)" style="display: none;">‹</button>
+            <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)" style="display: none;">›</button>
         </div>
     </div>
 
@@ -1314,6 +1403,27 @@
                 title: 'Hard Days',
                 description: 'A space to hold the difficult feelings without fixing them',
                 color: '#8a9ba8'
+            },
+            {
+                id: 'identity',
+                icon: 'rainbow',
+                title: 'Being Me',
+                description: 'Your journey of self-discovery and authenticity',
+                color: '#9b87b5'
+            },
+            {
+                id: 'freeform',
+                icon: 'thought',
+                title: 'What\'s On My Mind?',
+                description: 'Stream of consciousness. No filters, just thoughts.',
+                color: '#a8a29e'
+            },
+            {
+                id: 'creative',
+                icon: 'palette',
+                title: 'Creative Outlet',
+                description: 'Art, writing, music—anything you create',
+                color: '#e69fac'
             }
         ];
 
@@ -1325,19 +1435,25 @@
             mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>',
             flower: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M12 2a3 3 0 0 0 0 6 3 3 0 0 0 0-6zM12 16a3 3 0 0 0 0 6 3 3 0 0 0 0-6zM22 12a3 3 0 0 0-6 0 3 3 0 0 0 6 0zM8 12a3 3 0 0 0-6 0 3 3 0 0 0 6 0z"></path></svg>',
             smile: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>',
-            cloud: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>'
+            cloud: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>',
+            rainbow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 17H2M22 14c0-5.5-4.5-10-10-10S2 8.5 2 14M19 14c0-3.9-3.1-7-7-7s-7 3.1-7 7M16 14c0-2.2-1.8-4-4-4s-4 1.8-4 4"></path></svg>',
+            thought: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><circle cx="9" cy="10" r="1"></circle><circle cx="12" cy="10" r="1"></circle><circle cx="15" cy="10" r="1"></circle></svg>',
+            palette: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c.93 0 1.68-.75 1.68-1.68 0-.42-.16-.81-.42-1.12-.25-.3-.41-.71-.41-1.15 0-.93.75-1.68 1.68-1.68h1.95c3.03 0 5.5-2.47 5.5-5.5C22 6.48 17.52 2 12 2z"></path><circle cx="6.5" cy="11.5" r="1.5"></circle><circle cx="9.5" cy="7.5" r="1.5"></circle><circle cx="14.5" cy="7.5" r="1.5"></circle><circle cx="17.5" cy="11.5" r="1.5"></circle></svg>'
         };
 
         let entries = {};
         let currentRoom = null;
         let currentMedia = [];
+        let currentEditingEntry = null;
+        let lightboxMedia = [];
+        let currentLightboxIndex = 0;
 
         document.addEventListener('DOMContentLoaded', () => {
             loadData();
             renderRooms();
             updateStats();
             displayDailyQuote();
-            createFloatingHearts();
+            createFloatingKisses();
         });
 
         function displayDailyQuote() {
@@ -1346,9 +1462,12 @@
             document.getElementById('quoteAuthor').textContent = `— ${quote.author}`;
         }
 
-        function createSparkle(x, y) {
+        function createSparkle(x, y, color = null) {
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
+            if (color) {
+                sparkle.style.background = `radial-gradient(circle, ${color} 0%, transparent 70%)`;
+            }
             sparkle.style.left = x + 'px';
             sparkle.style.top = y + 'px';
             document.body.appendChild(sparkle);
@@ -1356,304 +1475,285 @@
             setTimeout(() => sparkle.remove(), 2000);
         }
 
-        function createFloatingHearts() {
+        function createFloatingKisses() {
             setInterval(() => {
-                if (Math.random() > 0.85) { // Less frequent - only 15% chance every interval
-                    const heart = document.createElement('div');
-                    heart.className = 'floating-hearts';
-                    heart.style.left = Math.random() * 100 + '%';
-                    heart.style.animationDuration = (15 + Math.random() * 10) + 's';
-                    document.body.appendChild(heart);
+                if (Math.random() > 0.85) {
+                    const kiss = document.createElement('div');
+                    kiss.className = 'floating-kiss';
+                    kiss.style.left = Math.random() * 100 + '%';
+                    kiss.style.animationDuration = (15 + Math.random() * 10) + 's';
+                    document.body.appendChild(kiss);
                     
-                    setTimeout(() => heart.remove(), 25000);
+                    setTimeout(() => kiss.remove(), 25000);
                 }
-            }, 8000); // Check every 8 seconds instead of 5
+            }, 8000);
         }
 
-        function showRandomMemory() {
-            const allEntries = [];
-            
-            // Collect all entries from all rooms
-            Object.keys(entries).forEach(roomId => {
-                const room = ROOMS.find(r => r.id === roomId);
-                if (entries[roomId] && entries[roomId].length > 0) {
-                    entries[roomId].forEach(entry => {
-                        allEntries.push({ ...entry, roomId, roomTitle: room?.title || 'Unknown' });
-                    });
-                }
-            });
-
-            if (allEntries.length === 0) {
-                alert('No memories yet, darling! Start creating some beautiful moments first. ✨');
+        function applyRoomTheme(room) {
+            if (!room) {
+                document.body.classList.remove('room-active');
+                document.body.style.removeProperty('--active-room-color-light');
+                document.body.style.removeProperty('--active-room-color-lighter');
                 return;
             }
 
-            // Pick a random entry
-            const randomEntry = allEntries[Math.floor(Math.random() * allEntries.length)];
+            const color = room.color;
+            document.body.classList.add('room-active');
             
-            // Show in modal
-            showMemoryModal(randomEntry);
-        }
-
-        function showMemoryModal(entry) {
-            const modal = document.getElementById('modal');
-            const modalContent = modal.querySelector('.modal-content');
+            const hex = color.replace('#', '');
+            const r = parseInt(hex.substr(0, 2), 16);
+            const g = parseInt(hex.substr(2, 2), 16);
+            const b = parseInt(hex.substr(4, 2), 16);
             
-            // Create custom content for memory display
-            let mediaHTML = '';
-            if (entry.media && entry.media.length > 0) {
-                mediaHTML = '<div class="memory-media-grid">' + 
-                    entry.media.map(m => {
-                        if (m.type === 'photo') {
-                            return `<div class="memory-media-item"><img src="${m.data}" alt="Memory"></div>`;
-                        } else if (m.type === 'video') {
-                            return `<div class="memory-media-item"><video src="${m.data}" controls></video></div>`;
-                        } else if (m.type === 'audio') {
-                            return `<div class="memory-media-item"><audio src="${m.data}" controls></audio></div>`;
-                        }
-                        return '';
-                    }).join('') +
-                    '</div>';
+            document.body.style.setProperty('--active-room-color-light', `rgba(${r}, ${g}, ${b}, 0.08)`);
+            document.body.style.setProperty('--active-room-color-lighter', `rgba(${r}, ${g}, ${b}, 0.04)`);
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const x = Math.random() * window.innerWidth;
+                    const y = Math.random() * window.innerHeight;
+                    createSparkle(x, y, `rgba(${r}, ${g}, ${b}, 0.8)`);
+                }, i * 50);
             }
-
-            const date = new Date(entry.date).toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-
-            modalContent.innerHTML = `
-                <div class="memory-modal-content">
-                    <div class="memory-room-badge">${entry.roomTitle}</div>
-                    <div class="memory-text">"${entry.text}"</div>
-                    ${mediaHTML}
-                    <div class="memory-date">Preserved on ${date}</div>
-                    <div class="form-actions" style="margin-top: 32px;">
-                        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
-                        <button class="btn btn-primary" onclick="showRandomMemory()">Another Memory</button>
-                    </div>
-                </div>
-            `;
-
-            modal.classList.add('active');
-        }
-
-        function surpriseMe() {
-            const surprises = [
-                () => {
-                    // Minimal sparkle bloom
-                    for (let i = 0; i < 12; i++) {
-                        setTimeout(() => {
-                            const x = window.innerWidth / 2 + (Math.random() - 0.5) * 400;
-                            const y = window.innerHeight / 2 + (Math.random() - 0.5) * 400;
-                            createSparkle(x, y);
-                        }, i * 80);
-                    }
-                    setTimeout(() => {
-                        alert('✨ You are absolutely magnificent, darling! ✨');
-                    }, 1000);
-                },
-                () => {
-                    // Random compliment
-                    const compliments = [
-                        "Your existence is a work of art! 🎨",
-                        "Darling, you're simply divine! 💎",
-                        "The world is better with you in it! 🌟",
-                        "You are fabulous beyond measure! ✨",
-                        "Your spirit shines so brightly! 💫",
-                        "You deserve all the beautiful things! 🌸"
-                    ];
-                    alert(compliments[Math.floor(Math.random() * compliments.length)]);
-                },
-                () => {
-                    // New quote with gentle animation
-                    displayDailyQuote();
-                    const quoteEl = document.getElementById('dailyQuote');
-                    quoteEl.style.animation = 'none';
-                    setTimeout(() => {
-                        quoteEl.style.animation = 'fadeIn 0.8s ease';
-                    }, 10);
-                    alert('New inspiration just for you! 💝');
-                },
-                () => {
-                    // Gentle heart cascade
-                    for (let i = 0; i < 8; i++) {
-                        setTimeout(() => {
-                            const heart = document.createElement('div');
-                            heart.className = 'floating-hearts';
-                            heart.style.left = (30 + Math.random() * 40) + '%';
-                            heart.style.animationDuration = '4s';
-                            heart.style.opacity = '0.2';
-                            document.body.appendChild(heart);
-                            setTimeout(() => heart.remove(), 4000);
-                        }, i * 150);
-                    }
-                    setTimeout(() => {
-                        alert('Sending you all the love! 💕');
-                    }, 1200);
-                }
-            ];
-
-            // Pick a random surprise
-            const surprise = surprises[Math.floor(Math.random() * surprises.length)];
-            surprise();
         }
 
         function renderRooms() {
             const grid = document.getElementById('roomsGrid');
-            grid.innerHTML = '';
-
-            ROOMS.forEach(room => {
+            grid.innerHTML = ROOMS.map(room => {
                 const roomEntries = entries[room.id] || [];
-                const roomEl = document.createElement('div');
-                roomEl.className = 'room';
-                roomEl.style.setProperty('--room-color', room.color);
-
-                const previewEntries = roomEntries.slice(-3).reverse();
-                const entriesHTML = previewEntries.length > 0
-                    ? previewEntries.map((entry, index) => {
-                        const preview = entry.text.length > 80 
-                            ? entry.text.substring(0, 80) + '...'
-                            : entry.text;
-                        const mediaCount = (entry.media || []).length;
-                        const mediaIndicator = mediaCount > 0 
-                            ? `<span class="entry-media-indicator">
+                const previewEntries = roomEntries.slice(-3);
+                
+                let previewHTML = '';
+                if (previewEntries.length > 0) {
+                    previewHTML = '<div class="entries-preview">' + previewEntries.map((entry, index) => {
+                        const truncated = entry.text.length > 80 ? entry.text.substring(0, 80) + '...' : entry.text;
+                        const mediaIndicator = entry.media && entry.media.length > 0 ? 
+                            `<span class="entry-media-indicator">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                                     <circle cx="8.5" cy="8.5" r="1.5"></circle>
                                     <polyline points="21 15 16 10 5 21"></polyline>
                                 </svg>
-                                ${mediaCount}
-                               </span>`
-                            : '';
-                        return `<div class="entry-snippet" onclick="viewEntry('${room.id}', ${roomEntries.length - 1 - index})">${preview}${mediaIndicator}</div>`;
-                    }).join('')
-                    : '<div class="empty-state">No entries yet—this room is waiting for you</div>';
+                                ${entry.media.length}
+                            </span>` : '';
+                        return `<div class="entry-snippet" onclick="event.stopPropagation(); openRoom('${room.id}')">${truncated}${mediaIndicator}</div>`;
+                    }).join('') + '</div>';
+                } else {
+                    previewHTML = '<div class="empty-state">No entries yet. Click to start.</div>';
+                }
+                
+                return `
+                    <div class="room" style="--room-color: ${room.color};" onclick="openRoom('${room.id}')">
+                        <div class="room-header">
+                            <div class="room-icon">${ICONS[room.icon]}</div>
+                            <div class="room-header-content">
+                                <div class="room-title">${room.title}</div>
+                                <div class="room-count">${roomEntries.length} ${roomEntries.length === 1 ? 'entry' : 'entries'}</div>
+                            </div>
+                        </div>
+                        <div class="room-description">${room.description}</div>
+                        ${previewHTML}
+                        <button class="add-entry-btn" onclick="event.stopPropagation(); openRoom('${room.id}', true)">+ Add Entry</button>
+                    </div>
+                `;
+            }).join('');
+        }
 
-                roomEl.innerHTML = `
-                    <div class="room-header">
-                        <div class="room-icon">${ICONS[room.icon]}</div>
-                        <div class="room-header-content">
-                            <h3 class="room-title">${room.title}</h3>
-                            <span class="room-count">${roomEntries.length} entries</span>
+        function openRoom(roomId, forceNew = false) {
+            const room = ROOMS.find(r => r.id === roomId);
+            if (!room) return;
+
+            currentRoom = room;
+            currentEditingEntry = null;
+            applyRoomTheme(room);
+
+            const roomEntries = entries[roomId] || [];
+
+            if (forceNew || roomEntries.length === 0) {
+                showEntryForm(room);
+            } else {
+                showRoomEntries(room, roomEntries);
+            }
+        }
+
+        function showRoomEntries(room, roomEntries) {
+            const modal = document.getElementById('modal');
+            const entriesHTML = roomEntries.map((entry, index) => {
+                const date = new Date(entry.date).toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                let mediaHTML = '';
+                if (entry.media && entry.media.length > 0) {
+                    mediaHTML = `
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; margin: 12px 0;">
+                            ${entry.media.map((media, mediaIndex) => {
+                                if (media.type === 'photo') {
+                                    return `<img src="${media.data}" style="width: 100%; height: 100px; object-fit: cover; border-radius: 8px; cursor: pointer;" onclick="openLightbox(${index}, ${mediaIndex})">`;
+                                } else if (media.type === 'video') {
+                                    return `<video src="${media.data}" style="width: 100%; height: 100px; object-fit: cover; border-radius: 8px; cursor: pointer;" onclick="openLightbox(${index}, ${mediaIndex})"></video>`;
+                                } else if (media.type === 'audio') {
+                                    return `<audio src="${media.data}" controls style="width: 100%;"></audio>`;
+                                }
+                                return '';
+                            }).join('')}
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div style="padding: 20px; background: var(--bg-secondary); border-radius: 12px; margin-bottom: 16px; border-left: 3px solid ${room.color};">
+                        <div style="font-size: 14px; color: var(--text-tertiary); margin-bottom: 12px;">${date}</div>
+                        ${entry.text ? `<div style="margin-bottom: 12px; white-space: pre-wrap; line-height: 1.6;">${entry.text}</div>` : ''}
+                        ${mediaHTML}
+                        <div style="display: flex; gap: 8px; margin-top: 12px;">
+                            <button class="btn btn-secondary btn-edit" onclick="editEntry('${room.id}', ${index})">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                </svg>
+                                Edit
+                            </button>
+                            <button class="btn btn-secondary btn-delete btn-edit" onclick="deleteEntry('${room.id}', ${index})">Delete</button>
                         </div>
                     </div>
-                    <p class="room-description">${room.description}</p>
-                    <div class="entries-preview">
+                `;
+            }).join('');
+
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-icon">${ICONS[room.icon]}</div>
+                        <h2 class="modal-title">${room.title}</h2>
+                    </div>
+                    <div style="max-height: 60vh; overflow-y: auto; margin-bottom: 24px;">
                         ${entriesHTML}
                     </div>
-                    <button class="add-entry-btn" onclick="openModal('${room.id}')">
-                        + Add to this space
-                    </button>
-                `;
-
-                grid.appendChild(roomEl);
-            });
-        }
-
-        function openModal(roomId) {
-            currentRoom = ROOMS.find(r => r.id === roomId);
-            if (!currentRoom) return;
-            currentMedia = [];
-
-            document.getElementById('modalIconContainer').innerHTML = ICONS[currentRoom.icon];
-            document.getElementById('modalTitle').textContent = currentRoom.title;
-            document.getElementById('promptLabel').textContent = getPromptForRoom(roomId);
-            document.getElementById('entryText').value = '';
-            document.getElementById('mediaPreview').innerHTML = '';
-
-            const modal = document.getElementById('modal');
-            modal.classList.add('active');
-            setTimeout(() => {
-                document.getElementById('entryText').focus();
-            }, 100);
-        }
-
-        function getPromptForRoom(roomId) {
-            const prompts = {
-                compliments: 'What kind words touched your heart today?',
-                brave: 'What brave thing did you do, even though it was hard?',
-                special: 'What made this moment special to you?',
-                voices: 'What is your critic saying? Now, what would your loving friend say back?',
-                letters: 'Who is this letter to, and what do you need to say?',
-                grateful: 'What are you grateful for right now?',
-                laughter: 'What brought joy to your day?',
-                hard: 'What feels heavy right now? You don\'t have to fix it, just name it.'
-            };
-            return prompts[roomId] || 'What\'s on your heart?';
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('modal');
-            const modalContent = modal.querySelector('.modal-content');
-            
-            // Restore the normal entry form
-            restoreEntryForm();
-            
-            modal.classList.remove('active');
-            currentRoom = null;
-            currentMedia = [];
-        }
-
-        function restoreEntryForm() {
-            const modal = document.getElementById('modal');
-            const modalContent = modal.querySelector('.modal-content');
-            
-            modalContent.innerHTML = `
-                <div class="modal-header">
-                    <div class="modal-icon" id="modalIconContainer"></div>
-                    <h2 class="modal-title" id="modalTitle">New Entry</h2>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" id="promptLabel">What's on your heart?</label>
-                    <textarea 
-                        class="form-textarea" 
-                        id="entryText" 
-                        placeholder="Let it out... this space holds you."
-                    ></textarea>
-                </div>
-
-                <div class="media-upload-section">
-                    <label class="media-upload-label">Add media (optional)</label>
-                    <div class="media-buttons">
-                        <button class="media-btn" onclick="document.getElementById('photoInput').click()">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                                <polyline points="21 15 16 10 5 21"></polyline>
-                            </svg>
-                            Photo
-                        </button>
-                        <button class="media-btn" onclick="document.getElementById('videoInput').click()">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-                            </svg>
-                            Video
-                        </button>
-                        <button class="media-btn" onclick="document.getElementById('audioInput').click()">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
-                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                                <line x1="12" y1="19" x2="12" y2="23"></line>
-                                <line x1="8" y1="23" x2="16" y2="23"></line>
-                            </svg>
-                            Audio
-                        </button>
+                    <div class="form-actions">
+                        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+                        <button class="btn btn-primary" onclick="showEntryForm(ROOMS.find(r => r.id === '${room.id}'))">New Entry</button>
                     </div>
-                    <input type="file" id="photoInput" accept="image/*" style="display: none;" onchange="handleMediaUpload(event, 'photo')" multiple>
-                    <input type="file" id="videoInput" accept="video/*" style="display: none;" onchange="handleMediaUpload(event, 'video')" multiple>
-                    <input type="file" id="audioInput" accept="audio/*" style="display: none;" onchange="handleMediaUpload(event, 'audio')" multiple>
-                    
-                    <div class="media-preview-grid" id="mediaPreview"></div>
-                </div>
-
-                <div class="form-actions">
-                    <button class="btn btn-secondary" onclick="closeModal()">Maybe Later</button>
-                    <button class="btn btn-primary" onclick="saveEntry()">Keep This Safe</button>
                 </div>
             `;
+            modal.classList.add('active');
+        }
+
+        function showEntryForm(room) {
+            currentRoom = room;
+            const modal = document.getElementById('modal');
+            
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-icon">${ICONS[room.icon]}</div>
+                        <h2 class="modal-title">${currentEditingEntry ? 'Edit Entry' : room.title}</h2>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">${room.description}</label>
+                        <textarea 
+                            class="form-textarea" 
+                            id="entryText" 
+                            placeholder="Let it out... this space holds you."
+                        >${currentEditingEntry ? currentEditingEntry.text : ''}</textarea>
+                    </div>
+
+                    <div class="media-upload-section">
+                        <label class="media-upload-label">Add media (optional)</label>
+                        <div class="media-buttons">
+                            <button class="media-btn" onclick="document.getElementById('photoInput').click()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                    <polyline points="21 15 16 10 5 21"></polyline>
+                                </svg>
+                                Photo
+                            </button>
+                            <button class="media-btn" onclick="document.getElementById('videoInput').click()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                                    <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                                </svg>
+                                Video
+                            </button>
+                            <button class="media-btn" onclick="document.getElementById('audioInput').click()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                                    <line x1="12" y1="19" x2="12" y2="23"></line>
+                                    <line x1="8" y1="23" x2="16" y2="23"></line>
+                                </svg>
+                                Audio
+                            </button>
+                        </div>
+                        <input type="file" id="photoInput" accept="image/*" style="display: none;" onchange="handleMediaUpload(event, 'photo')" multiple>
+                        <input type="file" id="videoInput" accept="video/*" style="display: none;" onchange="handleMediaUpload(event, 'video')" multiple>
+                        <input type="file" id="audioInput" accept="audio/*" style="display: none;" onchange="handleMediaUpload(event, 'audio')" multiple>
+                        
+                        <div class="media-preview-grid" id="mediaPreview"></div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn btn-secondary" onclick="closeModal()">Maybe Later</button>
+                        <button class="btn btn-primary" onclick="saveEntry()">${currentEditingEntry ? 'Update' : 'Keep This Safe'}</button>
+                    </div>
+                </div>
+            `;
+            
+            if (currentEditingEntry && currentEditingEntry.media) {
+                currentMedia = [...currentEditingEntry.media];
+                renderMediaPreview();
+            }
+            
+            modal.classList.add('active');
+        }
+
+        function editEntry(roomId, entryIndex) {
+            const room = ROOMS.find(r => r.id === roomId);
+            const entry = entries[roomId][entryIndex];
+            
+            if (!entry || !room) return;
+            
+            currentRoom = room;
+            currentEditingEntry = {
+                ...entry,
+                index: entryIndex,
+                roomId: roomId
+            };
+            
+            showEntryForm(room);
+        }
+
+        function deleteEntry(roomId, entryIndex) {
+            if (confirm('Are you sure you want to delete this entry? This cannot be undone.')) {
+                // Delete the entry
+                entries[roomId].splice(entryIndex, 1);
+                
+                // Save to localStorage
+                saveData();
+                
+                // Update the home page
+                renderRooms();
+                updateStats();
+                
+                // Find the room and refresh the modal
+                const room = ROOMS.find(r => r.id === roomId);
+                const roomEntries = entries[roomId] || [];
+                
+                // If no more entries, close modal. Otherwise refresh it.
+                if (roomEntries.length === 0) {
+                    closeModal();
+                } else {
+                    // Force refresh the modal with updated entries
+                    currentRoom = room;
+                    showRoomEntries(room, roomEntries);
+                }
+            }
         }
 
         function viewEntry(roomId, entryIndex) {
@@ -1662,8 +1762,15 @@
             
             if (!entry || !room) return;
             
-            const entryWithRoom = { ...entry, roomId, roomTitle: room.title };
-            showMemoryModal(entryWithRoom);
+            showMemoryModal({ ...entry, roomId, roomTitle: room.title });
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+            applyRoomTheme(null);
+            currentRoom = null;
+            currentMedia = [];
+            currentEditingEntry = null;
         }
 
         function handleMediaUpload(event, type) {
@@ -1718,12 +1825,22 @@
                 entries[currentRoom.id] = [];
             }
 
-            entries[currentRoom.id].push({
-                text: text,
-                media: [...currentMedia],
-                date: new Date().toISOString(),
-                id: Date.now()
-            });
+            if (currentEditingEntry) {
+                entries[currentEditingEntry.roomId][currentEditingEntry.index] = {
+                    text: text,
+                    media: [...currentMedia],
+                    date: currentEditingEntry.date,
+                    id: currentEditingEntry.id,
+                    editedAt: new Date().toISOString()
+                };
+            } else {
+                entries[currentRoom.id].push({
+                    text: text,
+                    media: [...currentMedia],
+                    date: new Date().toISOString(),
+                    id: Date.now()
+                });
+            }
 
             saveData();
             renderRooms();
@@ -1733,10 +1850,10 @@
 
         function updateStats() {
             const totalEntries = Object.values(entries).reduce((sum, arr) => sum + arr.length, 0);
-            const activeRooms = Object.keys(entries).filter(key => entries[key].length > 0).length;
+            const totalRooms = Object.keys(entries).filter(key => entries[key].length > 0).length;
 
             document.getElementById('totalEntries').textContent = totalEntries;
-            document.getElementById('activeRooms').textContent = activeRooms;
+            document.getElementById('totalRooms').textContent = totalRooms;
         }
 
         function saveData() {
@@ -1754,7 +1871,7 @@
             const data = {
                 entries,
                 exported: new Date().toISOString(),
-                version: '2.0',
+                version: '3.0',
                 mediaCount: Object.values(entries).reduce((sum, arr) => 
                     sum + arr.reduce((mediaSum, entry) => mediaSum + (entry.media?.length || 0), 0), 0)
             };
@@ -1766,10 +1883,6 @@
             a.download = `safe-space-backup-${new Date().toISOString().split('T')[0]}.json`;
             a.click();
             URL.revokeObjectURL(url);
-            
-            // Show confirmation
-            const totalMedia = data.mediaCount;
-            console.log(`Exported backup with ${totalMedia} media files`);
         }
 
         function importData(e) {
@@ -1781,10 +1894,13 @@
                 try {
                     const data = JSON.parse(event.target.result);
                     if (data.entries) {
-                        entries = data.entries;
-                        saveData();
-                        renderRooms();
-                        updateStats();
+                        if (confirm('This will replace all your current data. Continue?')) {
+                            entries = data.entries;
+                            saveData();
+                            renderRooms();
+                            updateStats();
+                            alert('Backup restored successfully! ✨');
+                        }
                     }
                 } catch (error) {
                     alert('Could not load backup. Please check the file.');
@@ -1793,14 +1909,242 @@
             reader.readAsText(file);
         }
 
+        function showRandomMemory() {
+            const allEntries = [];
+            
+            Object.keys(entries).forEach(roomId => {
+                const room = ROOMS.find(r => r.id === roomId);
+                if (entries[roomId] && entries[roomId].length > 0) {
+                    entries[roomId].forEach(entry => {
+                        allEntries.push({ ...entry, roomId, roomTitle: room?.title || 'Unknown' });
+                    });
+                }
+            });
+
+            if (allEntries.length === 0) {
+                alert('No memories yet, darling! Start creating some beautiful moments first. ✨');
+                return;
+            }
+
+            const randomEntry = allEntries[Math.floor(Math.random() * allEntries.length)];
+            showMemoryModal(randomEntry);
+        }
+
+        function showMemoryModal(entry) {
+            const modal = document.getElementById('modal');
+            
+            let mediaHTML = '';
+            if (entry.media && entry.media.length > 0) {
+                mediaHTML = '<div class="memory-media-grid">' + 
+                    entry.media.map((m, index) => {
+                        if (m.type === 'photo') {
+                            return `<div class="memory-media-item" onclick="openLightboxDirect(${JSON.stringify(entry.media).replace(/"/g, '&quot;')}, ${index})"><img src="${m.data}" alt="Memory"></div>`;
+                        } else if (m.type === 'video') {
+                            return `<div class="memory-media-item" onclick="openLightboxDirect(${JSON.stringify(entry.media).replace(/"/g, '&quot;')}, ${index})"><video src="${m.data}" controls></video></div>`;
+                        } else if (m.type === 'audio') {
+                            return `<div class="memory-media-item"><audio src="${m.data}" controls></audio></div>`;
+                        }
+                        return '';
+                    }).join('') +
+                    '</div>';
+            }
+
+            const date = new Date(entry.date).toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="memory-modal-content">
+                        <div class="memory-room-badge">${entry.roomTitle}</div>
+                        <div class="memory-text">"${entry.text}"</div>
+                        ${mediaHTML}
+                        <div class="memory-date">Preserved on ${date}</div>
+                        <p style="font-size: 13px; color: var(--text-tertiary); text-align: center; margin: 20px 0;">💡 To edit or delete this entry, close this and click on the "${entry.roomTitle}" room</p>
+                        <div class="form-actions" style="margin-top: 32px;">
+                            <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+                            <button class="btn btn-primary" onclick="showRandomMemory()">Another Memory</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.add('active');
+        }
+
+        function surpriseMe() {
+            const surprises = [
+                () => {
+                    for (let i = 0; i < 12; i++) {
+                        setTimeout(() => {
+                            const x = window.innerWidth / 2 + (Math.random() - 0.5) * 400;
+                            const y = window.innerHeight / 2 + (Math.random() - 0.5) * 400;
+                            createSparkle(x, y);
+                        }, i * 80);
+                    }
+                    setTimeout(() => {
+                        alert('✨ You are absolutely magnificent, darling! ✨');
+                    }, 1000);
+                },
+                () => {
+                    const compliments = [
+                        "Your existence is a work of art! 🎨",
+                        "Darling, you're simply divine! 💎",
+                        "The world is better with you in it! 🌟",
+                        "You are fabulous beyond measure! ✨",
+                        "Your spirit shines so brightly! 💫",
+                        "You deserve all the beautiful things! 🌸"
+                    ];
+                    alert(compliments[Math.floor(Math.random() * compliments.length)]);
+                },
+                () => {
+                    displayDailyQuote();
+                    const quoteEl = document.getElementById('dailyQuote');
+                    quoteEl.style.animation = 'none';
+                    setTimeout(() => {
+                        quoteEl.style.animation = 'fadeIn 0.8s ease';
+                    }, 10);
+                    alert('New inspiration just for you! 💝');
+                },
+                () => {
+                    for (let i = 0; i < 8; i++) {
+                        setTimeout(() => {
+                            const kiss = document.createElement('div');
+                            kiss.className = 'floating-kiss';
+                            kiss.style.left = (30 + Math.random() * 40) + '%';
+                            kiss.style.animationDuration = '4s';
+                            kiss.style.opacity = '0.25';
+                            document.body.appendChild(kiss);
+                            setTimeout(() => kiss.remove(), 4000);
+                        }, i * 150);
+                    }
+                    setTimeout(() => {
+                        alert('Sending you all the love! 💕');
+                    }, 1200);
+                }
+            ];
+
+            const surprise = surprises[Math.floor(Math.random() * surprises.length)];
+            surprise();
+        }
+
+        // Lightbox functions
+        function openLightbox(entryIndex, mediaIndex) {
+            const roomId = currentRoom.id;
+            const entry = entries[roomId][entryIndex];
+            
+            lightboxMedia = entry.media.filter(m => m.type === 'photo' || m.type === 'video');
+            currentLightboxIndex = lightboxMedia.findIndex((m, i) => {
+                const photoCount = entry.media.slice(0, mediaIndex).filter(m => m.type === 'photo' || m.type === 'video').length;
+                return i === photoCount;
+            });
+            
+            showLightboxMedia();
+            document.getElementById('lightbox').classList.add('active');
+            
+            const prevBtn = document.querySelector('.lightbox-prev');
+            const nextBtn = document.querySelector('.lightbox-next');
+            if (lightboxMedia.length > 1) {
+                prevBtn.style.display = 'flex';
+                nextBtn.style.display = 'flex';
+            } else {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+            }
+        }
+
+        function openLightboxDirect(media, startIndex) {
+            lightboxMedia = media.filter(m => m.type === 'photo' || m.type === 'video');
+            currentLightboxIndex = startIndex;
+            
+            showLightboxMedia();
+            document.getElementById('lightbox').classList.add('active');
+            
+            const prevBtn = document.querySelector('.lightbox-prev');
+            const nextBtn = document.querySelector('.lightbox-next');
+            if (lightboxMedia.length > 1) {
+                prevBtn.style.display = 'flex';
+                nextBtn.style.display = 'flex';
+            } else {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+            }
+        }
+
+        function showLightboxMedia() {
+            const content = document.getElementById('lightboxContent');
+            const media = lightboxMedia[currentLightboxIndex];
+            
+            const closeBtn = content.querySelector('.lightbox-close');
+            const prevBtn = content.querySelector('.lightbox-prev');
+            const nextBtn = content.querySelector('.lightbox-next');
+            
+            content.innerHTML = '';
+            
+            if (media.type === 'photo') {
+                const img = document.createElement('img');
+                img.src = media.data;
+                content.appendChild(img);
+            } else if (media.type === 'video') {
+                const video = document.createElement('video');
+                video.src = media.data;
+                video.controls = true;
+                video.autoplay = true;
+                content.appendChild(video);
+            }
+            
+            content.appendChild(closeBtn);
+            if (lightboxMedia.length > 1) {
+                content.appendChild(prevBtn);
+                content.appendChild(nextBtn);
+            }
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            lightboxMedia = [];
+            currentLightboxIndex = 0;
+        }
+
+        function navigateLightbox(direction) {
+            currentLightboxIndex += direction;
+            if (currentLightboxIndex < 0) {
+                currentLightboxIndex = lightboxMedia.length - 1;
+            } else if (currentLightboxIndex >= lightboxMedia.length) {
+                currentLightboxIndex = 0;
+            }
+            showLightboxMedia();
+        }
+
+        // Event listeners
         document.getElementById('modal').addEventListener('click', (e) => {
             if (e.target.id === 'modal') {
                 closeModal();
             }
         });
 
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') {
+                closeLightbox();
+            }
+        });
+
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
+            if (e.key === 'Escape') {
+                if (document.getElementById('lightbox').classList.contains('active')) {
+                    closeLightbox();
+                } else {
+                    closeModal();
+                }
+            } else if (document.getElementById('lightbox').classList.contains('active')) {
+                if (e.key === 'ArrowLeft') {
+                    navigateLightbox(-1);
+                } else if (e.key === 'ArrowRight') {
+                    navigateLightbox(1);
+                }
+            }
         });
     </script>
 </body>
