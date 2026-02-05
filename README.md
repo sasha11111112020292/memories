@@ -2530,6 +2530,355 @@
                 }
             }
         });
+
+        // ========== ALEX'S ENHANCEMENTS START HERE ==========
+        
+        // Variables for new features
+        let currentAudio = null;
+        let activeSoundscape = null;
+        let affirmationInterval = null;
+        let signatureClickCount = 0;
+        let signatureClickTimer = null;
+        let loveLettersUnlocked = false;
+
+        const AFFIRMATIONS = [
+            "You are exactly where you need to be 💫",
+            "Your feelings are valid and important 💝",
+            "You deserve kindness, especially from yourself 🌸",
+            "It's okay to take your time 🕊️",
+            "You are doing better than you think 🌟",
+            "Small steps are still progress ✨",
+            "You are loved and worthy of love 💕",
+            "Tomorrow is a new beginning 🌅",
+            "Your story matters 📖",
+            "You are stronger than you know 💪🏼",
+            "Rest is productive too 🌙",
+            "You're allowed to feel everything you feel 🌈",
+            "You bring light to this world 🌟",
+            "Your best is always enough 💖",
+            "You deserve peace and happiness 🦋"
+        ];
+
+        // Theme functions
+        function toggleTheme() {
+            const body = document.body;
+            const isDark = body.classList.toggle('dark-theme');
+            const icon = document.getElementById('themeIcon');
+            if (isDark) {
+                icon.innerHTML = '<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>';
+                createStars();
+            } else {
+                icon.innerHTML = '<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>';
+                removeStars();
+            }
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+                document.getElementById('themeIcon').innerHTML = '<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>';
+                createStars();
+            }
+        }
+
+        function createStars() {
+            const isDark = document.body.classList.contains('dark-theme');
+            if (!isDark) return;
+            removeStars();
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.cssText = `position:fixed;width:2px;height:2px;background:white;border-radius:50%;opacity:0;pointer-events:none;z-index:1;animation:twinkle ${2+Math.random()*2}s ease-in-out infinite;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*3}s`;
+                document.body.appendChild(star);
+            }
+        }
+
+        function removeStars() {
+            document.querySelectorAll('.star').forEach(star => star.remove());
+        }
+
+        // Soundscape functions
+        function toggleSoundscapeMenu() {
+            document.getElementById('soundscapeMenu').classList.toggle('active');
+        }
+
+        function toggleSound(soundType) {
+            const toggle = document.getElementById('soundscapeToggle');
+            const options = document.querySelectorAll('.soundscape-option');
+            
+            if (activeSoundscape === soundType) {
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio = null;
+                }
+                activeSoundscape = null;
+                toggle.classList.remove('active');
+                options.forEach(opt => opt.classList.remove('active'));
+                localStorage.removeItem('soundscape');
+            } else {
+                if (currentAudio) currentAudio.pause();
+                const soundFiles = { rain: 'sound1.mp3', fireplace: 'sound2.mp3', cafe: 'sound3.mp3' };
+                currentAudio = new Audio(soundFiles[soundType]);
+                currentAudio.loop = true;
+                currentAudio.volume = 0.3;
+                currentAudio.play().catch(e => alert('Please add audio files (sound1.mp3, sound2.mp3, sound3.mp3) to enable soundscapes'));
+                activeSoundscape = soundType;
+                toggle.classList.add('active');
+                options.forEach(opt => {
+                    opt.classList.remove('active');
+                    if (opt.textContent.toLowerCase().includes(soundType)) opt.classList.add('active');
+                });
+                localStorage.setItem('soundscape', soundType);
+            }
+        }
+
+        function loadSoundscape() {
+            const saved = localStorage.getItem('soundscape');
+            if (saved) setTimeout(() => toggleSound(saved), 1000);
+        }
+
+        // Affirmation functions
+        function startAffirmations() {
+            affirmationInterval = setInterval(() => {
+                const affirmation = AFFIRMATIONS[Math.floor(Math.random() * AFFIRMATIONS.length)];
+                const element = document.createElement('div');
+                element.className = 'floating-affirmation';
+                element.textContent = affirmation;
+                element.style.cssText = `position:fixed;bottom:0;left:${30+Math.random()*40}%;transform:translateX(-50%);font-family:'Crimson Pro',serif;font-size:18px;color:var(--text-secondary);opacity:0;pointer-events:none;z-index:1;animation:floatUp 8s ease-out forwards;text-align:center;max-width:80%;padding:0 20px`;
+                document.body.appendChild(element);
+                setTimeout(() => element.remove(), 8000);
+            }, 30000);
+        }
+
+        // Balloon for Scream Room
+        function createBalloon(x, y) {
+            const balloon = document.createElement('div');
+            balloon.textContent = '🎈';
+            balloon.style.cssText = `position:fixed;font-size:48px;pointer-events:none;z-index:1000;left:${x}px;top:${y}px;animation:balloonFloat 4s ease-out forwards`;
+            document.body.appendChild(balloon);
+            setTimeout(() => balloon.remove(), 4000);
+        }
+
+        // Secret Love Letters unlock
+        function handleSignatureClick() {
+            signatureClickCount++;
+            clearTimeout(signatureClickTimer);
+            signatureClickTimer = setTimeout(() => signatureClickCount = 0, 2000);
+            if (signatureClickCount === 7) unlockLoveLetters();
+        }
+
+        function unlockLoveLetters() {
+            if (loveLettersUnlocked) return;
+            loveLettersUnlocked = true;
+            localStorage.setItem('loveLettersUnlocked', 'true');
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.textContent = '💕';
+                    heart.style.cssText = `position:fixed;font-size:32px;pointer-events:none;z-index:1001;left:${Math.random()*80+10}%;bottom:0;animation:heartFloat 3s ease-out forwards;animation-delay:${Math.random()*0.5}s`;
+                    document.body.appendChild(heart);
+                    setTimeout(() => heart.remove(), 3000);
+                }, i * 100);
+            }
+            
+            ROOMS.push({
+                id: 'love',
+                icon: 'heart',
+                title: 'Secret Love Letters',
+                description: 'Letters to yourself, written with love',
+                color: '#ff9ecd'
+            });
+            renderRooms();
+            setTimeout(() => alert('✨ Secret room unlocked! You found the Love Letters room 💕'), 1500);
+        }
+
+        function checkLoveLettersUnlock() {
+            if (localStorage.getItem('loveLettersUnlocked') === 'true') {
+                loveLettersUnlocked = true;
+                ROOMS.push({
+                    id: 'love',
+                    icon: 'heart',
+                    title: 'Secret Love Letters',
+                    description: 'Letters to yourself, written with love',
+                    color: '#ff9ecd'
+                });
+            }
+        }
+
+        // Add CSS for animations
+        const style = document.createElement('style');
+        style.textContent = `
+            body.dark-theme {
+                --bg-primary: #1a1a2e !important;
+                --bg-secondary: #16213e !important;
+                --text-primary: #eee !important;
+                --text-secondary: #aaa !important;
+                --text-tertiary: #888 !important;
+                --border-light: #2a2a3e !important;
+                --border-medium: #3a3a4e !important;
+            }
+            body.dark-theme {
+                background: linear-gradient(-45deg, #0f0f1e, #1a1a2e, #16213e, #1a1a2e, #0f0f1e) !important;
+            }
+            @keyframes twinkle {
+                0%, 100% { opacity: 0; transform: scale(1); }
+                50% { opacity: 0.8; transform: scale(1.2); }
+            }
+            @keyframes floatUp {
+                0% { bottom: 0; opacity: 0; }
+                10% { opacity: 0.6; }
+                90% { opacity: 0.6; }
+                100% { bottom: 100vh; opacity: 0; }
+            }
+            @keyframes balloonFloat {
+                0% { transform: translateY(0) scale(1); opacity: 1; }
+                100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+            }
+            @keyframes heartFloat {
+                0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+                100% { transform: translateY(-80vh) scale(0.3) rotate(360deg); opacity: 0; }
+            }
+            .theme-toggle, .soundscape-toggle {
+                position: fixed;
+                width: 50px;
+                height: 50px;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-medium);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                z-index: 1000;
+                transition: all 0.3s ease;
+                box-shadow: var(--shadow-md);
+                right: 30px;
+            }
+            .theme-toggle { top: 30px; }
+            .soundscape-toggle { top: 100px; }
+            .theme-toggle:hover, .soundscape-toggle:hover {
+                transform: scale(1.1);
+                box-shadow: var(--shadow-lg);
+            }
+            .soundscape-toggle.active {
+                background: linear-gradient(135deg, rgba(212, 165, 116, 0.2), rgba(155, 135, 181, 0.2));
+                box-shadow: 0 0 20px rgba(212, 165, 116, 0.3);
+            }
+            .theme-toggle svg, .soundscape-toggle svg {
+                width: 24px;
+                height: 24px;
+                fill: var(--text-primary);
+            }
+            .soundscape-menu {
+                position: fixed;
+                top: 160px;
+                right: 30px;
+                background: var(--bg-primary);
+                border: 1px solid var(--border-medium);
+                border-radius: 12px;
+                padding: 16px;
+                box-shadow: var(--shadow-xl);
+                z-index: 999;
+                opacity: 0;
+                pointer-events: none;
+                transform: translateY(-10px);
+                transition: all 0.3s ease;
+            }
+            .soundscape-menu.active {
+                opacity: 1;
+                pointer-events: all;
+                transform: translateY(0);
+            }
+            .soundscape-option {
+                padding: 12px 20px;
+                margin: 4px 0;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-light);
+                border-radius: 8px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-size: 14px;
+                color: var(--text-primary);
+                white-space: nowrap;
+            }
+            .soundscape-option:hover {
+                background: linear-gradient(135deg, rgba(212, 165, 116, 0.1), rgba(155, 135, 181, 0.1));
+                transform: translateX(-3px);
+            }
+            .soundscape-option.active {
+                background: linear-gradient(135deg, rgba(212, 165, 116, 0.15), rgba(155, 135, 181, 0.15));
+                border-color: rgba(212, 165, 116, 0.3);
+            }
+            .signature {
+                pointer-events: all !important;
+                cursor: pointer !important;
+                transition: all 0.3s ease !important;
+            }
+            .signature:hover {
+                color: rgba(212, 165, 116, 0.7) !important;
+                transform: scale(1.1) !important;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Add HTML elements
+        const buttons = `
+            <div class="theme-toggle" onclick="toggleTheme()">
+                <svg id="themeIcon" viewBox="0 0 24 24">
+                    <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                </svg>
+            </div>
+            <div class="soundscape-toggle" id="soundscapeToggle" onclick="toggleSoundscapeMenu()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M9 18V5l12-2v13M9 18c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm12-2c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z"/>
+                </svg>
+            </div>
+            <div class="soundscape-menu" id="soundscapeMenu">
+                <div class="soundscape-option" onclick="toggleSound('rain')">🌧️ Gentle Rain</div>
+                <div class="soundscape-option" onclick="toggleSound('fireplace')">🔥 Fireplace</div>
+                <div class="soundscape-option" onclick="toggleSound('cafe')">☕ Café Ambience</div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('afterbegin', buttons);
+
+        // Make signature clickable
+        document.querySelector('.signature').onclick = handleSignatureClick;
+
+        // Hook into existing saveEntry if it exists
+        const originalSaveEntry = window.saveEntry;
+        if (originalSaveEntry) {
+            window.saveEntry = function(...args) {
+                const result = originalSaveEntry.apply(this, args);
+                if (args[0] === 'scream') {
+                    const rect = document.getElementById('modal').getBoundingClientRect();
+                    createBalloon(rect.left + rect.width / 2, rect.top + rect.height / 2);
+                }
+                return result;
+            };
+        }
+
+        // Initialize on load
+        setTimeout(() => {
+            loadTheme();
+            loadSoundscape();
+            checkLoveLettersUnlock();
+            startAffirmations();
+            renderRooms();
+        }, 500);
+
+        // Close soundscape menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('soundscapeMenu');
+            const toggle = document.getElementById('soundscapeToggle');
+            if (menu && toggle && !menu.contains(e.target) && !toggle.contains(e.target)) {
+                menu.classList.remove('active');
+            }
+        });
+        
+        // ========== ALEX'S ENHANCEMENTS END HERE ==========
     </script>
 </body>
 </html>
