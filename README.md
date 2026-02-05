@@ -234,6 +234,217 @@
             letter-spacing: 0.5px;
         }
 
+        /* PASSWORD SCREEN */
+        .password-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, #fafaf9, #f5f5f4, #fef5f0, #f9f5f9);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .password-box {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 48px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .password-box h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 32px;
+            font-weight: 400;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .password-box p {
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            font-size: 15px;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid var(--border-medium);
+            border-radius: 12px;
+            font-size: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 4px rgba(120, 113, 108, 0.1);
+        }
+
+        .password-input.error {
+            border-color: #dc2626;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; }
+        }
+
+        .password-hint {
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        /* BREATHING WIDGET */
+        .breathing-widget {
+            background: linear-gradient(135deg, rgba(155, 135, 181, 0.1) 0%, rgba(212, 165, 116, 0.1) 100%);
+            border: 1px solid rgba(155, 135, 181, 0.2);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            margin: 40px auto 40px;
+            max-width: 500px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .breathing-widget h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .breathing-circle {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(155, 135, 181, 0.3), rgba(212, 165, 116, 0.3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .breathing-circle.inhale {
+            transform: scale(1.3);
+            background: linear-gradient(135deg, rgba(155, 135, 181, 0.5), rgba(212, 165, 116, 0.5));
+        }
+
+        .breathing-circle.exhale {
+            transform: scale(0.8);
+            background: linear-gradient(135deg, rgba(155, 135, 181, 0.2), rgba(212, 165, 116, 0.2));
+        }
+
+        .breathing-text {
+            font-family: 'Crimson Pro', serif;
+            font-size: 28px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .breathing-controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .breathing-controls button {
+            padding: 12px 28px;
+            border-radius: 8px;
+            border: 1px solid var(--border-medium);
+            background: white;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .breathing-controls button:hover {
+            background: var(--bg-secondary);
+        }
+
+        .breathing-controls button:first-child {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .breathing-controls button:first-child:hover {
+            background: var(--text-primary);
+        }
+
+        /* VOICES ROOM - SPLIT CRITIC/FRIEND */
+        .room.voices-room {
+            grid-column: span 2;
+            background: linear-gradient(90deg, 
+                rgba(181, 135, 155, 0.05) 0%, 
+                rgba(181, 135, 155, 0.02) 48%,
+                rgba(139, 195, 145, 0.02) 52%,
+                rgba(139, 195, 145, 0.05) 100%
+            );
+            border-left: 4px solid #b5879b;
+            border-right: 4px solid #8bc391;
+        }
+
+        .voices-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 20px;
+        }
+
+        .voice-section {
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid;
+        }
+
+        .voice-section.critic {
+            background: linear-gradient(135deg, rgba(181, 135, 155, 0.08), rgba(195, 145, 165, 0.08));
+            border-color: rgba(181, 135, 155, 0.3);
+        }
+
+        .voice-section.friend {
+            background: linear-gradient(135deg, rgba(139, 195, 145, 0.08), rgba(168, 218, 181, 0.08));
+            border-color: rgba(139, 195, 145, 0.3);
+        }
+
+        .voice-label {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 8px;
+            font-family: 'Crimson Pro', serif;
+        }
+
+        .voice-section.critic .voice-label {
+            color: #7c4a5e;
+        }
+
+        .voice-section.friend .voice-label {
+            color: #4a7c59;
+        }
+
         .welcome-message {
             background: linear-gradient(135deg, #ffffff 0%, #fafaf9 100%);
             border: 1px solid var(--border-light);
@@ -1230,6 +1441,15 @@
                 grid-template-columns: 1fr;
             }
 
+            .room.voices-room {
+                grid-column: span 1;
+            }
+
+            .voices-split {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
             .modal-content {
                 padding: 24px;
             }
@@ -1256,6 +1476,22 @@
     </style>
 </head>
 <body>
+    <!-- Password Screen -->
+    <div id="passwordScreen" class="password-screen">
+        <div class="password-box">
+            <h2>🌸 Welcome 🌸</h2>
+            <p>Enter the password to access your safe space</p>
+            <input 
+                type="password" 
+                id="passwordInput" 
+                class="password-input" 
+                placeholder="Enter password"
+                autocomplete="off"
+            >
+            <div class="password-hint">Hint: A simple expression of affection ❤️</div>
+        </div>
+    </div>
+
     <div class="signature">𝒪𝐵</div>
     
     <div class="container">
@@ -1268,6 +1504,18 @@
                 <div class="quote-author" id="quoteAuthor">— Unknown</div>
             </div>
         </header>
+
+        <!-- Breathing Exercise Widget -->
+        <div class="breathing-widget">
+            <h3>🫁 Breathing Exercise</h3>
+            <div class="breathing-circle" id="breathingCircle">
+                <div class="breathing-text" id="breathingText">Ready</div>
+            </div>
+            <div class="breathing-controls">
+                <button onclick="startBreathing()">Start</button>
+                <button onclick="stopBreathing()">Stop</button>
+            </div>
+        </div>
 
         <div class="welcome-message">
             <p class="welcome-text" id="welcomeText">This is your private corner of the universe. Everything you share here stays here—safe, encrypted, and just for you. Let this be the place where you can finally exhale.</p>
@@ -1538,8 +1786,47 @@
             const grid = document.getElementById('roomsGrid');
             grid.innerHTML = ROOMS.map(room => {
                 const roomEntries = entries[room.id] || [];
-                const previewEntries = roomEntries.slice(-3);
                 
+                // Special handling for Two Voices room
+                if (room.id === 'voices') {
+                    const criticEntries = roomEntries.filter(e => e.voice === 'critic').slice(-2);
+                    const friendEntries = roomEntries.filter(e => e.voice === 'friend').slice(-2);
+                    
+                    const criticHTML = criticEntries.length > 0 ? 
+                        criticEntries.map(e => `<div class="entry-snippet">${e.text.substring(0, 60)}${e.text.length > 60 ? '...' : ''}</div>`).join('') :
+                        '<div class="empty-state">No entries yet</div>';
+                    
+                    const friendHTML = friendEntries.length > 0 ?
+                        friendEntries.map(e => `<div class="entry-snippet">${e.text.substring(0, 60)}${e.text.length > 60 ? '...' : ''}</div>`).join('') :
+                        '<div class="empty-state">No entries yet</div>';
+                    
+                    return `
+                        <div class="room voices-room" style="--room-color: ${room.color};" onclick="openRoom('${room.id}')">
+                            <div class="room-header">
+                                <div class="room-icon">${ICONS[room.icon]}</div>
+                                <div class="room-header-content">
+                                    <div class="room-title">${room.title}</div>
+                                    <div class="room-count">${roomEntries.length} ${roomEntries.length === 1 ? 'entry' : 'entries'}</div>
+                                </div>
+                            </div>
+                            <div class="room-description">${room.description}</div>
+                            <div class="voices-split">
+                                <div class="voice-section critic">
+                                    <div class="voice-label">😤 Inner Critic</div>
+                                    ${criticHTML}
+                                </div>
+                                <div class="voice-section friend">
+                                    <div class="voice-label">🤗 Inner Friend</div>
+                                    ${friendHTML}
+                                </div>
+                            </div>
+                            <button class="add-entry-btn" onclick="event.stopPropagation(); openRoom('${room.id}', true)">+ Add Entry</button>
+                        </div>
+                    `;
+                }
+                
+                // Normal rooms
+                const previewEntries = roomEntries.slice(-3);
                 let previewHTML = '';
                 if (previewEntries.length > 0) {
                     previewHTML = '<div class="entries-preview">' + previewEntries.map((entry, index) => {
@@ -2147,6 +2434,72 @@
                 currentLightboxIndex = 0;
             }
             showLightboxMedia();
+        }
+
+        // Password handling
+        const correctPassword = 'loveyou';
+        const passwordScreen = document.getElementById('passwordScreen');
+        const passwordInput = document.getElementById('passwordInput');
+
+        if (sessionStorage.getItem('authenticated') === 'true') {
+            passwordScreen.style.display = 'none';
+        }
+
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const entered = passwordInput.value.toLowerCase().trim();
+                if (entered === correctPassword) {
+                    sessionStorage.setItem('authenticated', 'true');
+                    passwordScreen.style.animation = 'fadeOut 0.5s ease forwards';
+                    setTimeout(() => passwordScreen.style.display = 'none', 500);
+                } else {
+                    passwordInput.classList.add('error');
+                    passwordInput.value = '';
+                    setTimeout(() => passwordInput.classList.remove('error'), 500);
+                }
+            }
+        });
+
+        // Breathing exercise
+        let breathingInterval = null;
+        let breathingState = 'ready';
+
+        function startBreathing() {
+            if (breathingInterval) return;
+            breathingState = 'inhale';
+            updateBreathingUI();
+            breathingInterval = setInterval(() => {
+                if (breathingState === 'inhale') breathingState = 'hold1';
+                else if (breathingState === 'hold1') breathingState = 'exhale';
+                else if (breathingState === 'exhale') breathingState = 'hold2';
+                else breathingState = 'inhale';
+                updateBreathingUI();
+            }, 4000);
+        }
+
+        function updateBreathingUI() {
+            const circle = document.getElementById('breathingCircle');
+            const text = document.getElementById('breathingText');
+            circle.className = 'breathing-circle';
+            if (breathingState === 'inhale') {
+                circle.classList.add('inhale');
+                text.textContent = 'Breathe In';
+            } else if (breathingState === 'hold1' || breathingState === 'hold2') {
+                text.textContent = 'Hold';
+            } else if (breathingState === 'exhale') {
+                circle.classList.add('exhale');
+                text.textContent = 'Breathe Out';
+            }
+        }
+
+        function stopBreathing() {
+            if (breathingInterval) {
+                clearInterval(breathingInterval);
+                breathingInterval = null;
+            }
+            breathingState = 'ready';
+            document.getElementById('breathingCircle').className = 'breathing-circle';
+            document.getElementById('breathingText').textContent = 'Ready';
         }
 
         // Event listeners
